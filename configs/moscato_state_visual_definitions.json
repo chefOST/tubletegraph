@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "policy": "One-line visual definition per MOSCATO state. Shown to the adapter instead of alias lists so the label must follow from what is visible, not from word overlap with TubeletGraph text.",
+  "definitions": {
+    "chopped": "the bread has been cut into several smaller pieces",
+    "jam-topped": "a red or purple fruit preserve is visibly on the bread surface and no nut butter is present",
+    "on dish": "plain bread slices resting on a plate or dish with nothing on their surface; they may be stacked",
+    "peanut butter topped": "a tan or brown nut butter is visibly on the bread surface and no fruit preserve is present",
+    "peanut-butter-and-jam-covered": "both a tan nut butter and a red or purple fruit preserve are visible on the bread surface",
+    "placed": "the bread has been set down on a surface other than a dish and its surface is unchanged",
+    "pressed-together": "two slices have been closed face to face so their spread surfaces touch and form a sandwich",
+    "relocated": "the bread has been moved to a different location and its surface is unchanged"
+  }
+}

@@ -96,6 +96,26 @@ def image_payload(path: Path) -> dict[str, Any]:
     }
 
 
+DEFAULT_VISUAL_DEFINITIONS_PATH = (
+    Path(__file__).resolve().parent.parent
+    / "configs"
+    / "moscato_state_visual_definitions.json"
+)
+
+
+def load_visual_definitions(
+    path: Path = DEFAULT_VISUAL_DEFINITIONS_PATH,
+) -> dict[str, str]:
+    """Return per-state visual definitions, or {} when the config is absent."""
+    if not path.is_file():
+        return {}
+    payload = load_json(path)
+    return {
+        str(key).strip().lower(): str(value).strip()
+        for key, value in payload.get("definitions", {}).items()
+    }
+
+
 def frame_sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -113,30 +133,38 @@ def classify_event(
     frame_path: Path,
     allowed: list[str],
     state_dict: dict[str, Any],
-) -> tuple[str | None, list[str]]:
+    visual_definitions: dict[str, str] | None = None,
+) -> tuple[str | None, list[str], str | None]:
+    """Return (state, raw_responses, observation).
+
+    The prompt deliberately omits the MOSCATO alias lists: aliases are only used
+    server-side in normalize_candidate. Showing them invited lexical matching
+    between TubeletGraph words and alias words instead of looking at the frame.
+    """
     evidence = semantic_evidence(raw_context)
     if not evidence:
-        return None, []
+        return None, [], None
 
-    aliases = state_dict.get("one2all", {})
-    state_guide = {
-        state: aliases.get(state, [state])
-        for state in allowed
-    }
+    definitions = visual_definitions or {}
+    state_guide = {state: definitions.get(state, state) for state in allowed}
     prompt = (
         "Map a TubeletGraph prediction to the MOSCATO state vocabulary. "
         "This is prediction post-processing. You are not given any ground-truth "
         "annotation timeline, video identifier, filename, or frame number. Use only "
-        "the supplied image and raw TubeletGraph semantic text. Return exactly one "
-        "state from ALLOWED_STATES and no explanation. The selected state must "
-        f"describe the current visible state of the target object {target_object!r}.\n\n"
-        "Selection policy: choose the most specific state directly supported jointly "
-        "by the image and TubeletGraph text. An explicitly visible spatial relation "
-        "or attribute is more specific than a generic result such as 'placed' or "
-        "'relocated'. Use a generic label only when no more specific allowed state is "
-        "visually or textually supported. Do not infer an unobserved action.\n\n"
+        "the supplied image and raw TubeletGraph semantic text. The selected state "
+        f"must describe the current visible state of the target object "
+        f"{target_object!r}.\n\n"
+        "Selection policy: first describe what is actually visible on the target "
+        "object in the image. Then choose the one allowed state whose definition "
+        "matches that observation. The TubeletGraph text is a hint about what "
+        "changed; if it names a relation or attribute that is not visible in the "
+        "image, ignore that part of the text. Do not choose a state because its "
+        "name resembles a word in the text. Do not infer an unobserved action.\n\n"
+        "Return a single JSON object with exactly two keys: "
+        '"observation" (one sentence describing the visible target object) and '
+        '"state" (one exact string copied from ALLOWED_STATES). No other text.\n\n'
         f"RAW_TUBELET_SEMANTIC_TEXT={json.dumps(evidence)}\n\n"
-        f"ALLOWED_STATES_WITH_ALIASES={json.dumps(state_guide, sort_keys=True)}\n\n"
+        f"ALLOWED_STATE_DEFINITIONS={json.dumps(state_guide, sort_keys=True)}\n\n"
         f"ALLOWED_STATES={json.dumps(allowed)}"
     )
     responses: list[str] = []
@@ -144,8 +172,8 @@ def classify_event(
         correction = ""
         if responses:
             correction = (
-                "\n\nYour prior response was not an allowed state. Return one exact "
-                "string copied from ALLOWED_STATES."
+                "\n\nYour prior response was not an allowed state. Return the JSON "
+                'object again with "state" copied exactly from ALLOWED_STATES.'
             )
         response = client.chat.completions.create(
             model=model,
@@ -171,11 +199,26 @@ def classify_event(
         raw_response = response.choices[0].message.content or ""
         responses.append(raw_response)
         try:
-            return normalize_candidate(raw_response, state_dict, allowed), responses
+            state = normalize_candidate(raw_response, state_dict, allowed)
         except ValueError:
             if attempt == 2:
                 raise
+            continue
+        return state, responses, extract_observation(raw_response)
     raise AssertionError("unreachable")
+
+
+def extract_observation(response: str) -> str | None:
+    """Return the adapter's free-text observation, if it returned JSON."""
+    candidate = re.sub(r"^```(?:json)?\s*|\s*```$", "", response.strip()).strip()
+    if not candidate.startswith("{"):
+        return None
+    try:
+        payload = json.loads(candidate)
+    except json.JSONDecodeError:
+        return None
+    observation = payload.get("observation") if isinstance(payload, dict) else None
+    return str(observation).strip() if observation else None
 
 
 def map_events(
@@ -185,14 +228,17 @@ def map_events(
     client: OpenAI,
     model: str,
     allowed_states: list[str] | None = None,
+    visual_definitions: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     mapped = copy.deepcopy(draft)
     allowed = canonical_states(state_dict, allowed_states)
+    if visual_definitions is None:
+        visual_definitions = load_visual_definitions()
     target_object = mapped["object"]
     num_local_frames = int(mapped["num_local_frames"])
     initial_frame_path = frames_dir / "0000000.jpg"
 
-    initial_state, initial_responses = classify_event(
+    initial_state, initial_responses, initial_observation = classify_event(
         client,
         model=model,
         target_object=target_object,
@@ -200,11 +246,13 @@ def map_events(
         frame_path=initial_frame_path,
         allowed=allowed,
         state_dict=state_dict,
+        visual_definitions=visual_definitions,
     )
     mapped["initial_state"] = initial_state
     mapped["initial_mapping"] = {
         "model": model,
         "raw_responses": initial_responses,
+        "observation": initial_observation,
         "mapped_state": initial_state,
         "status": "mapped" if initial_state is not None else "abstained_no_tubelet_text",
         "semantic_evidence": semantic_evidence(mapped.get("initial_raw", {})),
@@ -226,7 +274,7 @@ def map_events(
         last_frame = local_frame
         frame_path = frames_dir / f"{local_frame:07d}.jpg"
         raw_context = {"raw_nodes": transition.get("raw_nodes", [])}
-        state, responses = classify_event(
+        state, responses, observation = classify_event(
             client,
             model=model,
             target_object=target_object,
@@ -234,11 +282,13 @@ def map_events(
             frame_path=frame_path,
             allowed=allowed,
             state_dict=state_dict,
+            visual_definitions=visual_definitions,
         )
         transition["state"] = state
         transition["mapping"] = {
             "model": model,
             "raw_responses": responses,
+            "observation": observation,
             "mapped_state": state,
             "status": "mapped" if state is not None else "abstained_no_tubelet_text",
             "semantic_evidence": semantic_evidence(raw_context),
@@ -268,6 +318,9 @@ def map_events(
             "video_frames_used_for_mapping": bool(mapped_count),
             "adapter_input_mode": "tubelet_semantic_text_plus_single_event_frame",
             "adapter_image_detail": "low",
+            "adapter_prompt_version": 2,
+            "adapter_prompt_shows_aliases": False,
+            "adapter_output_format": "json_observation_then_state",
             "video_identifiers_used_in_prompt": False,
             "frame_numbers_used_in_prompt": False,
             "allowed_states_sha256": vocabulary_digest,
