@@ -1,0 +1,100 @@
+{
+  "video_id": "S12_Sandwich_7150991-2470",
+  "object": "bread slices",
+  "clip_start_global": 2824,
+  "frame_stride": 6,
+  "predicted_frames": 3890,
+  "evaluated_frames": 2790,
+  "skipped_empty_gt_frames": 1100,
+  "correct_frames": 984,
+  "abstained_frames": 0,
+  "coverage": 1.0,
+  "precision": 0.35268817204301073,
+  "accuracy": 0.35268817204301073,
+  "f1": 0.20347394540942929,
+  "f1_max": 0.20347394540942929,
+  "f1_max_threshold": 0.1,
+  "frame_hit_accuracy": 0.35268817204301073,
+  "micro_precision": 0.35268817204301073,
+  "micro_recall": 0.14298169136878813,
+  "micro_f1": 0.20347394540942929,
+  "macro_precision": 0.009245232600276638,
+  "macro_recall": 0.025511911401481954,
+  "macro_f1": 0.012512847987959267,
+  "f1_threshold_curve": [
+    {
+      "threshold": 0.1,
+      "precision": 0.35268817204301073,
+      "recall": 0.14298169136878813,
+      "f1": 0.20347394540942929
+    },
+    {
+      "threshold": 0.2,
+      "precision": 0.35268817204301073,
+      "recall": 0.14298169136878813,
+      "f1": 0.20347394540942929
+    },
+    {
+      "threshold": 0.3,
+      "precision": 0.35268817204301073,
+      "recall": 0.14298169136878813,
+      "f1": 0.20347394540942929
+    },
+    {
+      "threshold": 0.4,
+      "precision": 0.35268817204301073,
+      "recall": 0.14298169136878813,
+      "f1": 0.20347394540942929
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.35268817204301073,
+      "recall": 0.14298169136878813,
+      "f1": 0.20347394540942929
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.35268817204301073,
+      "recall": 0.14298169136878813,
+      "f1": 0.20347394540942929
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.35268817204301073,
+      "recall": 0.14298169136878813,
+      "f1": 0.20347394540942929
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.35268817204301073,
+      "recall": 0.14298169136878813,
+      "f1": 0.20347394540942929
+    },
+    {
+      "threshold": 0.9,
+      "precision": 0.35268817204301073,
+      "recall": 0.14298169136878813,
+      "f1": 0.20347394540942929
+    }
+  ],
+  "policy": {
+    "primary_metric_namespace": "word_accuracy",
+    "word_unit": "exact canonical MOSCATO state label per frame",
+    "multi_label": "prediction is correct if present in GT state list",
+    "empty_gt": "skip",
+    "temporal": "initial propagation plus transition forward fill",
+    "f1_max": "maximum micro-F1 at one global threshold in [0.1, ..., 0.9]",
+    "prediction_scores": "hard one-hot labels; no calibrated confidence available",
+    "abstention": "missing TubeletGraph semantic text is scored as an incorrect zero-vector prediction"
+  },
+  "run_name": "s12-bread-slices-20261003-5fps-stride6-r1",
+  "evaluated_at": "2026-10-03T22:12:08.522035+00:00",
+  "provenance": {
+    "annotations_sha256": "41ddb05eb3b8dd3fd1eb159d10c29e8d2eba95bbdd3fd2cf697a202cf943f912",
+    "state_dict_sha256": "0fbc692af4c5ff399a467804abb3e4d8af27fedb47256dc9e6072fb4f6b8aa05",
+    "events_sha256": "ecaef1b4101821bcdab13abc50d866f1361ae0f9731478b10e761c068f9922ff",
+    "ground_truth_used_for_inference": false,
+    "ground_truth_volume": "tubelet-ground-truth",
+    "ground_truth_mounted_only_by_evaluation": true
+  }
+}

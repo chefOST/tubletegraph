@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "video_id": "S12_Sandwich_7150991-2470",
+  "object": "bread slices",
+  "clip_start_global": 2824,
+  "num_local_frames": 649,
+  "initial_state": "pressed-together",
+  "initial_raw": {
+    "tubelet_object_id": "0",
+    "description": "Stacked sandwich bread"
+  },
+  "transitions": [
+    {
+      "local_frame": 198,
+      "state": "jam-topped",
+      "raw_nodes": [
+        {
+          "tubelet_object_id": "1",
+          "description": "plain bread slice",
+          "prior_description": "toasted bread slice",
+          "action": "spread",
+          "analysis_frame_idx": 198,
+          "object_start_frame_idx": 198
+        }
+      ],
+      "mapping": {
+        "model": "gpt-4.1",
+        "raw_responses": [
+          "jam-topped"
+        ],
+        "mapped_state": "jam-topped",
+        "status": "mapped",
+        "semantic_evidence": [
+          "plain bread slice",
+          "toasted bread slice",
+          "spread"
+        ],
+        "input_frame_filename": "0000198.jpg",
+        "input_frame_sha256": "3799bc06bcda1e5e22d22c4e672d17d5675004d467256e5b53c5c3b3cea32482"
+      }
+    },
+    {
+      "local_frame": 432,
+      "state": "pressed-together",
+      "raw_nodes": [
+        {
+          "tubelet_object_id": "2",
+          "description": "plain bread slice",
+          "prior_description": "toasted bread slice",
+          "action": "combine",
+          "analysis_frame_idx": 441,
+          "object_start_frame_idx": 432
+        }
+      ],
+      "mapping": {
+        "model": "gpt-4.1",
+        "raw_responses": [
+          "pressed-together"
+        ],
+        "mapped_state": "pressed-together",
+        "status": "mapped",
+        "semantic_evidence": [
+          "plain bread slice",
+          "toasted bread slice",
+          "combine"
+        ],
+        "input_frame_filename": "0000432.jpg",
+        "input_frame_sha256": "bdd9ce4173673940c4841c5aac28f4dad79eb22a190490f25027d0934577ba8f"
+      }
+    }
+  ],
+  "provenance": {
+    "source": "TubeletGraph GPT-4.1 prediction JSON",
+    "state_mapping_status": "mapped",
+    "ground_truth_used_for_mapping": false,
+    "state_mapping_model": "gpt-4.1",
+    "video_frames_used_for_mapping": true,
+    "adapter_input_mode": "tubelet_semantic_text_plus_single_event_frame",
+    "adapter_image_detail": "low",
+    "video_identifiers_used_in_prompt": false,
+    "frame_numbers_used_in_prompt": false,
+    "allowed_states_sha256": "b30728b0c67427ab30ffbc0e3040f0bf005a6e1d0ced56d9cc3928577199fa36",
+    "allowed_states": [
+      "chopped",
+      "jam-topped",
+      "on dish",
+      "peanut butter topped",
+      "peanut-butter-and-jam-covered",
+      "placed",
+      "pressed-together",
+      "relocated"
+    ]
+  },
+  "frame_stride": 6,
+  "source_fps": 30,
+  "tubelet_fps": 5,
+  "source_frame_count": 3890,
+  "initial_mapping": {
+    "model": "gpt-4.1",
+    "raw_responses": [
+      "pressed-together"
+    ],
+    "mapped_state": "pressed-together",
+    "status": "mapped",
+    "semantic_evidence": [
+      "Stacked sandwich bread"
+    ],
+    "input_frame_filename": "0000000.jpg",
+    "input_frame_sha256": "c433c3c55e33cdf5db7a0095279b6bdd7e0845a2cf2bf74af6be4afe1ed1f2ab"
+  }
+}

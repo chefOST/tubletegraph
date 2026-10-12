@@ -1,0 +1,72 @@
+{
+  "status": "succeeded",
+  "started_at": "2026-10-03T21:02:13.084633+00:00",
+  "run_name": "s12-bread-slices-20261003-5fps-stride6-r1",
+  "smoke_test": false,
+  "video_id": "S12_Sandwich_7150991-2470",
+  "fps": 30,
+  "frame_stride": 6,
+  "tubelet_fps": 5,
+  "clip_start_global": 2824,
+  "target_object": "bread slices",
+  "target_object_id": 1,
+  "expected_local_frames": 3890,
+  "max_frames": null,
+  "later_object_tracking": true,
+  "tubeletgraph_repository": "https://github.com/YihongSun/TubeletGraph.git",
+  "tubeletgraph_commit": "fdb05b6fbd7f4644aea990bf967cc18d82bf291b",
+  "detectron2_commit": "a2f4a8771ab77e8411c26b27f24f9489a28a2453",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "gpu_vram_gb": 85.095,
+  "torch": "2.7.0+cu126",
+  "torch_cuda": "12.6",
+  "openai_secret_present": true,
+  "ground_truth_available_to_gpu_job": false,
+  "ground_truth_volume_mounted": false,
+  "adapter_input_mode": "tubelet_semantic_text_plus_single_event_frame",
+  "adapter_prompt_contains_video_id": false,
+  "adapter_prompt_contains_frame_number": false,
+  "artifacts": {
+    "event_draft": "tubelet_events.draft.json",
+    "mapped_events": "tubelet_events.json",
+    "predictions": "predictions",
+    "visualizations": "visualizations",
+    "generated_configs": "generated_configs"
+  },
+  "source_input_frame_count": 3890,
+  "selected_source_frame_count": 3890,
+  "input_frame_count": 649,
+  "input_dimensions": [
+    800,
+    600
+  ],
+  "mask_values": [
+    0,
+    1
+  ],
+  "mask_source_mode": "L",
+  "mask_runtime_mode": "P",
+  "command": [
+    "python",
+    "quick_run.py",
+    "--input_dir",
+    "/tmp/tubelet_input/S12_Sandwich_7150991-2470",
+    "--input_mask",
+    "/tmp/tubelet_input/S12_Sandwich_7150991-2470_0000000.png",
+    "--fps",
+    "5"
+  ],
+  "state_candidate_policy": "Object-specific MOSCATO states observed in other CMU videos, excluding the evaluated video",
+  "state_candidates": [
+    "chopped",
+    "jam-topped",
+    "on dish",
+    "peanut butter topped",
+    "peanut-butter-and-jam-covered",
+    "placed",
+    "pressed-together",
+    "relocated"
+  ],
+  "finished_at": "2026-10-03T22:10:25.168562+00:00",
+  "volume_path": "/data/S12_Sandwich_7150991-2470/runs/s12-bread-slices-20261003-5fps-stride6-r1"
+}

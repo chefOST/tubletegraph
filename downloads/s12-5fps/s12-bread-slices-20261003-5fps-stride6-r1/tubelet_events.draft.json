@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "video_id": "S12_Sandwich_7150991-2470",
+  "object": "bread slices",
+  "clip_start_global": 2824,
+  "num_local_frames": 649,
+  "initial_state": null,
+  "initial_raw": {
+    "tubelet_object_id": "0",
+    "description": "Stacked sandwich bread"
+  },
+  "transitions": [
+    {
+      "local_frame": 198,
+      "state": null,
+      "raw_nodes": [
+        {
+          "tubelet_object_id": "1",
+          "description": "plain bread slice",
+          "prior_description": "toasted bread slice",
+          "action": "spread",
+          "analysis_frame_idx": 198,
+          "object_start_frame_idx": 198
+        }
+      ]
+    },
+    {
+      "local_frame": 432,
+      "state": null,
+      "raw_nodes": [
+        {
+          "tubelet_object_id": "2",
+          "description": "plain bread slice",
+          "prior_description": "toasted bread slice",
+          "action": "combine",
+          "analysis_frame_idx": 441,
+          "object_start_frame_idx": 432
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "source": "TubeletGraph GPT-4.1 prediction JSON",
+    "state_mapping_status": "unmapped",
+    "ground_truth_used_for_mapping": false
+  },
+  "frame_stride": 6,
+  "source_fps": 30,
+  "tubelet_fps": 5,
+  "source_frame_count": 3890
+}
