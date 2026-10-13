@@ -1,6 +1,12 @@
 # TubeletGraph × MOSCATO (CMU-MMAC) — End-to-End Setup
 
-This README is the practical setup for the experiment:
+Historical setup notes for the single-state prototype. The example evaluator below
+reports hit accuracy and micro/macro scores; it does not implement the current
+[project metrics](https://github.com/chefOST/tubletegraph/blob/main/README.md#metrics):
+frame-averaged precision and recall (detail). See the [branch README](README.md#existing-evaluator-diagnostics)
+for existing evaluator diagnostics.
+
+Original experiment setup:
 
 > Run **TubeletGraph** on the exact CMU-MMAC videos used by **MOSCATO**, convert TubeletGraph's sparse state changes into one state prediction per frame, then compare those predictions against MOSCATO's frame-level state annotations.
 
@@ -1015,7 +1021,7 @@ Do **not** blindly backward-fill every transition.
 
 ---
 
-# 24. Evaluation policy for MOSCATO
+# 24. Historical evaluation policy for MOSCATO
 
 MOSCATO can contain multiple state labels for one object at one frame.
 
@@ -1058,7 +1064,7 @@ If your supervisor explicitly defines empty frames as a `"none"` class, change t
 
 ---
 
-# 25. Evaluation script
+# 25. Historical evaluation script
 
 Save this as:
 
@@ -1590,9 +1596,9 @@ S48_Salad_7150991-222,vegetables,...,...,...,...
 
 ---
 
-# 31. Methodology decisions to lock before final benchmark
+# 31. Historical prototype methodology
 
-Before producing your final numbers, explicitly decide these rules and keep them fixed:
+These were the original prototype choices. Use the current project metric definitions for new benchmark reporting:
 
 ## A. What is one evaluation unit?
 

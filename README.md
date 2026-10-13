@@ -211,9 +211,12 @@ specific W&B entity. The command prints the final four scores and W&B run URL,
 and saves the evaluation beneath the completed run's `evaluation/` directory
 on the `tubelet-data` Volume.
 
-## Evaluation policy
+## Existing evaluator diagnostics
 
-The scripts in this branch use these fixed rules:
+The [project metrics](https://github.com/chefOST/tubletegraph/blob/main/README.md#metrics)
+are frame-averaged precision and recall (detail). This branch's scripts still
+report legacy hit accuracy and micro-averaged scores; they do not yet implement
+the project metrics. Existing diagnostic rules:
 
 - One evaluation unit is one target object at one raw video frame.
 - Local frame `i` maps to MOSCATO frame `2824 + i`.
