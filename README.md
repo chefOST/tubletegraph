@@ -4,11 +4,12 @@ ChefOST evaluates object-state tracking in procedural cooking videos. Use this r
 
 ## Metrics
 
-Precision is the fraction of evaluated frames with at least one predicted label matching ground truth:
+For each object, `P_t` is the predicted state set and `T_t` the ground-truth state set at frame `t`.
 
-`precision = frames with ≥1 matching predicted label / evaluated frames`
+- Precision: fraction of predicted states that are correct, `|P_t ∩ T_t| / |P_t|`, averaged over frames with predictions.
+- Recall (detail): fraction of ground-truth states recovered, `|P_t ∩ T_t| / |T_t|`, averaged over frames where the object is present.
 
-Detail is a desired metric; its definition and scoring protocol are pending. Record the dataset, split and sampling alongside results. Keep published paper results distinct from ChefOST experiments, and label proposed changes to metric definitions explicitly.
+Average per-frame ratios equally; missing predictions give zero recall when GT states exist. Record the dataset, split and sampling; document empty-GT handling and aggregation across objects/videos. Keep published paper results distinct from ChefOST experiments.
 
 ## Context
 
