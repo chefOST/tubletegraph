@@ -15,6 +15,10 @@ Average per-frame ratios equally; missing predictions give zero recall when GT s
 
 Read the [project goals](https://github.com/chefOST/.github/blob/main/docs/PaperNotes.md#project-goals), then the [TubeletGraph paper notes](https://github.com/chefOST/.github/blob/main/docs/PaperNotes.md#6-tubeletgraph) relevant to your task. Use the [organization guide](https://github.com/chefOST/.github/blob/main/profile/README.md) for shared project context and the [data repository](https://github.com/chefOST/chefOST-data) for shared annotations and vocabularies.
 
+## Videos
+
+Shared MOSCATO ground-truth videos are on R2. See [video access](https://github.com/chefOST/chefOST-data#videos) for the folder location and Modal/local setup. Read-only credentials were sent in the private team Discord channel. Follow this model's preprocessing and save outputs in your own storage.
+
 ## Experiment tracking
 
 Follow [W&B setup](weights_and_biases/README.md) to configure the appropriate team and project. Verify the destination used by your actual run command before reporting results.
