@@ -1,0 +1,7 @@
+{
+  "entity": "chefOST",
+  "projects": {
+    "experiments": "tubeletgraph-experiments",
+    "full-evals": "tubeletgraph - full evals"
+  }
+}

@@ -23,3 +23,6 @@ results/
 *.secret
 *.secrets
 .aws/
+
+# From main.
+/wandb/

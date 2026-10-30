@@ -1,4 +1,29 @@
-# TubeletGraph x MOSCATO: CMU S12 sandwich
+# TubeletGraph / ChefOST
+
+ChefOST evaluates object-state tracking in procedural cooking videos. Use this repository for TubeletGraph work.
+
+## Metrics
+
+For each object, `P_t` is the predicted state set and `T_t` the ground-truth state set at frame `t`.
+
+- Precision: fraction of predicted states that are correct, `|P_t ∩ T_t| / |P_t|`, averaged over frames with predictions.
+- Recall (detail): fraction of ground-truth states recovered, `|P_t ∩ T_t| / |T_t|`, averaged over frames where the object is present.
+
+Average per-frame ratios equally; missing predictions give zero recall when GT states exist. Record the dataset, split and sampling; document empty-GT handling and aggregation across objects/videos. Keep published paper results distinct from ChefOST experiments.
+
+## Context
+
+Read the [project goals](https://github.com/chefOST/.github/blob/main/docs/PaperNotes.md#project-goals), then the [TubeletGraph paper notes](https://github.com/chefOST/.github/blob/main/docs/PaperNotes.md#6-tubeletgraph) relevant to your task. Use the [organization guide](https://github.com/chefOST/.github/blob/main/profile/README.md) for shared project context and the [data repository](https://github.com/chefOST/chefOST-data) for shared annotations and vocabularies.
+
+## Videos
+
+Shared MOSCATO ground-truth videos are on R2. See [video access](https://github.com/chefOST/chefOST-data#videos) for the folder location and Modal/local setup. Read-only credentials were sent in the private team Discord channel. Follow this model's preprocessing and save outputs in your own storage.
+
+## Experiment tracking
+
+Follow [W&B setup](weights_and_biases/README.md) to configure the appropriate team and project. Verify the destination used by your actual run command before reporting results.
+
+## TubeletGraph x MOSCATO: CMU S12 sandwich
 
 This branch runs TubeletGraph on the exact CMU-MMAC video represented by the
 only matching MOSCATO CMU annotation entry requested for this experiment:
@@ -16,7 +41,7 @@ The AVI and MOSCATO bundle are local data inputs and are intentionally ignored
 by Git. The experiment manifest is
 `configs/s12_sandwich_7150991-2470.json`.
 
-## Verified alignment
+### Verified alignment
 
 The source AVI is H.264, 800 x 600, 30 FPS, and 6,714 raw frames. The MOSCATO
 `object` array and all five object-state timelines are also 6,714 frames. Never
@@ -28,7 +53,7 @@ Run the check again at any time:
 python3 scripts/inspect_video.py
 ```
 
-## Prepare the one-object clip
+### Prepare the one-object clip
 
 Install local tools (FFmpeg must also be on `PATH`):
 
@@ -69,7 +94,7 @@ without changing their object IDs. Visually inspect the mask before spending GPU
 time. To redraw it interactively, omit `--polygons-json`; press `n` to close one
 polygon and begin another.
 
-## Modal, OpenAI, and W&B environments
+### Modal, OpenAI, and W&B environments
 
 TubeletGraph is installed and run only in the CUDA Modal image defined by
 `modal_tubelet.py`. The key is never placed in a file or image layer.
@@ -152,7 +177,7 @@ Use `modal volume ls tubelet-data` to find the run and `modal volume get` to
 download it. Do not calculate MOSCATO metrics before visually validating that
 the tracked mask stays on the bread.
 
-## Convert and evaluate a validated run
+### Convert and evaluate a validated run
 
 The Modal runner automatically writes `tubelet_events.draft.json` and the
 closed-vocabulary `tubelet_events.json` beside the run manifest. The following
@@ -214,14 +239,14 @@ input mode and TubeletGraph commit. Add extra tags with
 and saves the evaluation beneath the completed run's `evaluation/` directory
 on the `tubelet-data` Volume.
 
-## Batch inference over the shared videos
+### Batch inference over the shared videos
 
 To run TubeletGraph over all 41 MOSCATO videos on R2, with raw output and the
 SAM2 and CropFormer speedups, see
 [docs/batch_inference_and_speedups.md](docs/batch_inference_and_speedups.md).
 It also covers cost, credentials and masks.
 
-## Existing evaluator diagnostics
+### Existing evaluator diagnostics
 
 The [project metrics](https://github.com/chefOST/tubletegraph/blob/main/README.md#metrics)
 are frame-averaged precision and recall (detail). This branch's scripts still
