@@ -205,9 +205,12 @@ modal run modal_tubelet.py \
   --evaluate-run-name <validated-run-name>
 ```
 
-Results go to the `chefOST` entity. Development runs default to the
-`tubeletgraph-experiments` project. Add `--full-eval` only for an intended full
-evaluation, which logs to the `tubeletgraph - full evals` project. The command prints the final four scores and W&B run URL,
+Results go to the `chefOST` entity, in the `tubeletgraph - full evals` project
+by default. Add `--experiment` for a development run, which logs to
+`tubeletgraph-experiments` instead. Each run is tagged automatically with its
+eval kind, video, session, object, fps, stride, later-tracking setting, adapter
+input mode and TubeletGraph commit. Add extra tags with
+`--wandb-tags "prompt-v2,rerun"`. The command prints the final four scores and W&B run URL,
 and saves the evaluation beneath the completed run's `evaluation/` directory
 on the `tubelet-data` Volume.
 

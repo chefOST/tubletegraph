@@ -38,7 +38,7 @@ SECRET_NAME = "tubelet-openai"
 WANDB_SECRET_NAME = "wandb"
 WANDB_EXPERIMENTS_PROJECT = "tubeletgraph-experiments"
 WANDB_FULL_EVAL_PROJECT = "tubeletgraph - full evals"
-DEFAULT_WANDB_PROJECT = WANDB_EXPERIMENTS_PROJECT
+DEFAULT_WANDB_PROJECT = WANDB_FULL_EVAL_PROJECT
 DEFAULT_WANDB_ENTITY = "chefOST"
 TUBELETGRAPH_REPOSITORY = "https://github.com/YihongSun/TubeletGraph.git"
 TUBELETGRAPH_COMMIT = "fdb05b6fbd7f4644aea990bf967cc18d82bf291b"
@@ -549,6 +549,7 @@ def evaluate_and_log(
     run_name: str,
     wandb_project: str,
     wandb_entity: str = "",
+    wandb_tags: str = "",
 ) -> dict:
     """Evaluate an isolated completed run, then publish metrics to W&B."""
     import hashlib
@@ -581,7 +582,7 @@ def evaluate_and_log(
 
     sys.path.insert(0, "/opt/moscato")
     from scripts.evaluate import evaluate_events, load_json, write_csv
-    from scripts.log_wandb import log_evaluation
+    from scripts.log_wandb import log_evaluation, run_tags
 
     rows, summary = evaluate_events(
         load_json(annotations_path),
@@ -622,6 +623,9 @@ def evaluate_and_log(
     )
     summary_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
 
+    eval_kind = (
+        "full-eval" if wandb_project == WANDB_FULL_EVAL_PROJECT else "experiment"
+    )
     try:
         wandb_result = log_evaluation(
             summary=summary,
@@ -639,6 +643,12 @@ def evaluate_and_log(
                 "video_id": video_id,
                 "object": object_name,
                 "run_name": run_name,
+                "eval_kind": eval_kind,
+                "fps": manifest.get("fps"),
+                "frame_stride": manifest.get("frame_stride"),
+                "tubelet_fps": manifest.get("tubelet_fps"),
+                "later_object_tracking": manifest.get("later_object_tracking"),
+                "adapter_input_mode": manifest.get("adapter_input_mode"),
                 "tubeletgraph_commit": TUBELETGRAPH_COMMIT,
                 "detectron2_commit": DETECTRON2_COMMIT,
                 "ground_truth_used_for_inference": False,
@@ -646,6 +656,13 @@ def evaluate_and_log(
                 "ground_truth_mounted_only_by_evaluation": True,
                 "metric_policy": summary["policy"],
             },
+            tags=run_tags(
+                eval_kind=eval_kind,
+                video_id=video_id,
+                object_name=object_name,
+                manifest=manifest,
+                extra=[t.strip() for t in wandb_tags.split(",") if t.strip()],
+            ),
         )
         wandb_result_path.write_text(
             json.dumps(wandb_result, indent=2) + "\n", encoding="utf-8"
@@ -681,16 +698,17 @@ def main(
     evaluate_run_name: str = "",
     wandb_project: str = "",
     wandb_entity: str = DEFAULT_WANDB_ENTITY,
-    full_eval: bool = False,
+    wandb_tags: str = "",
+    experiment: bool = False,
 ) -> None:
     import json
 
-    # Development runs go to tubeletgraph-experiments; pass --full-eval only
-    # for intended full evaluations ("tubeletgraph - full evals").
-    if full_eval and wandb_project and wandb_project != WANDB_FULL_EVAL_PROJECT:
-        raise ValueError("--full-eval cannot be combined with a different --wandb-project")
+    # Evaluations log to "tubeletgraph - full evals" by default; pass
+    # --experiment for development runs (tubeletgraph-experiments).
+    if experiment and wandb_project and wandb_project != WANDB_EXPERIMENTS_PROJECT:
+        raise ValueError("--experiment cannot be combined with a different --wandb-project")
     if not wandb_project:
-        wandb_project = WANDB_FULL_EVAL_PROJECT if full_eval else DEFAULT_WANDB_PROJECT
+        wandb_project = WANDB_EXPERIMENTS_PROJECT if experiment else DEFAULT_WANDB_PROJECT
 
     if evaluate_run_name:
         if smoke_test or run_name:
@@ -703,6 +721,7 @@ def main(
             run_name=evaluate_run_name,
             wandb_project=wandb_project,
             wandb_entity=wandb_entity,
+            wandb_tags=wandb_tags,
         )
         print(json.dumps(result, indent=2))
         return

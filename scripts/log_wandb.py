@@ -44,6 +44,48 @@ def _artifact_component(value: str) -> str:
     return component[:128]
 
 
+MAX_TAG_LENGTH = 64
+
+
+def _tag(value: str) -> str:
+    tag = re.sub(r"[^A-Za-z0-9_.:=-]+", "-", str(value)).strip("-")
+    return tag[:MAX_TAG_LENGTH]
+
+
+def run_tags(
+    *,
+    eval_kind: str,
+    video_id: str,
+    object_name: str,
+    manifest: dict[str, Any],
+    extra: tuple[str, ...] | list[str] = (),
+) -> list[str]:
+    """Build searchable W&B tags from the run identity and its manifest."""
+    tags = ["tubeletgraph", "moscato", "cmu", "evaluation", eval_kind]
+    tags.append(f"video:{video_id}")
+    tags.append(f"session:{video_id.split('_', 1)[0]}")
+    tags.append(f"object:{object_name}")
+    if manifest.get("fps") is not None:
+        tags.append(f"fps:{manifest['fps']}")
+    if manifest.get("frame_stride") is not None:
+        tags.append(f"stride:{manifest['frame_stride']}")
+    if "later_object_tracking" in manifest:
+        state = "on" if manifest["later_object_tracking"] else "off"
+        tags.append(f"later-tracking:{state}")
+    if manifest.get("adapter_input_mode"):
+        tags.append(f"adapter:{manifest['adapter_input_mode']}")
+    if manifest.get("tubeletgraph_commit"):
+        tags.append(f"tubeletgraph-commit:{manifest['tubeletgraph_commit'][:7]}")
+    if manifest.get("smoke_test"):
+        tags.append("smoke-test")
+    tags.extend(extra)
+    seen: list[str] = []
+    for tag in map(_tag, tags):
+        if tag and tag not in seen:
+            seen.append(tag)
+    return seen
+
+
 def log_evaluation(
     *,
     summary: dict[str, Any],
@@ -53,6 +95,7 @@ def log_evaluation(
     run_name: str,
     artifact_paths: dict[str, Path],
     config: dict[str, Any],
+    tags: list[str],
 ) -> dict[str, str]:
     """Log scalar cards, threshold curve, frame table, and source artifacts."""
     if not os.environ.get("WANDB_API_KEY"):
@@ -70,7 +113,7 @@ def log_evaluation(
         name=resolved_name,
         job_type="evaluation",
         config=config,
-        tags=["tubeletgraph", "moscato", "cmu", "evaluation"],
+        tags=tags,
     ) as run:
         for key, value in metrics.items():
             run.summary[key] = value
