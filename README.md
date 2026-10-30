@@ -214,6 +214,13 @@ input mode and TubeletGraph commit. Add extra tags with
 and saves the evaluation beneath the completed run's `evaluation/` directory
 on the `tubelet-data` Volume.
 
+## Batch inference over the shared videos
+
+To run TubeletGraph over all 41 MOSCATO videos on R2, with raw output and the
+SAM2 and CropFormer speedups, see
+[docs/batch_inference_and_speedups.md](docs/batch_inference_and_speedups.md).
+It also covers cost, credentials and masks.
+
 ## Existing evaluator diagnostics
 
 The [project metrics](https://github.com/chefOST/tubletegraph/blob/main/README.md#metrics)

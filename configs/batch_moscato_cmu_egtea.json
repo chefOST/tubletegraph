@@ -1,0 +1,4587 @@
+{
+  "defaults": {
+    "object_id": 1
+  },
+  "videos": [
+    {
+      "video_id": "S08_Eggs_7150991-727",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1872,
+      "clip_end_global": 5118,
+      "r2_path": "_copies/MP4/CMU/Eggs/S08_Eggs_7150991-727.mp4"
+    },
+    {
+      "video_id": "S08_Eggs_7150991-727",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1734,
+      "clip_end_global": 5299,
+      "r2_path": "_copies/MP4/CMU/Eggs/S08_Eggs_7150991-727.mp4"
+    },
+    {
+      "video_id": "S08_Eggs_7150991-727",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1734,
+      "clip_end_global": 1956,
+      "r2_path": "_copies/MP4/CMU/Eggs/S08_Eggs_7150991-727.mp4"
+    },
+    {
+      "video_id": "S08_Eggs_7150991-727",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 846,
+      "clip_end_global": 3443,
+      "r2_path": "_copies/MP4/CMU/Eggs/S08_Eggs_7150991-727.mp4"
+    },
+    {
+      "video_id": "S08_Eggs_7150991-727",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 792,
+      "clip_end_global": 1019,
+      "r2_path": "_copies/MP4/CMU/Eggs/S08_Eggs_7150991-727.mp4"
+    },
+    {
+      "video_id": "S08_Eggs_7150991-727",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 510,
+      "clip_end_global": 5299,
+      "r2_path": "_copies/MP4/CMU/Eggs/S08_Eggs_7150991-727.mp4"
+    },
+    {
+      "video_id": "S08_Eggs_7150991-727",
+      "object_name": "pan",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 510,
+      "clip_end_global": 5299,
+      "r2_path": "_copies/MP4/CMU/Eggs/S08_Eggs_7150991-727.mp4"
+    },
+    {
+      "video_id": "S08_Eggs_7150991-727",
+      "object_name": "salt",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1986,
+      "clip_end_global": 2225,
+      "r2_path": "_copies/MP4/CMU/Eggs/S08_Eggs_7150991-727.mp4"
+    },
+    {
+      "video_id": "S08_Eggs_7150991-727",
+      "object_name": "spread spatula",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1734,
+      "clip_end_global": 5299,
+      "r2_path": "_copies/MP4/CMU/Eggs/S08_Eggs_7150991-727.mp4"
+    },
+    {
+      "video_id": "S08_Eggs_7150991-727",
+      "object_name": "the dish",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5154,
+      "clip_end_global": 5299,
+      "r2_path": "_copies/MP4/CMU/Eggs/S08_Eggs_7150991-727.mp4"
+    },
+    {
+      "video_id": "S09_Brownie_7150991-1653",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 10638,
+      "clip_end_global": 13342,
+      "r2_path": "_copies/MP4/CMU/Brownie/S09_Brownie_7150991-1653.mp4"
+    },
+    {
+      "video_id": "S09_Brownie_7150991-1653",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1800,
+      "clip_end_global": 12494,
+      "r2_path": "_copies/MP4/CMU/Brownie/S09_Brownie_7150991-1653.mp4"
+    },
+    {
+      "video_id": "S09_Brownie_7150991-1653",
+      "object_name": "egg mixture",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5514,
+      "clip_end_global": 13342,
+      "r2_path": "_copies/MP4/CMU/Brownie/S09_Brownie_7150991-1653.mp4"
+    },
+    {
+      "video_id": "S09_Brownie_7150991-1653",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1614,
+      "clip_end_global": 10252,
+      "r2_path": "_copies/MP4/CMU/Brownie/S09_Brownie_7150991-1653.mp4"
+    },
+    {
+      "video_id": "S09_Brownie_7150991-1653",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1800,
+      "clip_end_global": 2841,
+      "r2_path": "_copies/MP4/CMU/Brownie/S09_Brownie_7150991-1653.mp4"
+    },
+    {
+      "video_id": "S09_Brownie_7150991-1653",
+      "object_name": "measuring spoon/cup",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2868,
+      "clip_end_global": 4633,
+      "r2_path": "_copies/MP4/CMU/Brownie/S09_Brownie_7150991-1653.mp4"
+    },
+    {
+      "video_id": "S09_Brownie_7150991-1653",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2868,
+      "clip_end_global": 12494,
+      "r2_path": "_copies/MP4/CMU/Brownie/S09_Brownie_7150991-1653.mp4"
+    },
+    {
+      "video_id": "S09_Brownie_7150991-1653",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2868,
+      "clip_end_global": 3999,
+      "r2_path": "_copies/MP4/CMU/Brownie/S09_Brownie_7150991-1653.mp4"
+    },
+    {
+      "video_id": "S09_Brownie_7150991-1653",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 12492,
+      "clip_end_global": 13342,
+      "r2_path": "_copies/MP4/CMU/Brownie/S09_Brownie_7150991-1653.mp4"
+    },
+    {
+      "video_id": "S09_Brownie_7150991-1653",
+      "object_name": "water",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4020,
+      "clip_end_global": 4633,
+      "r2_path": "_copies/MP4/CMU/Brownie/S09_Brownie_7150991-1653.mp4"
+    },
+    {
+      "video_id": "S09_Eggs_7150991-1050",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 408,
+      "clip_end_global": 4203,
+      "r2_path": "_copies/MP4/CMU/Eggs/S09_Eggs_7150991-1050.mp4"
+    },
+    {
+      "video_id": "S09_Eggs_7150991-1050",
+      "object_name": "cooked omelette",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5814,
+      "clip_end_global": 6384,
+      "r2_path": "_copies/MP4/CMU/Eggs/S09_Eggs_7150991-1050.mp4"
+    },
+    {
+      "video_id": "S09_Eggs_7150991-1050",
+      "object_name": "egg mixture",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3756,
+      "clip_end_global": 5818,
+      "r2_path": "_copies/MP4/CMU/Eggs/S09_Eggs_7150991-1050.mp4"
+    },
+    {
+      "video_id": "S09_Eggs_7150991-1050",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1824,
+      "clip_end_global": 3757,
+      "r2_path": "_copies/MP4/CMU/Eggs/S09_Eggs_7150991-1050.mp4"
+    },
+    {
+      "video_id": "S09_Eggs_7150991-1050",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1710,
+      "clip_end_global": 6134,
+      "r2_path": "_copies/MP4/CMU/Eggs/S09_Eggs_7150991-1050.mp4"
+    },
+    {
+      "video_id": "S09_Eggs_7150991-1050",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1086,
+      "clip_end_global": 6134,
+      "r2_path": "_copies/MP4/CMU/Eggs/S09_Eggs_7150991-1050.mp4"
+    },
+    {
+      "video_id": "S09_Eggs_7150991-1050",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 954,
+      "clip_end_global": 1124,
+      "r2_path": "_copies/MP4/CMU/Eggs/S09_Eggs_7150991-1050.mp4"
+    },
+    {
+      "video_id": "S09_Eggs_7150991-1050",
+      "object_name": "pan",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 690,
+      "clip_end_global": 6134,
+      "r2_path": "_copies/MP4/CMU/Eggs/S09_Eggs_7150991-1050.mp4"
+    },
+    {
+      "video_id": "S09_Eggs_7150991-1050",
+      "object_name": "salt",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2574,
+      "clip_end_global": 2669,
+      "r2_path": "_copies/MP4/CMU/Eggs/S09_Eggs_7150991-1050.mp4"
+    },
+    {
+      "video_id": "S09_Eggs_7150991-1050",
+      "object_name": "the dish",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 354,
+      "clip_end_global": 6384,
+      "r2_path": "_copies/MP4/CMU/Eggs/S09_Eggs_7150991-1050.mp4"
+    },
+    {
+      "video_id": "S12_Sandwich_7150991-2470",
+      "object_name": "bread slices",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2232,
+      "clip_end_global": 5644,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S12_Sandwich_7150991-2470.mp4"
+    },
+    {
+      "video_id": "S12_Sandwich_7150991-2470",
+      "object_name": "jam",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4476,
+      "clip_end_global": 5446,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S12_Sandwich_7150991-2470.mp4"
+    },
+    {
+      "video_id": "S12_Sandwich_7150991-2470",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1932,
+      "clip_end_global": 5372,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S12_Sandwich_7150991-2470.mp4"
+    },
+    {
+      "video_id": "S12_Sandwich_7150991-2470",
+      "object_name": "peanut butter",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3168,
+      "clip_end_global": 5446,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S12_Sandwich_7150991-2470.mp4"
+    },
+    {
+      "video_id": "S12_Sandwich_7150991-2470",
+      "object_name": "the dish",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1884,
+      "clip_end_global": 5644,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S12_Sandwich_7150991-2470.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 882,
+      "clip_end_global": 5359,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 882,
+      "clip_end_global": 9963,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 984,
+      "clip_end_global": 1086,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6798,
+      "clip_end_global": 10755,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4272,
+      "clip_end_global": 10055,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4302,
+      "clip_end_global": 4525,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3294,
+      "clip_end_global": 9761,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "pan",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3294,
+      "clip_end_global": 10055,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "salt",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2184,
+      "clip_end_global": 3112,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "spread spatula",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1392,
+      "clip_end_global": 5359,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S14_Eggs_7150991-1016",
+      "object_name": "the dish",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5574,
+      "clip_end_global": 5626,
+      "r2_path": "_copies/MP4/CMU/Eggs/S14_Eggs_7150991-1016.mp4"
+    },
+    {
+      "video_id": "S15_Pizza_7150991-5341",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 888,
+      "clip_end_global": 8402,
+      "r2_path": "_copies/MP4/CMU/Pizza/S15_Pizza_7150991-5341.mp4"
+    },
+    {
+      "video_id": "S15_Pizza_7150991-5341",
+      "object_name": "batter",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 888,
+      "clip_end_global": 8402,
+      "r2_path": "_copies/MP4/CMU/Pizza/S15_Pizza_7150991-5341.mp4"
+    },
+    {
+      "video_id": "S15_Pizza_7150991-5341",
+      "object_name": "cheese",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4536,
+      "clip_end_global": 8402,
+      "r2_path": "_copies/MP4/CMU/Pizza/S15_Pizza_7150991-5341.mp4"
+    },
+    {
+      "video_id": "S15_Pizza_7150991-5341",
+      "object_name": "grater",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4536,
+      "clip_end_global": 6755,
+      "r2_path": "_copies/MP4/CMU/Pizza/S15_Pizza_7150991-5341.mp4"
+    },
+    {
+      "video_id": "S15_Pizza_7150991-5341",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6882,
+      "clip_end_global": 7150,
+      "r2_path": "_copies/MP4/CMU/Pizza/S15_Pizza_7150991-5341.mp4"
+    },
+    {
+      "video_id": "S15_Pizza_7150991-5341",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3756,
+      "clip_end_global": 4309,
+      "r2_path": "_copies/MP4/CMU/Pizza/S15_Pizza_7150991-5341.mp4"
+    },
+    {
+      "video_id": "S15_Pizza_7150991-5341",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 8370,
+      "clip_end_global": 8460,
+      "r2_path": "_copies/MP4/CMU/Pizza/S15_Pizza_7150991-5341.mp4"
+    },
+    {
+      "video_id": "S15_Pizza_7150991-5341",
+      "object_name": "pepperoni",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6882,
+      "clip_end_global": 7484,
+      "r2_path": "_copies/MP4/CMU/Pizza/S15_Pizza_7150991-5341.mp4"
+    },
+    {
+      "video_id": "S15_Pizza_7150991-5341",
+      "object_name": "pizza",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 8322,
+      "clip_end_global": 8401,
+      "r2_path": "_copies/MP4/CMU/Pizza/S15_Pizza_7150991-5341.mp4"
+    },
+    {
+      "video_id": "S15_Pizza_7150991-5341",
+      "object_name": "pizza sauce",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3432,
+      "clip_end_global": 8402,
+      "r2_path": "_copies/MP4/CMU/Pizza/S15_Pizza_7150991-5341.mp4"
+    },
+    {
+      "video_id": "S15_Salad_7150991-451",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 528,
+      "clip_end_global": 3444,
+      "r2_path": "_copies/MP4/CMU/Salad/S15_Salad_7150991-451.mp4"
+    },
+    {
+      "video_id": "S15_Salad_7150991-451",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 528,
+      "clip_end_global": 2370,
+      "r2_path": "_copies/MP4/CMU/Salad/S15_Salad_7150991-451.mp4"
+    },
+    {
+      "video_id": "S15_Salad_7150991-451",
+      "object_name": "mayonnaise",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2910,
+      "clip_end_global": 3444,
+      "r2_path": "_copies/MP4/CMU/Salad/S15_Salad_7150991-451.mp4"
+    },
+    {
+      "video_id": "S15_Salad_7150991-451",
+      "object_name": "vegetables",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 840,
+      "clip_end_global": 3444,
+      "r2_path": "_copies/MP4/CMU/Salad/S15_Salad_7150991-451.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1788,
+      "clip_end_global": 2940,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "cooked omelette",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6480,
+      "clip_end_global": 6773,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "egg mixture",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2820,
+      "clip_end_global": 6773,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1866,
+      "clip_end_global": 6772,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2040,
+      "clip_end_global": 6773,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1524,
+      "clip_end_global": 2941,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1224,
+      "clip_end_global": 1302,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "pan",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1104,
+      "clip_end_global": 6772,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "salt",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3276,
+      "clip_end_global": 3342,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "salt shaker",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3372,
+      "clip_end_global": 3535,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Eggs_7150991-858",
+      "object_name": "the dish",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6480,
+      "clip_end_global": 6773,
+      "r2_path": "_copies/MP4/CMU/Eggs/S16_Eggs_7150991-858.mp4"
+    },
+    {
+      "video_id": "S16_Pizza_7150991-3739",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1176,
+      "clip_end_global": 16667,
+      "r2_path": "_copies/MP4/CMU/Pizza/S16_Pizza_7150991-3739.mp4"
+    },
+    {
+      "video_id": "S16_Pizza_7150991-3739",
+      "object_name": "batter",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4620,
+      "clip_end_global": 16667,
+      "r2_path": "_copies/MP4/CMU/Pizza/S16_Pizza_7150991-3739.mp4"
+    },
+    {
+      "video_id": "S16_Pizza_7150991-3739",
+      "object_name": "cheese",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 7062,
+      "clip_end_global": 16667,
+      "r2_path": "_copies/MP4/CMU/Pizza/S16_Pizza_7150991-3739.mp4"
+    },
+    {
+      "video_id": "S16_Pizza_7150991-3739",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6144,
+      "clip_end_global": 16068,
+      "r2_path": "_copies/MP4/CMU/Pizza/S16_Pizza_7150991-3739.mp4"
+    },
+    {
+      "video_id": "S16_Pizza_7150991-3739",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1974,
+      "clip_end_global": 5743,
+      "r2_path": "_copies/MP4/CMU/Pizza/S16_Pizza_7150991-3739.mp4"
+    },
+    {
+      "video_id": "S16_Pizza_7150991-3739",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 16638,
+      "clip_end_global": 16993,
+      "r2_path": "_copies/MP4/CMU/Pizza/S16_Pizza_7150991-3739.mp4"
+    },
+    {
+      "video_id": "S16_Pizza_7150991-3739",
+      "object_name": "pepperoni",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 11118,
+      "clip_end_global": 16667,
+      "r2_path": "_copies/MP4/CMU/Pizza/S16_Pizza_7150991-3739.mp4"
+    },
+    {
+      "video_id": "S16_Pizza_7150991-3739",
+      "object_name": "pizza",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5940,
+      "clip_end_global": 16667,
+      "r2_path": "_copies/MP4/CMU/Pizza/S16_Pizza_7150991-3739.mp4"
+    },
+    {
+      "video_id": "S16_Pizza_7150991-3739",
+      "object_name": "pizza sauce",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4620,
+      "clip_end_global": 16667,
+      "r2_path": "_copies/MP4/CMU/Pizza/S16_Pizza_7150991-3739.mp4"
+    },
+    {
+      "video_id": "S16_Pizza_7150991-3739",
+      "object_name": "tin of pizza sauce",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4620,
+      "clip_end_global": 5743,
+      "r2_path": "_copies/MP4/CMU/Pizza/S16_Pizza_7150991-3739.mp4"
+    },
+    {
+      "video_id": "S17_Salad_7150991-822",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1248,
+      "clip_end_global": 11945,
+      "r2_path": "_copies/MP4/CMU/Salad/S17_Salad_7150991-822.mp4"
+    },
+    {
+      "video_id": "S17_Salad_7150991-822",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2976,
+      "clip_end_global": 11006,
+      "r2_path": "_copies/MP4/CMU/Salad/S17_Salad_7150991-822.mp4"
+    },
+    {
+      "video_id": "S17_Salad_7150991-822",
+      "object_name": "mayonnaise",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 10782,
+      "clip_end_global": 11945,
+      "r2_path": "_copies/MP4/CMU/Salad/S17_Salad_7150991-822.mp4"
+    },
+    {
+      "video_id": "S17_Salad_7150991-822",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 11214,
+      "clip_end_global": 11945,
+      "r2_path": "_copies/MP4/CMU/Salad/S17_Salad_7150991-822.mp4"
+    },
+    {
+      "video_id": "S17_Salad_7150991-822",
+      "object_name": "vegetables",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1398,
+      "clip_end_global": 11945,
+      "r2_path": "_copies/MP4/CMU/Salad/S17_Salad_7150991-822.mp4"
+    },
+    {
+      "video_id": "S19_Brownie_7150991-848",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 11298,
+      "clip_end_global": 14739,
+      "r2_path": "_copies/MP4/CMU/Brownie/S19_Brownie_7150991-848.mp4"
+    },
+    {
+      "video_id": "S19_Brownie_7150991-848",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1098,
+      "clip_end_global": 14442,
+      "r2_path": "_copies/MP4/CMU/Brownie/S19_Brownie_7150991-848.mp4"
+    },
+    {
+      "video_id": "S19_Brownie_7150991-848",
+      "object_name": "egg mixture",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4794,
+      "clip_end_global": 14739,
+      "r2_path": "_copies/MP4/CMU/Brownie/S19_Brownie_7150991-848.mp4"
+    },
+    {
+      "video_id": "S19_Brownie_7150991-848",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2124,
+      "clip_end_global": 10215,
+      "r2_path": "_copies/MP4/CMU/Brownie/S19_Brownie_7150991-848.mp4"
+    },
+    {
+      "video_id": "S19_Brownie_7150991-848",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2490,
+      "clip_end_global": 3246,
+      "r2_path": "_copies/MP4/CMU/Brownie/S19_Brownie_7150991-848.mp4"
+    },
+    {
+      "video_id": "S19_Brownie_7150991-848",
+      "object_name": "measuring spoon/cup",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 780,
+      "clip_end_global": 8106,
+      "r2_path": "_copies/MP4/CMU/Brownie/S19_Brownie_7150991-848.mp4"
+    },
+    {
+      "video_id": "S19_Brownie_7150991-848",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3624,
+      "clip_end_global": 14441,
+      "r2_path": "_copies/MP4/CMU/Brownie/S19_Brownie_7150991-848.mp4"
+    },
+    {
+      "video_id": "S19_Brownie_7150991-848",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3624,
+      "clip_end_global": 4139,
+      "r2_path": "_copies/MP4/CMU/Brownie/S19_Brownie_7150991-848.mp4"
+    },
+    {
+      "video_id": "S19_Brownie_7150991-848",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 10542,
+      "clip_end_global": 14895,
+      "r2_path": "_copies/MP4/CMU/Brownie/S19_Brownie_7150991-848.mp4"
+    },
+    {
+      "video_id": "S19_Brownie_7150991-848",
+      "object_name": "water",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 780,
+      "clip_end_global": 1840,
+      "r2_path": "_copies/MP4/CMU/Brownie/S19_Brownie_7150991-848.mp4"
+    },
+    {
+      "video_id": "S20_Pizza_7150991-180",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1296,
+      "clip_end_global": 15323,
+      "r2_path": "_copies/MP4/CMU/Pizza/S20_Pizza_7150991-180.mp4"
+    },
+    {
+      "video_id": "S20_Pizza_7150991-180",
+      "object_name": "batter",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1296,
+      "clip_end_global": 15323,
+      "r2_path": "_copies/MP4/CMU/Pizza/S20_Pizza_7150991-180.mp4"
+    },
+    {
+      "video_id": "S20_Pizza_7150991-180",
+      "object_name": "cheese",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 7368,
+      "clip_end_global": 15323,
+      "r2_path": "_copies/MP4/CMU/Pizza/S20_Pizza_7150991-180.mp4"
+    },
+    {
+      "video_id": "S20_Pizza_7150991-180",
+      "object_name": "grater",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 7368,
+      "clip_end_global": 10306,
+      "r2_path": "_copies/MP4/CMU/Pizza/S20_Pizza_7150991-180.mp4"
+    },
+    {
+      "video_id": "S20_Pizza_7150991-180",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 11736,
+      "clip_end_global": 13690,
+      "r2_path": "_copies/MP4/CMU/Pizza/S20_Pizza_7150991-180.mp4"
+    },
+    {
+      "video_id": "S20_Pizza_7150991-180",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4800,
+      "clip_end_global": 10756,
+      "r2_path": "_copies/MP4/CMU/Pizza/S20_Pizza_7150991-180.mp4"
+    },
+    {
+      "video_id": "S20_Pizza_7150991-180",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 15228,
+      "clip_end_global": 15404,
+      "r2_path": "_copies/MP4/CMU/Pizza/S20_Pizza_7150991-180.mp4"
+    },
+    {
+      "video_id": "S20_Pizza_7150991-180",
+      "object_name": "pepperoni",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 11736,
+      "clip_end_global": 15323,
+      "r2_path": "_copies/MP4/CMU/Pizza/S20_Pizza_7150991-180.mp4"
+    },
+    {
+      "video_id": "S20_Pizza_7150991-180",
+      "object_name": "pizza sauce",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3840,
+      "clip_end_global": 15323,
+      "r2_path": "_copies/MP4/CMU/Pizza/S20_Pizza_7150991-180.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 10728,
+      "clip_end_global": 12400,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 930,
+      "clip_end_global": 11695,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "egg mixture",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3708,
+      "clip_end_global": 12284,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 648,
+      "clip_end_global": 4658,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1032,
+      "clip_end_global": 1637,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "measuring spoon/cup",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5388,
+      "clip_end_global": 7229,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6294,
+      "clip_end_global": 7229,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6294,
+      "clip_end_global": 7035,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 11916,
+      "clip_end_global": 12400,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "spread spatula",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2172,
+      "clip_end_global": 10502,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S24_Brownie_7150991-483",
+      "object_name": "water",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5388,
+      "clip_end_global": 5755,
+      "r2_path": "_copies/MP4/CMU/Brownie/S24_Brownie_7150991-483.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6552,
+      "clip_end_global": 9472,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1734,
+      "clip_end_global": 6522,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "brownie batter",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2706,
+      "clip_end_global": 9472,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "brownie mix package",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1734,
+      "clip_end_global": 2475,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 972,
+      "clip_end_global": 6522,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2706,
+      "clip_end_global": 3276,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "measuring spoon/cup",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3450,
+      "clip_end_global": 4278,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4782,
+      "clip_end_global": 6522,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3948,
+      "clip_end_global": 8404,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3450,
+      "clip_end_global": 4278,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 7068,
+      "clip_end_global": 9472,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S25_Brownie_7150991-763",
+      "object_name": "water",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4596,
+      "clip_end_global": 6522,
+      "r2_path": "_copies/MP4/CMU/Brownie/S25_Brownie_7150991-763.mp4"
+    },
+    {
+      "video_id": "S28_Eggs_7150991-1",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 570,
+      "clip_end_global": 5792,
+      "r2_path": "_copies/MP4/CMU/Eggs/S28_Eggs_7150991-1.mp4"
+    },
+    {
+      "video_id": "S28_Eggs_7150991-1",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 384,
+      "clip_end_global": 9828,
+      "r2_path": "_copies/MP4/CMU/Eggs/S28_Eggs_7150991-1.mp4"
+    },
+    {
+      "video_id": "S28_Eggs_7150991-1",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1686,
+      "clip_end_global": 2225,
+      "r2_path": "_copies/MP4/CMU/Eggs/S28_Eggs_7150991-1.mp4"
+    },
+    {
+      "video_id": "S28_Eggs_7150991-1",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1194,
+      "clip_end_global": 1573,
+      "r2_path": "_copies/MP4/CMU/Eggs/S28_Eggs_7150991-1.mp4"
+    },
+    {
+      "video_id": "S28_Eggs_7150991-1",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1194,
+      "clip_end_global": 1573,
+      "r2_path": "_copies/MP4/CMU/Eggs/S28_Eggs_7150991-1.mp4"
+    },
+    {
+      "video_id": "S28_Eggs_7150991-1",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 894,
+      "clip_end_global": 9828,
+      "r2_path": "_copies/MP4/CMU/Eggs/S28_Eggs_7150991-1.mp4"
+    },
+    {
+      "video_id": "S28_Eggs_7150991-1",
+      "object_name": "pan",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 822,
+      "clip_end_global": 9828,
+      "r2_path": "_copies/MP4/CMU/Eggs/S28_Eggs_7150991-1.mp4"
+    },
+    {
+      "video_id": "S28_Eggs_7150991-1",
+      "object_name": "salt",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2670,
+      "clip_end_global": 9827,
+      "r2_path": "_copies/MP4/CMU/Eggs/S28_Eggs_7150991-1.mp4"
+    },
+    {
+      "video_id": "S28_Eggs_7150991-1",
+      "object_name": "spread spatula",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3456,
+      "clip_end_global": 5792,
+      "r2_path": "_copies/MP4/CMU/Eggs/S28_Eggs_7150991-1.mp4"
+    },
+    {
+      "video_id": "S28_Eggs_7150991-1",
+      "object_name": "the dish",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 8778,
+      "clip_end_global": 9827,
+      "r2_path": "_copies/MP4/CMU/Eggs/S28_Eggs_7150991-1.mp4"
+    },
+    {
+      "video_id": "S29_Salad_7150991-1",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2826,
+      "clip_end_global": 7943,
+      "r2_path": "_copies/MP4/CMU/Salad/S29_Salad_7150991-1.mp4"
+    },
+    {
+      "video_id": "S29_Salad_7150991-1",
+      "object_name": "cutting board",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1464,
+      "clip_end_global": 7917,
+      "r2_path": "_copies/MP4/CMU/Salad/S29_Salad_7150991-1.mp4"
+    },
+    {
+      "video_id": "S29_Salad_7150991-1",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2904,
+      "clip_end_global": 6800,
+      "r2_path": "_copies/MP4/CMU/Salad/S29_Salad_7150991-1.mp4"
+    },
+    {
+      "video_id": "S29_Salad_7150991-1",
+      "object_name": "mayonnaise",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 7242,
+      "clip_end_global": 7943,
+      "r2_path": "_copies/MP4/CMU/Salad/S29_Salad_7150991-1.mp4"
+    },
+    {
+      "video_id": "S29_Salad_7150991-1",
+      "object_name": "vegetables",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1464,
+      "clip_end_global": 7943,
+      "r2_path": "_copies/MP4/CMU/Salad/S29_Salad_7150991-1.mp4"
+    },
+    {
+      "video_id": "S31_Sandwich_7150991-1",
+      "object_name": "bread slices",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 624,
+      "clip_end_global": 6321,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S31_Sandwich_7150991-1.mp4"
+    },
+    {
+      "video_id": "S31_Sandwich_7150991-1",
+      "object_name": "jam",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4344,
+      "clip_end_global": 6204,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S31_Sandwich_7150991-1.mp4"
+    },
+    {
+      "video_id": "S31_Sandwich_7150991-1",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1332,
+      "clip_end_global": 5842,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S31_Sandwich_7150991-1.mp4"
+    },
+    {
+      "video_id": "S31_Sandwich_7150991-1",
+      "object_name": "peanut butter",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3762,
+      "clip_end_global": 5705,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S31_Sandwich_7150991-1.mp4"
+    },
+    {
+      "video_id": "S31_Sandwich_7150991-1",
+      "object_name": "the dish",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1170,
+      "clip_end_global": 6321,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S31_Sandwich_7150991-1.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 990,
+      "clip_end_global": 9443,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1566,
+      "clip_end_global": 9336,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "egg mixture",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4740,
+      "clip_end_global": 9651,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1278,
+      "clip_end_global": 7905,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1878,
+      "clip_end_global": 2252,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "measuring spoon/cup",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2352,
+      "clip_end_global": 7905,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 990,
+      "clip_end_global": 7905,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3288,
+      "clip_end_global": 3738,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 678,
+      "clip_end_global": 9651,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "spread spatula",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5256,
+      "clip_end_global": 9336,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S34_Brownie_7150991-268",
+      "object_name": "water",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2400,
+      "clip_end_global": 7905,
+      "r2_path": "_copies/MP4/CMU/Brownie/S34_Brownie_7150991-268.mp4"
+    },
+    {
+      "video_id": "S36_Sandwich_7150991-165",
+      "object_name": "bread slices",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1740,
+      "clip_end_global": 4127,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S36_Sandwich_7150991-165.mp4"
+    },
+    {
+      "video_id": "S36_Sandwich_7150991-165",
+      "object_name": "jam",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2994,
+      "clip_end_global": 3727,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S36_Sandwich_7150991-165.mp4"
+    },
+    {
+      "video_id": "S36_Sandwich_7150991-165",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1998,
+      "clip_end_global": 4127,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S36_Sandwich_7150991-165.mp4"
+    },
+    {
+      "video_id": "S36_Sandwich_7150991-165",
+      "object_name": "peanut butter",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2448,
+      "clip_end_global": 4127,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S36_Sandwich_7150991-165.mp4"
+    },
+    {
+      "video_id": "S36_Sandwich_7150991-165",
+      "object_name": "the dish",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 918,
+      "clip_end_global": 4127,
+      "r2_path": "_copies/MP4/CMU/Sandwich/S36_Sandwich_7150991-165.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 9438,
+      "clip_end_global": 13915,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 462,
+      "clip_end_global": 13701,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "egg mixture",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4428,
+      "clip_end_global": 13915,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2418,
+      "clip_end_global": 8830,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2928,
+      "clip_end_global": 10862,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "measuring spoon/cup",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 654,
+      "clip_end_global": 2156,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1182,
+      "clip_end_global": 11695,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1602,
+      "clip_end_global": 2156,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 9438,
+      "clip_end_global": 13915,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "spread spatula",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3534,
+      "clip_end_global": 13702,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S37_Brownie_7150991-133",
+      "object_name": "water",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 750,
+      "clip_end_global": 8830,
+      "r2_path": "_copies/MP4/CMU/Brownie/S37_Brownie_7150991-133.mp4"
+    },
+    {
+      "video_id": "S41_Salad_7150991-349",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1884,
+      "clip_end_global": 6518,
+      "r2_path": "_copies/MP4/CMU/Salad/S41_Salad_7150991-349.mp4"
+    },
+    {
+      "video_id": "S41_Salad_7150991-349",
+      "object_name": "contents of the bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5718,
+      "clip_end_global": 5833,
+      "r2_path": "_copies/MP4/CMU/Salad/S41_Salad_7150991-349.mp4"
+    },
+    {
+      "video_id": "S41_Salad_7150991-349",
+      "object_name": "cutting board",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1158,
+      "clip_end_global": 6518,
+      "r2_path": "_copies/MP4/CMU/Salad/S41_Salad_7150991-349.mp4"
+    },
+    {
+      "video_id": "S41_Salad_7150991-349",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1464,
+      "clip_end_global": 6518,
+      "r2_path": "_copies/MP4/CMU/Salad/S41_Salad_7150991-349.mp4"
+    },
+    {
+      "video_id": "S41_Salad_7150991-349",
+      "object_name": "vegetable peeler",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2940,
+      "clip_end_global": 3677,
+      "r2_path": "_copies/MP4/CMU/Salad/S41_Salad_7150991-349.mp4"
+    },
+    {
+      "video_id": "S41_Salad_7150991-349",
+      "object_name": "vegetables",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1158,
+      "clip_end_global": 6518,
+      "r2_path": "_copies/MP4/CMU/Salad/S41_Salad_7150991-349.mp4"
+    },
+    {
+      "video_id": "S48_Salad_7150991-222",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6048,
+      "clip_end_global": 9310,
+      "r2_path": "_copies/MP4/CMU/Salad/S48_Salad_7150991-222.mp4"
+    },
+    {
+      "video_id": "S48_Salad_7150991-222",
+      "object_name": "cutting board",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3486,
+      "clip_end_global": 8082,
+      "r2_path": "_copies/MP4/CMU/Salad/S48_Salad_7150991-222.mp4"
+    },
+    {
+      "video_id": "S48_Salad_7150991-222",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3486,
+      "clip_end_global": 8082,
+      "r2_path": "_copies/MP4/CMU/Salad/S48_Salad_7150991-222.mp4"
+    },
+    {
+      "video_id": "S48_Salad_7150991-222",
+      "object_name": "mayonnaise",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 8568,
+      "clip_end_global": 9116,
+      "r2_path": "_copies/MP4/CMU/Salad/S48_Salad_7150991-222.mp4"
+    },
+    {
+      "video_id": "S48_Salad_7150991-222",
+      "object_name": "vegetable peeler",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2610,
+      "clip_end_global": 4942,
+      "r2_path": "_copies/MP4/CMU/Salad/S48_Salad_7150991-222.mp4"
+    },
+    {
+      "video_id": "S48_Salad_7150991-222",
+      "object_name": "vegetables",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2610,
+      "clip_end_global": 9309,
+      "r2_path": "_copies/MP4/CMU/Salad/S48_Salad_7150991-222.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6666,
+      "clip_end_global": 9408,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 630,
+      "clip_end_global": 9408,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "brownie batter",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5058,
+      "clip_end_global": 9408,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "brownie mix package",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 894,
+      "clip_end_global": 5062,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2616,
+      "clip_end_global": 6494,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "measuring spoon/cup",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3246,
+      "clip_end_global": 4534,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "mixer",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4980,
+      "clip_end_global": 8975,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4578,
+      "clip_end_global": 7754,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4032,
+      "clip_end_global": 4343,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6588,
+      "clip_end_global": 9408,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "oven gloves",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6558,
+      "clip_end_global": 9408,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Brownie_7150991-202",
+      "object_name": "water",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3264,
+      "clip_end_global": 6494,
+      "r2_path": "_copies/MP4/CMU/Brownie/S49_Brownie_7150991-202.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1374,
+      "clip_end_global": 7397,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1374,
+      "clip_end_global": 11665,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1782,
+      "clip_end_global": 4136,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4302,
+      "clip_end_global": 10200,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 852,
+      "clip_end_global": 11665,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 828,
+      "clip_end_global": 1180,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 504,
+      "clip_end_global": 10200,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "pan",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 450,
+      "clip_end_global": 11665,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "salt",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2790,
+      "clip_end_global": 4136,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "spread spatula",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3420,
+      "clip_end_global": 4136,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S49_Eggs_7150991-224",
+      "object_name": "the dish",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 10608,
+      "clip_end_global": 11665,
+      "r2_path": "_copies/MP4/CMU/Eggs/S49_Eggs_7150991-224.mp4"
+    },
+    {
+      "video_id": "S51_Salad_7150991-225",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1122,
+      "clip_end_global": 11974,
+      "r2_path": "_copies/MP4/CMU/Salad/S51_Salad_7150991-225.mp4"
+    },
+    {
+      "video_id": "S51_Salad_7150991-225",
+      "object_name": "cutting board",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 876,
+      "clip_end_global": 11974,
+      "r2_path": "_copies/MP4/CMU/Salad/S51_Salad_7150991-225.mp4"
+    },
+    {
+      "video_id": "S51_Salad_7150991-225",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1452,
+      "clip_end_global": 11974,
+      "r2_path": "_copies/MP4/CMU/Salad/S51_Salad_7150991-225.mp4"
+    },
+    {
+      "video_id": "S51_Salad_7150991-225",
+      "object_name": "vegetables",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 696,
+      "clip_end_global": 11974,
+      "r2_path": "_copies/MP4/CMU/Salad/S51_Salad_7150991-225.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 9042,
+      "clip_end_global": 11585,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 828,
+      "clip_end_global": 11287,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "egg mixture",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5346,
+      "clip_end_global": 11585,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 828,
+      "clip_end_global": 7440,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2376,
+      "clip_end_global": 2941,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "measuring spoon/cup",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 996,
+      "clip_end_global": 4479,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 10554,
+      "clip_end_global": 11236,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1530,
+      "clip_end_global": 9439,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1740,
+      "clip_end_global": 2142,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 11286,
+      "clip_end_global": 11746,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "spread spatula",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3102,
+      "clip_end_global": 10555,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Brownie_7150991-308",
+      "object_name": "water",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1038,
+      "clip_end_global": 4771,
+      "r2_path": "_copies/MP4/CMU/Brownie/S54_Brownie_7150991-308.mp4"
+    },
+    {
+      "video_id": "S54_Eggs_7150991-251",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1140,
+      "clip_end_global": 5836,
+      "r2_path": "_copies/MP4/CMU/Eggs/S54_Eggs_7150991-251.mp4"
+    },
+    {
+      "video_id": "S54_Eggs_7150991-251",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 408,
+      "clip_end_global": 7343,
+      "r2_path": "_copies/MP4/CMU/Eggs/S54_Eggs_7150991-251.mp4"
+    },
+    {
+      "video_id": "S54_Eggs_7150991-251",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1140,
+      "clip_end_global": 1674,
+      "r2_path": "_copies/MP4/CMU/Eggs/S54_Eggs_7150991-251.mp4"
+    },
+    {
+      "video_id": "S54_Eggs_7150991-251",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2574,
+      "clip_end_global": 7343,
+      "r2_path": "_copies/MP4/CMU/Eggs/S54_Eggs_7150991-251.mp4"
+    },
+    {
+      "video_id": "S54_Eggs_7150991-251",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2556,
+      "clip_end_global": 2911,
+      "r2_path": "_copies/MP4/CMU/Eggs/S54_Eggs_7150991-251.mp4"
+    },
+    {
+      "video_id": "S54_Eggs_7150991-251",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2406,
+      "clip_end_global": 7343,
+      "r2_path": "_copies/MP4/CMU/Eggs/S54_Eggs_7150991-251.mp4"
+    },
+    {
+      "video_id": "S54_Eggs_7150991-251",
+      "object_name": "pan",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 660,
+      "clip_end_global": 7343,
+      "r2_path": "_copies/MP4/CMU/Eggs/S54_Eggs_7150991-251.mp4"
+    },
+    {
+      "video_id": "S54_Eggs_7150991-251",
+      "object_name": "salt",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2232,
+      "clip_end_global": 2400,
+      "r2_path": "_copies/MP4/CMU/Eggs/S54_Eggs_7150991-251.mp4"
+    },
+    {
+      "video_id": "S54_Eggs_7150991-251",
+      "object_name": "spread spatula",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1914,
+      "clip_end_global": 4862,
+      "r2_path": "_copies/MP4/CMU/Eggs/S54_Eggs_7150991-251.mp4"
+    },
+    {
+      "video_id": "S54_Eggs_7150991-251",
+      "object_name": "the dish",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6798,
+      "clip_end_global": 7343,
+      "r2_path": "_copies/MP4/CMU/Eggs/S54_Eggs_7150991-251.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2040,
+      "clip_end_global": 9394,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2550,
+      "clip_end_global": 9099,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "brownie batter",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5484,
+      "clip_end_global": 9356,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "brownie mix package",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4170,
+      "clip_end_global": 5486,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "eggs",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2520,
+      "clip_end_global": 5486,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "eggshell",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 2580,
+      "clip_end_global": 5315,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "measuring spoon/cup",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1110,
+      "clip_end_global": 9117,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "mixer",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3468,
+      "clip_end_global": 9098,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "oil",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3786,
+      "clip_end_global": 7721,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "oil bottle",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1584,
+      "clip_end_global": 1735,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1968,
+      "clip_end_global": 7091,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Brownie_7150991-713",
+      "object_name": "water",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1116,
+      "clip_end_global": 4055,
+      "r2_path": "_copies/MP4/CMU/Brownie/S55_Brownie_7150991-713.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "baking tray",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1434,
+      "clip_end_global": 16182,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "batter",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1434,
+      "clip_end_global": 16182,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "cheese",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6570,
+      "clip_end_global": 16183,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "cutting board",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6570,
+      "clip_end_global": 16183,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 6648,
+      "clip_end_global": 16182,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "mixing spoon",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4290,
+      "clip_end_global": 6437,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "oven",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 16182,
+      "clip_end_global": 16420,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "pepperoni",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 11040,
+      "clip_end_global": 16182,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "pizza",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 16182,
+      "clip_end_global": 16420,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "pizza sauce",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 4410,
+      "clip_end_global": 16182,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "S55_Pizza_7150991-292",
+      "object_name": "tin of pizza sauce",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 5064,
+      "clip_end_global": 6437,
+      "r2_path": "_copies/MP4/CMU/Pizza/S55_Pizza_7150991-292.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 21216,
+      "clip_end_global": 42958,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "cooking utensil (flipper)",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 14592,
+      "clip_end_global": 27260,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 5136,
+      "clip_end_global": 30115,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "garnish",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 15096,
+      "clip_end_global": 39804,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "kettle",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1104,
+      "clip_end_global": 1584,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 8040,
+      "clip_end_global": 37044,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "oven control knob",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1368,
+      "clip_end_global": 43094,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "pan",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2400,
+      "clip_end_global": 27260,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "pasta",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 14496,
+      "clip_end_global": 43094,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "plate",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 7536,
+      "clip_end_global": 37043,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "pot",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1104,
+      "clip_end_global": 43094,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "sauce",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16488,
+      "clip_end_global": 27260,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "spoon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 42360,
+      "clip_end_global": 42958,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1368,
+      "clip_end_global": 43094,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "vegetables",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 5136,
+      "clip_end_global": 42958,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R01-PastaSalad",
+      "object_name": "water",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1104,
+      "clip_end_global": 43094,
+      "r2_path": "EGTEA/PastaSalad/P02-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "bacon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 18648,
+      "clip_end_global": 41786,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 33984,
+      "clip_end_global": 42795,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "bread",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 20640,
+      "clip_end_global": 33781,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "cream cheese",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 28320,
+      "clip_end_global": 29274,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "cup",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 40512,
+      "clip_end_global": 41346,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "egg",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16728,
+      "clip_end_global": 43793,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "eggshell",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 34128,
+      "clip_end_global": 37424,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "garnish",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 34584,
+      "clip_end_global": 40217,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "juice",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 41136,
+      "clip_end_global": 41346,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "juice bottle",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 41136,
+      "clip_end_global": 41346,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16224,
+      "clip_end_global": 39485,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "oil",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 36336,
+      "clip_end_global": 43125,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "oil bottle",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 36336,
+      "clip_end_global": 39485,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "oven control knob",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 31584,
+      "clip_end_global": 40053,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "pan",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16728,
+      "clip_end_global": 43125,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "plate",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16440,
+      "clip_end_global": 42334,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "pot",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 18480,
+      "clip_end_global": 39913,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "spoon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16728,
+      "clip_end_global": 25291,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R03-BaconAndEggs",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16728,
+      "clip_end_global": 43125,
+      "r2_path": "EGTEA/BaconAndEggs/P02-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 7560,
+      "clip_end_global": 19492,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "bread",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1680,
+      "clip_end_global": 29377,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "cereal",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 7560,
+      "clip_end_global": 12213,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "cereal box",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 7488,
+      "clip_end_global": 7972,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "cup",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3432,
+      "clip_end_global": 28994,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3576,
+      "clip_end_global": 17778,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "honey/chocolate syrup",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 11904,
+      "clip_end_global": 24139,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "jam",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 27984,
+      "clip_end_global": 29093,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 5928,
+      "clip_end_global": 28994,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "microwave",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 24192,
+      "clip_end_global": 25817,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "milk",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 8472,
+      "clip_end_global": 12213,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "milk container",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 8472,
+      "clip_end_global": 8629,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "peanut butter honey mixture",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3432,
+      "clip_end_global": 29093,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "plate",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 25632,
+      "clip_end_global": 29377,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "pot",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 6936,
+      "clip_end_global": 31090,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "sink",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 9240,
+      "clip_end_global": 17035,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "spoon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 20472,
+      "clip_end_global": 21300,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1680,
+      "clip_end_global": 31090,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P02-R04-ContinentalBreakfast",
+      "object_name": "water",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1080,
+      "clip_end_global": 31090,
+      "r2_path": "EGTEA/ContinentalBreakfast/P02-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 936,
+      "clip_end_global": 38008,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "colander",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 9000,
+      "clip_end_global": 11745,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "cutting board",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 0,
+      "clip_end_global": 57648,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2496,
+      "clip_end_global": 58260,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "garnish",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 6216,
+      "clip_end_global": 11143,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 0,
+      "clip_end_global": 57648,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "pan",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 31752,
+      "clip_end_global": 44303,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "pasta",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1464,
+      "clip_end_global": 51812,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "pot",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1464,
+      "clip_end_global": 9954,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "sauce",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 12144,
+      "clip_end_global": 12413,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "spoon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2064,
+      "clip_end_global": 43423,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1464,
+      "clip_end_global": 51814,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "vegetables",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 0,
+      "clip_end_global": 54093,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P03-R01-PastaSalad",
+      "object_name": "water",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1464,
+      "clip_end_global": 38421,
+      "r2_path": "EGTEA/PastaSalad/P03-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P04-R06-GreekSalad",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 312,
+      "clip_end_global": 19725,
+      "r2_path": "EGTEA/GreekSalad/P04-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P04-R06-GreekSalad",
+      "object_name": "burger bun",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 19344,
+      "clip_end_global": 19725,
+      "r2_path": "EGTEA/GreekSalad/P04-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P04-R06-GreekSalad",
+      "object_name": "cutting board",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 264,
+      "clip_end_global": 32713,
+      "r2_path": "EGTEA/GreekSalad/P04-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P04-R06-GreekSalad",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 24120,
+      "clip_end_global": 25701,
+      "r2_path": "EGTEA/GreekSalad/P04-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P04-R06-GreekSalad",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 264,
+      "clip_end_global": 32713,
+      "r2_path": "EGTEA/GreekSalad/P04-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P04-R06-GreekSalad",
+      "object_name": "plate",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 19344,
+      "clip_end_global": 19725,
+      "r2_path": "EGTEA/GreekSalad/P04-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P04-R06-GreekSalad",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 984,
+      "clip_end_global": 1482,
+      "r2_path": "EGTEA/GreekSalad/P04-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P04-R06-GreekSalad",
+      "object_name": "vegetables",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 312,
+      "clip_end_global": 32713,
+      "r2_path": "EGTEA/GreekSalad/P04-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P04-R06-GreekSalad",
+      "object_name": "water",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 24120,
+      "clip_end_global": 25701,
+      "r2_path": "EGTEA/GreekSalad/P04-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 13416,
+      "clip_end_global": 14427,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "bread",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2280,
+      "clip_end_global": 10896,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "cover",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 9216,
+      "clip_end_global": 10896,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "cream cheese",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 9216,
+      "clip_end_global": 10896,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 12120,
+      "clip_end_global": 14427,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 4584,
+      "clip_end_global": 13123,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "plate",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2280,
+      "clip_end_global": 14427,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "sauce",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 8184,
+      "clip_end_global": 8851,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "sauce bottles",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 8184,
+      "clip_end_global": 8851,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "turkey",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2280,
+      "clip_end_global": 8851,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "vegetables",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2280,
+      "clip_end_global": 14427,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P09-R02-TurkeySandwich",
+      "object_name": "water",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 12120,
+      "clip_end_global": 14427,
+      "r2_path": "EGTEA/TurkeySandwich/P09-R02-TurkeySandwich.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "cooking utensil (flipper)",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 37200,
+      "clip_end_global": 42223,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "cutting board",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 9864,
+      "clip_end_global": 41576,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 5592,
+      "clip_end_global": 43589,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 20856,
+      "clip_end_global": 41576,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "pasta",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1152,
+      "clip_end_global": 43589,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "plate",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 20856,
+      "clip_end_global": 43903,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "pot",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16656,
+      "clip_end_global": 42385,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "spoon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2952,
+      "clip_end_global": 5213,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1176,
+      "clip_end_global": 39806,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "vegetables",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1920,
+      "clip_end_global": 43903,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P12-R01-PastaSalad",
+      "object_name": "water",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 17472,
+      "clip_end_global": 42223,
+      "r2_path": "EGTEA/PastaSalad/P12-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 15984,
+      "clip_end_global": 44830,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "colander",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 23616,
+      "clip_end_global": 44830,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "cutting board",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 7344,
+      "clip_end_global": 50435,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3096,
+      "clip_end_global": 43294,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "garnish",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 18864,
+      "clip_end_global": 19990,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 11856,
+      "clip_end_global": 50435,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "oil",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16944,
+      "clip_end_global": 19990,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "oil bottle",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16944,
+      "clip_end_global": 17522,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "pasta",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 9936,
+      "clip_end_global": 44830,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "pot",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3144,
+      "clip_end_global": 43294,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "sauce bottles",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 17712,
+      "clip_end_global": 19990,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "sink",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 16296,
+      "clip_end_global": 46092,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "spoon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 11640,
+      "clip_end_global": 41571,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3840,
+      "clip_end_global": 41571,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "vegetables",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 7440,
+      "clip_end_global": 50435,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P14-R01-PastaSalad",
+      "object_name": "water",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3144,
+      "clip_end_global": 41571,
+      "r2_path": "EGTEA/PastaSalad/P14-R01-PastaSalad.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 840,
+      "clip_end_global": 20153,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "bread",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2928,
+      "clip_end_global": 23803,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "cereal",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1488,
+      "clip_end_global": 10263,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "cereal box",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1488,
+      "clip_end_global": 1706,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "cup",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 5112,
+      "clip_end_global": 27992,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3336,
+      "clip_end_global": 25986,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "honey/chocolate syrup",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 15960,
+      "clip_end_global": 20153,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "jam",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 22608,
+      "clip_end_global": 23803,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "kettle",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 24240,
+      "clip_end_global": 25392,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2928,
+      "clip_end_global": 23803,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "microwave",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 18096,
+      "clip_end_global": 20153,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "milk",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3720,
+      "clip_end_global": 10263,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "milk container",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3840,
+      "clip_end_global": 4559,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "oven control knob",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 4968,
+      "clip_end_global": 25986,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "pan",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2280,
+      "clip_end_global": 5565,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "peanut butter honey mixture",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2928,
+      "clip_end_global": 23803,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "plate",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2928,
+      "clip_end_global": 23803,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "pot",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 25416,
+      "clip_end_global": 25986,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "sink",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3336,
+      "clip_end_global": 3445,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "spoon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1656,
+      "clip_end_global": 22511,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2280,
+      "clip_end_global": 25986,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "teabag",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 5112,
+      "clip_end_global": 27992,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P17-R04-ContinentalBreakfast",
+      "object_name": "water",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2280,
+      "clip_end_global": 25986,
+      "r2_path": "EGTEA/ContinentalBreakfast/P17-R04-ContinentalBreakfast.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "bacon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 19632,
+      "clip_end_global": 26656,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1824,
+      "clip_end_global": 29492,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "bread",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 24456,
+      "clip_end_global": 26656,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "cream cheese",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 24000,
+      "clip_end_global": 26656,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "cup",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 12624,
+      "clip_end_global": 13176,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "egg",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 2376,
+      "clip_end_global": 26656,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "egg mixture",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 5256,
+      "clip_end_global": 14085,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 26736,
+      "clip_end_global": 29492,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "garnish",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 4872,
+      "clip_end_global": 5260,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "juice",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 13032,
+      "clip_end_global": 13176,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "milk",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 3096,
+      "clip_end_global": 5260,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "oil",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 7584,
+      "clip_end_global": 12032,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "pan",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1656,
+      "clip_end_global": 29492,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "plate",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 17184,
+      "clip_end_global": 26656,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "sink",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 21816,
+      "clip_end_global": 29492,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "spoon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 4824,
+      "clip_end_global": 26772,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 7008,
+      "clip_end_global": 16774,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P18-R03-BaconAndEggs",
+      "object_name": "water",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 26736,
+      "clip_end_global": 29492,
+      "r2_path": "EGTEA/BaconAndEggs/P18-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "bacon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 0,
+      "clip_end_global": 59907,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 19368,
+      "clip_end_global": 60366,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "bread",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 51888,
+      "clip_end_global": 57881,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "burger bun",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 31440,
+      "clip_end_global": 38993,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "cover",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 38808,
+      "clip_end_global": 38993,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "cream cheese",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 55728,
+      "clip_end_global": 57881,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "cup",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 11280,
+      "clip_end_global": 13111,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "egg",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 25728,
+      "clip_end_global": 47671,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "egg mixture",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 432,
+      "clip_end_global": 60366,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 40368,
+      "clip_end_global": 45739,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "garnish",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 46656,
+      "clip_end_global": 47671,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "juice",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 11424,
+      "clip_end_global": 13111,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 19488,
+      "clip_end_global": 57881,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "milk",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 46512,
+      "clip_end_global": 47671,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "milk container",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 46512,
+      "clip_end_global": 46602,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "oil",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 0,
+      "clip_end_global": 59379,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "oil bottle",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 58776,
+      "clip_end_global": 59379,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "oven control knob",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 47808,
+      "clip_end_global": 59907,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "pan",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 0,
+      "clip_end_global": 60366,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "plate",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 4968,
+      "clip_end_global": 57881,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "spoon",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 0,
+      "clip_end_global": 60366,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P23-R03-BaconAndEggs",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 0,
+      "clip_end_global": 60366,
+      "r2_path": "EGTEA/BaconAndEggs/P23-R03-BaconAndEggs.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "bowl",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1104,
+      "clip_end_global": 46543,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "bread",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 32592,
+      "clip_end_global": 34228,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "cereal",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 34272,
+      "clip_end_global": 36595,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "colander",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 41424,
+      "clip_end_global": 42904,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "cover",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 30624,
+      "clip_end_global": 41415,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "cream cheese",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 31872,
+      "clip_end_global": 32318,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "cutting board",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 14208,
+      "clip_end_global": 57535,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "faucet/water tap",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 11544,
+      "clip_end_global": 28571,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "garnish",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1104,
+      "clip_end_global": 42904,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "honey/chocolate syrup",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 37848,
+      "clip_end_global": 41415,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "knife",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 14208,
+      "clip_end_global": 57535,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "oil",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 41424,
+      "clip_end_global": 42904,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "oil bottle",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 37848,
+      "clip_end_global": 41415,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "pan",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 46560,
+      "clip_end_global": 48140,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "peanut butter honey mixture",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 37848,
+      "clip_end_global": 41415,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "sink",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 25320,
+      "clip_end_global": 28001,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "stove",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 46560,
+      "clip_end_global": 48140,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "teabag",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 41424,
+      "clip_end_global": 42904,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "vegetables",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 1104,
+      "clip_end_global": 57535,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    },
+    {
+      "video_id": "P25-R06-GreekSalad",
+      "object_name": "water",
+      "dataset": "EGTEA",
+      "fps": 24,
+      "frame_stride": 24,
+      "clip_start_global": 11544,
+      "clip_end_global": 28571,
+      "r2_path": "EGTEA/GreekSalad/P25-R06-GreekSalad.mp4"
+    }
+  ]
+}

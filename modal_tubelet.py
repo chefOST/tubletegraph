@@ -26,6 +26,7 @@ After visual validation, evaluate and publish to W&B:
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import os
 import re
 
 import modal
@@ -36,6 +37,15 @@ VOLUME_NAME = "tubelet-data"
 GROUND_TRUTH_VOLUME_NAME = "tubelet-ground-truth"
 SECRET_NAME = "tubelet-openai"
 WANDB_SECRET_NAME = "wandb"
+R2_SECRET_NAME = "chefost-r2"
+R2_BUCKET = "chefost-moscato-gt-videos"
+R2_ENDPOINT = "https://2aee25b6b08cc209d7cab66f1d0942fd.r2.cloudflarestorage.com"
+R2_VIDEO_PREFIX = "moscato/releases/564f350e536734db/videos/"
+# Environment flags read by the patched TubeletGraph (scripts/tubelet_speedups.py).
+SAM2_SPEEDUP_ENV = {
+    "TUBELETGRAPH_SHARE_SAM2": "1",
+    "TUBELETGRAPH_CACHE_SAM2_FEATURES": "1",
+}
 WANDB_EXPERIMENTS_PROJECT = "tubeletgraph-experiments"
 WANDB_FULL_EVAL_PROJECT = "tubeletgraph - full evals"
 DEFAULT_WANDB_PROJECT = WANDB_FULL_EVAL_PROJECT
@@ -61,6 +71,20 @@ openai_secret = modal.Secret.from_name(
 )
 wandb_secret = modal.Secret.from_name(
     WANDB_SECRET_NAME, required_keys=["WANDB_API_KEY"]
+)
+# Shared MOSCATO videos on R2 (see chefOST-data README). Read-only; mounted
+# only by the CPU frame-preparation function. Set MOSCATO_DISABLE_R2=1 to run
+# the app in a workspace that does not have the chefost-r2 Secret yet.
+R2_ENABLED = os.environ.get("MOSCATO_DISABLE_R2") != "1"
+r2_videos = modal.CloudBucketMount(
+    bucket_name=R2_BUCKET,
+    bucket_endpoint_url=R2_ENDPOINT,
+    key_prefix=R2_VIDEO_PREFIX,
+    secret=modal.Secret.from_name(
+        R2_SECRET_NAME,
+        required_keys=["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
+    ),
+    read_only=True,
 )
 
 
@@ -156,6 +180,9 @@ evaluation_image = (
 )
 
 
+prepare_image = modal.Image.debian_slim(python_version="3.12").apt_install("ffmpeg")
+
+
 def _safe_component(value: str, label: str) -> str:
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", value):
         raise ValueError(f"Unsafe {label}: {value!r}")
@@ -169,6 +196,16 @@ def _wandb_project(value: str) -> str:
     return _safe_component(value, "wandb_project")
 
 
+def _mask_names(input_root) -> list[str]:
+    names = []
+    if (input_root / "mask.png").is_file():
+        names.append("mask.png")
+    masks_dir = input_root / "masks"
+    if masks_dir.is_dir():
+        names.extend(f"masks/{path.name}" for path in sorted(masks_dir.glob("*.png")))
+    return names
+
+
 def _run_name(value: str) -> str:
     if value:
         return _safe_component(value, "run_name")
@@ -179,7 +216,10 @@ def _run_name(value: str) -> str:
     image=tubelet_image,
     gpu="A100-80GB",
     cpu=8.0,
-    memory=32768,
+    # 64 GiB leaves room for the SAM2 feature cache to spill to CPU memory on
+    # long clips. Clips under ~1,400 sampled frames fit the GPU cache budget,
+    # so MOSCATO_GPU_MEMORY_MB=32768 is enough there and costs less.
+    memory=int(os.environ.get("MOSCATO_GPU_MEMORY_MB", "65536")),
     timeout=12 * 60 * 60,
     volumes={"/data": data_volume},
     secrets=[openai_secret],
@@ -198,8 +238,18 @@ def run_tubelet(
     smoke_test: bool = False,
     persist_intermediates: bool = False,
     later_tracking: bool = True,
+    sam2_speedups: bool = True,
+    map_states: bool = True,
+    clip_end_global: int = 0,
+    mask_name: str = "mask.png",
+    collect_spacing: int = 30,
 ) -> dict:
-    """Validate inputs, run TubeletGraph, map states, and persist artifacts."""
+    """Validate inputs, run TubeletGraph, map states, and persist artifacts.
+
+    With ``map_states=False`` the MOSCATO adapter is skipped and only
+    TubeletGraph's raw output (masks and its own VLM state text under
+    ``predictions/``) is saved, for downstream label matching elsewhere.
+    """
     import json
     import os
     from pathlib import Path
@@ -222,6 +272,8 @@ def run_tubelet(
         raise ValueError("max_frames must be non-negative")
     if frame_stride < 1:
         raise ValueError("frame_stride must be at least 1")
+    if collect_spacing < 1:
+        raise ValueError("collect_spacing must be at least 1")
     if fps % frame_stride != 0:
         raise ValueError(
             f"fps={fps} must be divisible by frame_stride={frame_stride} "
@@ -245,12 +297,15 @@ def run_tubelet(
         logical_video_id = video_id
         input_root = Path("/data") / video_id
         input_frames = input_root / "frames"
-        input_mask = input_root / "mask.png"
+        input_mask = (input_root / mask_name).resolve()
+        if input_root.resolve() not in input_mask.parents:
+            raise ValueError(f"mask_name escapes the video folder: {mask_name!r}")
         state_dict_path = input_root / "state_dict.json"
         legacy_ground_truth_path = input_root / "ground_truth.json"
         run_dir = input_root / "runs" / resolved_run_name
-        expected_input_frames = int(expected_frames)
+        expected_input_frames = int(expected_frames) or None
 
+    data_volume.reload()
     if run_dir.exists():
         raise FileExistsError(
             f"Run output already exists: {run_dir}. Choose a different --run-name."
@@ -274,6 +329,9 @@ def run_tubelet(
         "expected_local_frames": expected_input_frames,
         "max_frames": int(max_frames) or None,
         "later_object_tracking": bool(later_tracking),
+        "sam2_speedups": dict(SAM2_SPEEDUP_ENV) if sam2_speedups else {},
+        "moscato_adapter": bool(map_states),
+        "collect_spacing": int(collect_spacing),
         "tubeletgraph_repository": TUBELETGRAPH_REPOSITORY,
         "tubeletgraph_commit": TUBELETGRAPH_COMMIT,
         "detectron2_commit": DETECTRON2_COMMIT,
@@ -299,7 +357,9 @@ def run_tubelet(
             raise FileNotFoundError(input_frames)
         if not input_mask.is_file():
             raise FileNotFoundError(input_mask)
-        if not smoke_test and (state_dict_path is None or not state_dict_path.is_file()):
+        if map_states and not smoke_test and (
+            state_dict_path is None or not state_dict_path.is_file()
+        ):
             raise FileNotFoundError(
                 f"{state_dict_path} is required for closed-vocabulary state mapping"
             )
@@ -325,6 +385,26 @@ def run_tubelet(
                 raise ValueError(
                     f"Frame numbering breaks at {index}: found {frame_path.name}"
                 )
+        # Videos prepared from R2 keep the full video in frames/ with a
+        # source.json; cut this object's clip from it by global frame index.
+        source_json = None if smoke_test else input_root / "source.json"
+        if source_json is not None and source_json.is_file():
+            source_info = json.loads(source_json.read_text(encoding="utf-8"))
+            source_start = int(source_info.get("clip_start_global", 0))
+            offset = int(clip_start_global) - source_start
+            end = int(clip_end_global) - source_start if clip_end_global else len(frame_paths)
+            if offset < 0 or end > len(frame_paths) or end <= offset:
+                raise ValueError(
+                    f"Clip [{clip_start_global}, {clip_end_global or 'end'}) is outside "
+                    f"prepared frames [{source_start}, {source_start + len(frame_paths)})"
+                )
+            frame_paths = frame_paths[offset:end]
+            manifest["source_clip_offset"] = offset
+        elif clip_end_global:
+            raise ValueError(
+                "clip_end_global needs frames prepared from R2 (source.json); "
+                f"{input_frames} holds a pre-cut clip"
+            )
         source_frame_count = len(frame_paths)
         if max_frames:
             if max_frames > source_frame_count:
@@ -406,10 +486,30 @@ def run_tubelet(
         manifest["status"] = "running"
         manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
 
+        if collect_spacing != 30:
+            # Frames between later-object re-tracking rounds. The container is
+            # single-use, so editing the base config only affects this run.
+            base_config = repository / "configs" / "default.yaml"
+            text = base_config.read_text(encoding="utf-8")
+            updated, count = re.subn(
+                r"(?m)^(\s*collect_spacing:\s*)\d+", rf"\g<1>{int(collect_spacing)}", text
+            )
+            if count != 1:
+                raise RuntimeError("Expected one collect_spacing entry in configs/default.yaml")
+            base_config.write_text(updated, encoding="utf-8")
+
         with log_path.open("w", encoding="utf-8") as log_handle:
             tubelet_env = dict(os.environ)
             if not later_tracking:
                 tubelet_env["TUBELETGRAPH_SKIP_LATER_TRACKING"] = "1"
+            if sam2_speedups:
+                tubelet_env.update(SAM2_SPEEDUP_ENV)
+                if not smoke_test:
+                    # Per-frame CropFormer results keyed by frame bytes, shared
+                    # by every object run on this video.
+                    tubelet_env["TUBELETGRAPH_CROPFORMER_CACHE_DIR"] = str(
+                        input_root / "cropformer_cache"
+                    )
             process = subprocess.Popen(
                 command,
                 cwd=repository,
@@ -440,6 +540,7 @@ def run_tubelet(
                     f"Expected TubeletGraph VLM prediction was not produced: {prediction_json}"
                 )
 
+        if not smoke_test and map_states:
             sys.path.insert(0, "/opt/moscato")
             from openai import OpenAI
             from scripts.build_event_draft import build_draft
@@ -532,6 +633,117 @@ def run_tubelet(
         "volume_path": str(run_dir),
         "manifest": str(manifest_path),
     }
+
+
+@app.function(
+    image=prepare_image,
+    cpu=4.0,
+    memory=8192,
+    timeout=2 * 60 * 60,
+    volumes={"/data": data_volume, **({"/videos": r2_videos} if R2_ENABLED else {})},
+)
+def prepare_from_r2(
+    video_id: str,
+    r2_path: str,
+    clip_start_global: int = 0,
+    clip_end_global: int = 0,
+    dataset: str = "CMU",
+    overwrite: bool = False,
+    skip_existing: bool = False,
+) -> dict:
+    """Decode an R2 video into the zero-based clip frames the GPU run expects.
+
+    Mirrors scripts/prepare_frames.py: decode every frame with ``-vsync 0`` so
+    indices match source frames, then keep [clip_start_global, clip_end_global).
+    ``clip_end_global=0`` keeps every frame from the start. The hand-drawn
+    first-frame masks must still be uploaded, one per object, to
+    /<video_id>/masks/<object-slug>.png. Batch runs prepare the full video once
+    and each object run cuts its own clip.
+    """
+    import json
+    from pathlib import Path
+    import shutil
+    import subprocess
+    import tempfile
+
+    video_id = _safe_component(video_id, "video_id")
+    dataset = _safe_component(dataset, "dataset")
+    if not R2_ENABLED:
+        raise RuntimeError("R2 is disabled (MOSCATO_DISABLE_R2=1); create the chefost-r2 Secret")
+    videos_root = Path("/videos").resolve()
+    source = (videos_root / r2_path).resolve()
+    if videos_root not in source.parents:
+        raise ValueError(f"r2_path escapes the video folder: {r2_path!r}")
+    if not source.is_file():
+        raise FileNotFoundError(f"Not found on R2 mount: {r2_path}")
+    if clip_start_global < 0 or (clip_end_global and clip_end_global <= clip_start_global):
+        raise ValueError("Need 0 <= clip_start_global < clip_end_global (or end=0)")
+
+    data_volume.reload()
+    input_root = Path("/data") / video_id
+    frames_dir = input_root / "frames"
+    if frames_dir.exists() and skip_existing and not overwrite:
+        source_json = input_root / "source.json"
+        if not source_json.is_file():
+            raise FileExistsError(
+                f"{frames_dir} was not prepared from R2 (no source.json), so its frame "
+                "numbering is unknown. Pass overwrite in the batch entry to rebuild it."
+            )
+        metadata = json.loads(source_json.read_text())
+        metadata.update(
+            video_id=video_id,
+            clip_frames=sum(1 for _ in frames_dir.glob("*.jpg")),
+            masks=_mask_names(input_root),
+            reused_existing_frames=True,
+        )
+        return metadata
+    if frames_dir.exists():
+        if not overwrite:
+            raise FileExistsError(f"{frames_dir} exists; pass overwrite=True to rebuild")
+        shutil.rmtree(frames_dir)
+
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "stream=avg_frame_rate,width,height",
+         "-of", "json", str(source)],
+        check=True, capture_output=True, text=True,
+    )
+    stream = json.loads(probe.stdout)["streams"][0]
+    numerator, denominator = (int(x) for x in stream["avg_frame_rate"].split("/"))
+
+    with tempfile.TemporaryDirectory() as raw:
+        raw_dir = Path(raw)
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-i", str(source), "-vsync", "0",
+             "-q:v", "2", "-start_number", "0", str(raw_dir / "%07d.jpg")],
+            check=True,
+        )
+        raw_frames = sorted(raw_dir.glob("*.jpg"))
+        end = clip_end_global or len(raw_frames)
+        if end > len(raw_frames):
+            raise ValueError(
+                f"clip_end_global={end} exceeds the {len(raw_frames)} decoded frames"
+            )
+        frames_dir.mkdir(parents=True)
+        for local_index, global_index in enumerate(range(clip_start_global, end)):
+            shutil.copy2(raw_frames[global_index], frames_dir / f"{local_index:07d}.jpg")
+
+    metadata = {
+        "video_id": video_id,
+        "r2_bucket": R2_BUCKET,
+        "r2_key": R2_VIDEO_PREFIX + r2_path,
+        "source_fps": numerator / denominator if denominator else None,
+        "source_dimensions": [int(stream["width"]), int(stream["height"])],
+        "decoded_frames": len(raw_frames),
+        "clip_start_global": int(clip_start_global),
+        "clip_end_global": int(end),
+        "clip_frames": int(end - clip_start_global),
+        "dataset": dataset,
+    }
+    (input_root / "source.json").write_text(json.dumps(metadata, indent=2) + "\n")
+    data_volume.commit()
+    metadata["masks"] = _mask_names(input_root)
+    return metadata
 
 
 @app.function(
@@ -681,6 +893,153 @@ def evaluate_and_log(
     }
 
 
+@app.function(
+    image=prepare_image,
+    cpu=1.0,
+    memory=1024,
+    timeout=10 * 60,
+    volumes={"/videos": r2_videos} if R2_ENABLED else {},
+)
+def r2_manifest() -> str:
+    """Return /videos/manifest.json from the R2 mount."""
+    from pathlib import Path
+
+    if not R2_ENABLED:
+        raise RuntimeError("R2 is disabled (MOSCATO_DISABLE_R2=1); create the chefost-r2 Secret")
+    return Path("/videos/manifest.json").read_text(encoding="utf-8")
+
+
+BATCH_RUN_KEYS = {
+    "video_id", "fps", "clip_start_global", "object_name", "object_id",
+    "expected_frames", "max_frames", "frame_stride", "run_name",
+    "later_tracking", "persist_intermediates", "map_states",
+    "clip_end_global", "mask_name", "collect_spacing",
+}
+BATCH_PREPARE_KEYS = {"r2_path", "dataset", "overwrite"}
+
+
+def object_slug(object_name: str) -> str:
+    slug = re.sub(r"[^A-Za-z0-9]+", "-", object_name).strip("-").lower()
+    if not slug:
+        raise ValueError(f"Cannot form a file name from object {object_name!r}")
+    return slug
+
+
+def load_batch(path: str) -> list[dict]:
+    """Read a batch file: {"defaults": {...}, "videos": [{...}, ...]}.
+
+    Each video needs ``video_id`` and ``object_name``. Add ``r2_path`` (relative
+    to the R2 video folder) to have frames prepared from R2 first.
+    """
+    import json
+    from pathlib import Path
+
+    payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    defaults = payload.get("defaults", {})
+    videos = payload.get("videos")
+    if not isinstance(videos, list) or not videos:
+        raise ValueError("Batch file needs a non-empty 'videos' list")
+    allowed = BATCH_RUN_KEYS | BATCH_PREPARE_KEYS
+    specs, seen = [], set()
+    for index, video in enumerate(videos):
+        spec = {**defaults, **video}
+        unknown = sorted(set(spec) - allowed)
+        if unknown:
+            raise ValueError(f"videos[{index}] has unknown keys: {unknown}")
+        for key in ("video_id", "object_name"):
+            if not spec.get(key):
+                raise ValueError(f"videos[{index}] is missing {key!r}")
+        _safe_component(spec["video_id"], "video_id")
+        identity = (spec["video_id"], spec["object_name"])
+        if identity in seen:
+            raise ValueError(f"Duplicate batch entry for {identity}")
+        seen.add(identity)
+        spec.setdefault("expected_frames", 0)
+        spec.setdefault("mask_name", f"masks/{object_slug(spec['object_name'])}.png")
+        specs.append(spec)
+    return specs
+
+
+def run_batch(
+    specs: list[dict],
+    *,
+    run_name: str,
+    max_parallel: int,
+    prepare_only: bool,
+    sam2_speedups: bool,
+) -> list[dict]:
+    """Prepare inputs from R2 in parallel, then run every ready video in parallel."""
+    results: list[dict] = []
+    ready: list[dict] = []
+
+    by_video: dict[str, list[dict]] = {}
+    for spec in specs:
+        by_video.setdefault(spec["video_id"], []).append(spec)
+    prepare_calls = []
+    for video_id, video_specs in by_video.items():
+        r2_paths = {spec.get("r2_path") for spec in video_specs}
+        if len(r2_paths) > 1:
+            raise ValueError(f"{video_id} lists different r2_path values: {sorted(map(str, r2_paths))}")
+        r2_path = r2_paths.pop()
+        if not r2_path:
+            ready.extend(video_specs)
+            continue
+        first = video_specs[0]
+        prepare_calls.append((video_specs, prepare_from_r2.spawn(
+            video_id=video_id,
+            r2_path=r2_path,
+            dataset=first.get("dataset", "CMU"),
+            overwrite=bool(first.get("overwrite", False)),
+            skip_existing=True,
+        )))
+    for video_specs, call in prepare_calls:
+        try:
+            info = call.get()
+        except Exception as error:
+            results.extend({"video_id": spec["video_id"], "object_name": spec["object_name"],
+                            "status": "prepare_failed", "error": f"{type(error).__name__}: {error}"}
+                           for spec in video_specs)
+            continue
+        for spec in video_specs:
+            if spec["mask_name"] not in info.get("masks", []):
+                results.append({"video_id": spec["video_id"], "object_name": spec["object_name"],
+                                "status": "needs_mask", "mask_name": spec["mask_name"]})
+            else:
+                ready.append(spec)
+    # Run one object per video first so later objects reuse its CropFormer cache.
+    ready.sort(key=lambda spec: [s["object_name"] for s in by_video[spec["video_id"]]].index(spec["object_name"]))
+
+    if prepare_only:
+        results.extend({"video_id": s["video_id"], "object_name": s["object_name"],
+                        "status": "ready"} for s in ready)
+        return results
+
+    def launch(spec: dict):
+        kwargs = {key: spec[key] for key in BATCH_RUN_KEYS if key in spec}
+        kwargs.setdefault("run_name", f"{run_name}-{object_slug(spec['object_name'])}")
+        # Batch runs keep TubeletGraph's raw output; labels are matched downstream.
+        kwargs.setdefault("map_states", False)
+        return run_tubelet.spawn(sam2_speedups=sam2_speedups, **kwargs)
+
+    window = max_parallel if max_parallel > 0 else len(ready)
+    pending: list[tuple[dict, object]] = []
+    queue = list(ready)
+    while queue or pending:
+        while queue and len(pending) < window:
+            spec = queue.pop(0)
+            pending.append((spec, launch(spec)))
+            print(f"launched {spec['video_id']} / {spec['object_name']}", flush=True)
+        spec, call = pending.pop(0)
+        try:
+            outcome = call.get()
+            results.append({"video_id": spec["video_id"], "object_name": spec["object_name"], **outcome})
+        except Exception as error:
+            results.append({"video_id": spec["video_id"], "object_name": spec["object_name"],
+                            "status": "failed", "error": f"{type(error).__name__}: {error}"})
+        print(f"finished {spec['video_id']}: {results[-1]['status']}", flush=True)
+    return results
+
+
 @app.local_entrypoint()
 def main(
     video_id: str = DEFAULT_VIDEO_ID,
@@ -700,8 +1059,39 @@ def main(
     wandb_entity: str = DEFAULT_WANDB_ENTITY,
     wandb_tags: str = "",
     experiment: bool = False,
+    sam2_speedups: bool = True,
+    batch_file: str = "",
+    max_parallel: int = 0,
+    prepare_only: bool = False,
+    r2_manifest_out: str = "",
 ) -> None:
     import json
+    from pathlib import Path
+
+    if r2_manifest_out:
+        Path(r2_manifest_out).write_text(r2_manifest.remote(), encoding="utf-8")
+        print(f"wrote R2 manifest to {r2_manifest_out}")
+        return
+
+    if batch_file:
+        if smoke_test or evaluate_run_name:
+            raise ValueError("--batch-file cannot be combined with --smoke-test or --evaluate-run-name")
+        results = run_batch(
+            load_batch(batch_file),
+            run_name=_run_name(run_name),
+            max_parallel=max_parallel,
+            prepare_only=prepare_only,
+            sam2_speedups=sam2_speedups,
+        )
+        print(json.dumps(results, indent=2))
+        counts: dict[str, int] = {}
+        for result in results:
+            counts[result["status"]] = counts.get(result["status"], 0) + 1
+        print("batch summary:", json.dumps(counts, sort_keys=True))
+        failed = [r for r in results if r["status"] in ("failed", "prepare_failed")]
+        if failed:
+            raise SystemExit(f"{len(failed)} of {len(results)} batch entries failed")
+        return
 
     # Evaluations log to "tubeletgraph - full evals" by default; pass
     # --experiment for development runs (tubeletgraph-experiments).
@@ -739,5 +1129,6 @@ def main(
         smoke_test=smoke_test,
         persist_intermediates=persist_intermediates,
         later_tracking=later_tracking,
+        sam2_speedups=sam2_speedups,
     )
     print(json.dumps(result, indent=2))

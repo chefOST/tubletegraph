@@ -15,6 +15,11 @@ results/
 *.avi
 
 # Local credentials are never source-controlled. Runtime credentials belong in
-# the Modal Secrets named "tubelet-openai" and "wandb".
+# the Modal Secrets named "tubelet-openai", "wandb" and "chefost-r2".
 .env
 .env.*
+*.env
+.secrets/
+*.secret
+*.secrets
+.aws/
