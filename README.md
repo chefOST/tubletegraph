@@ -202,12 +202,12 @@ results, threshold curve, per-frame table, and reproducibility artifact to W&B:
 
 ```bash
 modal run modal_tubelet.py \
-  --evaluate-run-name <validated-run-name> \
-  --wandb-project chefost-tubeletgraph-moscato
+  --evaluate-run-name <validated-run-name>
 ```
 
-Add `--wandb-entity <team-or-user>` only when the run should be sent to a
-specific W&B entity. The command prints the final four scores and W&B run URL,
+Results go to the `chefOST` entity. Development runs default to the
+`tubeletgraph-experiments` project. Add `--full-eval` only for an intended full
+evaluation, which logs to the `tubeletgraph - full evals` project. The command prints the final four scores and W&B run URL,
 and saves the evaluation beneath the completed run's `evaluation/` directory
 on the `tubelet-data` Volume.
 

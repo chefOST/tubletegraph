@@ -36,7 +36,9 @@ VOLUME_NAME = "tubelet-data"
 GROUND_TRUTH_VOLUME_NAME = "tubelet-ground-truth"
 SECRET_NAME = "tubelet-openai"
 WANDB_SECRET_NAME = "wandb"
-DEFAULT_WANDB_PROJECT = "tubeletgraph"
+WANDB_EXPERIMENTS_PROJECT = "tubeletgraph-experiments"
+WANDB_FULL_EVAL_PROJECT = "tubeletgraph - full evals"
+DEFAULT_WANDB_PROJECT = WANDB_EXPERIMENTS_PROJECT
 DEFAULT_WANDB_ENTITY = "chefOST"
 TUBELETGRAPH_REPOSITORY = "https://github.com/YihongSun/TubeletGraph.git"
 TUBELETGRAPH_COMMIT = "fdb05b6fbd7f4644aea990bf967cc18d82bf291b"
@@ -158,6 +160,13 @@ def _safe_component(value: str, label: str) -> str:
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", value):
         raise ValueError(f"Unsafe {label}: {value!r}")
     return value
+
+
+def _wandb_project(value: str) -> str:
+    # The team-mandated project names contain spaces, so allow them verbatim.
+    if value in (WANDB_EXPERIMENTS_PROJECT, WANDB_FULL_EVAL_PROJECT):
+        return value
+    return _safe_component(value, "wandb_project")
 
 
 def _run_name(value: str) -> str:
@@ -549,7 +558,7 @@ def evaluate_and_log(
 
     video_id = _safe_component(video_id, "video_id")
     run_name = _safe_component(run_name, "evaluate_run_name")
-    wandb_project = _safe_component(wandb_project, "wandb_project")
+    wandb_project = _wandb_project(wandb_project)
     if wandb_entity:
         wandb_entity = _safe_component(wandb_entity, "wandb_entity")
 
@@ -670,10 +679,18 @@ def main(
     persist_intermediates: bool = False,
     later_tracking: bool = True,
     evaluate_run_name: str = "",
-    wandb_project: str = DEFAULT_WANDB_PROJECT,
+    wandb_project: str = "",
     wandb_entity: str = DEFAULT_WANDB_ENTITY,
+    full_eval: bool = False,
 ) -> None:
     import json
+
+    # Development runs go to tubeletgraph-experiments; pass --full-eval only
+    # for intended full evaluations ("tubeletgraph - full evals").
+    if full_eval and wandb_project and wandb_project != WANDB_FULL_EVAL_PROJECT:
+        raise ValueError("--full-eval cannot be combined with a different --wandb-project")
+    if not wandb_project:
+        wandb_project = WANDB_FULL_EVAL_PROJECT if full_eval else DEFAULT_WANDB_PROJECT
 
     if evaluate_run_name:
         if smoke_test or run_name:
