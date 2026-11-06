@@ -1,0 +1,468 @@
+{
+  "video_id": "S15_Salad_7150991-451",
+  "image_width": 800,
+  "image_height": 600,
+  "object_id": 1,
+  "source_fps": 30,
+  "frame_stride": 6,
+  "policy": "User-approved initialization at the first clearly maskable visible view found on the sampling grid. Earlier annotated frames are excluded from inference and must be reported separately in evaluation.",
+  "authoring": "Assistant-traced visible contours, visually reviewed; not dataset-provided ground-truth segmentation. Frame selection used images and object names, not state labels.",
+  "objects": {
+    "bowl": {
+      "annotated_start": 528,
+      "initial_frame": 654,
+      "excluded_lead_in_frames": 126,
+      "excluded_lead_in_seconds": 4.2,
+      "note": "Floral bowl; earlier views are off-screen, blurred or substantially occluded. Visible outline is clipped slightly by the bottom image edge.",
+      "polygons": [
+        [
+          [
+            44,
+            475
+          ],
+          [
+            48,
+            428
+          ],
+          [
+            65,
+            391
+          ],
+          [
+            91,
+            363
+          ],
+          [
+            124,
+            349
+          ],
+          [
+            160,
+            342
+          ],
+          [
+            193,
+            344
+          ],
+          [
+            226,
+            355
+          ],
+          [
+            258,
+            376
+          ],
+          [
+            283,
+            408
+          ],
+          [
+            302,
+            448
+          ],
+          [
+            307,
+            482
+          ],
+          [
+            302,
+            516
+          ],
+          [
+            289,
+            551
+          ],
+          [
+            266,
+            576
+          ],
+          [
+            236,
+            594
+          ],
+          [
+            211,
+            599
+          ],
+          [
+            132,
+            599
+          ],
+          [
+            97,
+            583
+          ],
+          [
+            69,
+            555
+          ],
+          [
+            51,
+            521
+          ]
+        ]
+      ],
+      "image_sha256": "2ed8c721033123ed87e593338b4037fa45e3a8096140fe03847cf29b4f939d19",
+      "mask_sha256": "fd01f27c20bddcbe1e87a19d5a69611b623a70458fae05a80ba8e0919f6445f5",
+      "mask_pixels": 54779
+    },
+    "knife": {
+      "annotated_start": 528,
+      "initial_frame": 1152,
+      "excluded_lead_in_frames": 624,
+      "excluded_lead_in_seconds": 20.8,
+      "note": "Visible blade and exposed handle; hand pixels excluded. Knife becomes visible when removed from the drawer.",
+      "polygons": [
+        [
+          [
+            248,
+            314
+          ],
+          [
+            271,
+            307
+          ],
+          [
+            290,
+            320
+          ],
+          [
+            315,
+            348
+          ],
+          [
+            352,
+            393
+          ],
+          [
+            391,
+            447
+          ],
+          [
+            419,
+            487
+          ],
+          [
+            439,
+            527
+          ],
+          [
+            448,
+            551
+          ],
+          [
+            442,
+            569
+          ],
+          [
+            430,
+            565
+          ],
+          [
+            411,
+            543
+          ],
+          [
+            386,
+            511
+          ],
+          [
+            359,
+            468
+          ],
+          [
+            330,
+            426
+          ],
+          [
+            301,
+            393
+          ],
+          [
+            279,
+            365
+          ],
+          [
+            258,
+            339
+          ]
+        ]
+      ],
+      "image_sha256": "53ce75d25dba74275a04589861c6cd0f79241a69c63ba353d1119224dfadb052",
+      "mask_sha256": "ae3b7511e90ca0c657646e167ac810c55e0e43bacec7a2e7134eab867c19ea07",
+      "mask_pixels": 11577
+    },
+    "mayonnaise": {
+      "annotated_start": 2910,
+      "initial_frame": 3024,
+      "excluded_lead_in_frames": 114,
+      "excluded_lead_in_seconds": 3.8,
+      "note": "Visible dressing on vegetables, not its bottle. The second contour is an interior hole excluding exposed vegetables. Boundary remains approximate due to motion blur.",
+      "polygons": [
+        [
+          [
+            317,
+            513
+          ],
+          [
+            311,
+            539
+          ],
+          [
+            308,
+            559
+          ],
+          [
+            315,
+            588
+          ],
+          [
+            330,
+            599
+          ],
+          [
+            351,
+            599
+          ],
+          [
+            375,
+            592
+          ],
+          [
+            388,
+            578
+          ],
+          [
+            404,
+            566
+          ],
+          [
+            412,
+            561
+          ],
+          [
+            414,
+            550
+          ],
+          [
+            403,
+            535
+          ],
+          [
+            399,
+            517
+          ],
+          [
+            390,
+            503
+          ],
+          [
+            381,
+            495
+          ],
+          [
+            366,
+            496
+          ],
+          [
+            351,
+            501
+          ],
+          [
+            337,
+            503
+          ]
+        ],
+        [
+          [
+            331,
+            525
+          ],
+          [
+            348,
+            517
+          ],
+          [
+            363,
+            517
+          ],
+          [
+            373,
+            529
+          ],
+          [
+            384,
+            539
+          ],
+          [
+            392,
+            552
+          ],
+          [
+            381,
+            562
+          ],
+          [
+            375,
+            574
+          ],
+          [
+            359,
+            583
+          ],
+          [
+            337,
+            584
+          ],
+          [
+            328,
+            576
+          ],
+          [
+            324,
+            561
+          ],
+          [
+            326,
+            542
+          ]
+        ]
+      ],
+      "image_sha256": "af1e19f88de8f130d3fff12829e754672d8df8cbca70154d09f6416e615dcdef",
+      "mask_sha256": "03cd6733b3f6b90ee3332f3978888713f78ee9a5371a903d71b972a85792756e",
+      "mask_pixels": 5086
+    },
+    "vegetables": {
+      "annotated_start": 840,
+      "initial_frame": 846,
+      "excluded_lead_in_frames": 6,
+      "excluded_lead_in_seconds": 0.2,
+      "note": "Visible celery and carrot regions through transparent packaging. Hands, opaque purple packaging and empty bag regions excluded. This aggregate object initialization is approximate where the packaging obscures food boundaries.",
+      "polygons": [
+        [
+          [
+            355,
+            493
+          ],
+          [
+            383,
+            465
+          ],
+          [
+            434,
+            441
+          ],
+          [
+            490,
+            422
+          ],
+          [
+            515,
+            407
+          ],
+          [
+            548,
+            406
+          ],
+          [
+            579,
+            417
+          ],
+          [
+            590,
+            439
+          ],
+          [
+            571,
+            469
+          ],
+          [
+            529,
+            496
+          ],
+          [
+            486,
+            510
+          ],
+          [
+            457,
+            536
+          ],
+          [
+            435,
+            572
+          ],
+          [
+            407,
+            571
+          ],
+          [
+            384,
+            545
+          ]
+        ],
+        [
+          [
+            480,
+            571
+          ],
+          [
+            486,
+            548
+          ],
+          [
+            510,
+            534
+          ],
+          [
+            510,
+            518
+          ],
+          [
+            527,
+            489
+          ],
+          [
+            552,
+            480
+          ],
+          [
+            579,
+            481
+          ],
+          [
+            591,
+            499
+          ],
+          [
+            579,
+            523
+          ],
+          [
+            548,
+            540
+          ],
+          [
+            561,
+            558
+          ],
+          [
+            541,
+            584
+          ],
+          [
+            530,
+            599
+          ],
+          [
+            469,
+            599
+          ]
+        ]
+      ],
+      "image_sha256": "667c24458ebc13a090dc50ff2455b26cd75ce322578ed0c302554284fbab35b2",
+      "mask_sha256": "6c52a3bdd3fb25faabddeb2db9b82fbd503fab01320bfc3a731db8510aefa559",
+      "mask_pixels": 27628
+    }
+  }
+}

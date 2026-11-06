@@ -1,0 +1,57 @@
+{
+  "defaults": {
+    "object_id": 1,
+    "map_states": false,
+    "later_tracking": true
+  },
+  "videos": [
+    {
+      "video_id": "S15_Salad_7150991-451",
+      "object_name": "bowl",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 654,
+      "clip_end_global": 3444,
+      "r2_path": "_copies/MP4/CMU/Salad/S15_Salad_7150991-451.mp4",
+      "expected_frames": 3888,
+      "mask_name": "masks/bowl.png"
+    },
+    {
+      "video_id": "S15_Salad_7150991-451",
+      "object_name": "knife",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 1152,
+      "clip_end_global": 2370,
+      "r2_path": "_copies/MP4/CMU/Salad/S15_Salad_7150991-451.mp4",
+      "expected_frames": 3888,
+      "mask_name": "masks/knife.png"
+    },
+    {
+      "video_id": "S15_Salad_7150991-451",
+      "object_name": "mayonnaise",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 3024,
+      "clip_end_global": 3444,
+      "r2_path": "_copies/MP4/CMU/Salad/S15_Salad_7150991-451.mp4",
+      "expected_frames": 3888,
+      "mask_name": "masks/mayonnaise.png"
+    },
+    {
+      "video_id": "S15_Salad_7150991-451",
+      "object_name": "vegetables",
+      "dataset": "CMU",
+      "fps": 30,
+      "frame_stride": 6,
+      "clip_start_global": 846,
+      "clip_end_global": 3444,
+      "r2_path": "_copies/MP4/CMU/Salad/S15_Salad_7150991-451.mp4",
+      "expected_frames": 3888,
+      "mask_name": "masks/vegetables.png"
+    }
+  ]
+}
