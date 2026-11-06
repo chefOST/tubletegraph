@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import nullcontext
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -20,6 +21,8 @@ def main() -> None:
     parser.add_argument('--project', required=True)
     parser.add_argument('--budget-usd', type=float, required=True)
     parser.add_argument('--initialization', type=Path)
+    parser.add_argument('--resume-dir', type=Path)
+    parser.add_argument('--prior-compute-usd', type=float, default=0.0)
     args = parser.parse_args()
     destinations = json.loads(Path('weights_and_biases/settings.json').read_text())
     if args.project not in destinations['projects'].values():
@@ -40,14 +43,30 @@ def main() -> None:
             seed = initialization['objects'][spec['object_name']]
             if seed['initial_frame'] != spec['clip_start_global']:
                 raise ValueError(f"Mask/frame mismatch for {spec['object_name']}")
-    name = datetime.now(timezone.utc).strftime('one-video-%Y%m%dT%H%M%SZ')
-    out = Path('results') / video_id / name
-    out.mkdir(parents=True, exist_ok=False)
+    previous = {}
+    results = []
+    if args.resume_dir:
+        out = args.resume_dir
+        previous = json.loads((out / 'run.json').read_text())
+        if previous['video_id'] != video_id or previous['wandb_path'].rsplit('/', 1)[0] != f"{destinations['entity']}/{args.project}":
+            raise ValueError('Resume state belongs to a different video or W&B destination')
+        name = previous['run_name']
+        results = json.loads((out / 'objects.json').read_text())
+        if any(r.get('status') != 'succeeded' for r in results):
+            raise ValueError('Resume state contains unsuccessful objects')
+    else:
+        name = datetime.now(timezone.utc).strftime('one-video-%Y%m%dT%H%M%SZ')
+        out = Path('results') / video_id / name
+        out.mkdir(parents=True, exist_ok=False)
     # List prices checked 2026-11-06: A100 80GB, 8 cores, 64 GiB.
     hourly_rate = (0.000694 + 8 * 0.0000131 + 64 * 0.00000222) * 3600
-    compute_allowance = args.budget_usd - 15
+    if args.prior_compute_usd < 0:
+        raise ValueError('Prior compute must be nonnegative')
+    compute_allowance = args.budget_usd - 15 - args.prior_compute_usd
+    completed = {r['object'] for r in results}
+    pending = [s for s in specs if s['object_name'] not in completed]
     gpu_seconds_limit = compute_allowance / hourly_rate * 3600
-    timeout_seconds = min(7200, int(gpu_seconds_limit / len(specs)) - 120)
+    timeout_seconds = min(7200, int(gpu_seconds_limit / max(1, len(pending))) - 120)
     if timeout_seconds < 60:
         raise ValueError('Budget cannot accommodate this batch')
     # Read-only input preflight happens before creating any GPU containers.
@@ -63,6 +82,7 @@ def main() -> None:
         'sampling_fps': specs[0]['fps'] / specs[0]['frame_stride'],
         'budget_usd': args.budget_usd,
         'compute_allowance_usd': compute_allowance,
+        'prior_compute_usd': args.prior_compute_usd,
         'estimated_container_usd_per_hour': hourly_rate,
         'per_object_timeout_seconds': timeout_seconds,
         'parallel_gpu_jobs': 1,
@@ -75,16 +95,18 @@ def main() -> None:
         'budget_note': 'Time-based compute guard; reserve $15 for API/build/storage. Not an invoice.',
         'initialization': initialization,
     }
-    results = []
     cumulative_seconds = 0.0
     with wandb.init(
         entity=destinations['entity'], project=args.project, name=f'{video_id}-{name}',
         job_type='inference', group=video_id,
-        tags=['tubeletgraph', 'moscato', 'cmu', 'one-video', 'budget-70', 'raw-inference'],
-        config=config,
+        tags=['tubeletgraph', 'moscato', 'cmu', 'one-video', f'budget-{args.budget_usd:g}', 'raw-inference'],
+        config=config, allow_val_change=True,
+        **({'id': previous['wandb_path'].rsplit('/', 1)[-1], 'resume': 'must'} if previous else {}),
     ) as run:
         if run.entity.lower() != destinations['entity'].lower() or run.project != args.project:
             raise RuntimeError(f'Unexpected W&B destination: {run.entity}/{run.project}')
+        if previous:
+            run.config.update(config, allow_val_change=True)
         identity = {'wandb_url': run.url, 'wandb_path': run.path, 'run_name': name, **config}
         (out / 'run.json').write_text(json.dumps(identity, indent=2) + '\n')
         print('VERIFIED_WANDB', run.url, flush=True)
@@ -106,14 +128,18 @@ def main() -> None:
                 run.log({'inputs/initial_masks': wandb.Image(str(preview))})
         run.log_artifact(inputs)
         run.summary['inference/status'] = 'starting'
+        if run.summary.get('inference/error') is not None:
+            del run.summary['inference/error']
+        run.summary['inference/completed_objects'] = len(results)
+        run.summary['budget/prior_compute_usd'] = args.prior_compute_usd
         try:
-            with modal.enable_output(), app.run():
+            with (modal.enable_output() if modal.is_local() else nullcontext()), (app.run(detach=True) if modal.is_local() else nullcontext()):
                 gpu = run_tubelet.with_options(
                     cpu=(8.0, 8.0), memory=(65536, 65536),
                     timeout=timeout_seconds, retries=0,
                     max_containers=1, scaledown_window=2,
                 )
-                for index, spec in enumerate(specs):
+                for spec in pending:
                     if (cumulative_seconds + timeout_seconds + 120) > gpu_seconds_limit:
                         raise RuntimeError('Stopping before the reserved compute budget is exhausted')
                     object_run_name = f"{name}-{spec['mask_name'].split('/')[-1].removesuffix('.png')}"
@@ -135,15 +161,19 @@ def main() -> None:
                                 result = call.get(timeout=30)
                                 break
                             except TimeoutError:
-                                run.log({'budget/estimated_compute_usd': (cumulative_seconds + elapsed) / 3600 * hourly_rate})
+                                run.log({'budget/estimated_compute_usd': args.prior_compute_usd + (cumulative_seconds + elapsed) / 3600 * hourly_rate})
                     except BaseException:
                         call.cancel(terminate_containers=True)
                         raise
                     finally:
                         cumulative_seconds += time.monotonic() - start
+                    if not modal.is_local():
+                        data_volume.reload()
                     record = {'object': spec['object_name'], 'run_name': object_run_name, **result}
                     results.append(record)
                     (out / 'objects.json').write_text(json.dumps(results, indent=2) + '\n')
+                    if not modal.is_local():
+                        data_volume.commit()
                     remote = f'{video_id}/runs/{object_run_name}'
                     local = out / object_run_name
                     artifact = wandb.Artifact(f'{video_id}-{object_run_name}', type='tubeletgraph-predictions')
@@ -158,8 +188,8 @@ def main() -> None:
                             for chunk in data_volume.read_file(path):
                                 handle.write(chunk)
                         artifact.add_file(str(dest), name=str(relative))
-                    run.log_artifact(artifact)
-                    run.log({'inference/completed_objects': index + 1, 'budget/estimated_compute_usd': cumulative_seconds / 3600 * hourly_rate})
+                    run.log_artifact(artifact).wait()
+                    run.log({'inference/completed_objects': len(results), 'budget/estimated_compute_usd': args.prior_compute_usd + cumulative_seconds / 3600 * hourly_rate})
                     print('FINISHED_OBJECT', spec['object_name'], result.get('status'), flush=True)
                     if result.get('status') != 'succeeded':
                         raise RuntimeError(f"Object run failed: {spec['object_name']}")
@@ -170,8 +200,10 @@ def main() -> None:
             raise
         finally:
             run.summary['inference/completed_objects'] = len(results)
-            run.summary['budget/estimated_compute_usd'] = cumulative_seconds / 3600 * hourly_rate
+            run.summary['budget/estimated_compute_usd'] = args.prior_compute_usd + cumulative_seconds / 3600 * hourly_rate
             run.summary['evaluation/status'] = 'not_scored'
+            if not modal.is_local():
+                data_volume.commit()
             (out / 'objects.json').write_text(json.dumps(results, indent=2) + '\n')
     print('COMPLETE', json.dumps({'wandb_url': identity['wandb_url'], 'objects': len(results), 'results': str(out)}), flush=True)
 

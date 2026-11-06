@@ -1,9 +1,13 @@
 # One-video run
 
-Status: launched on 2026-11-06; completion pending.
+Status: completed on 2026-11-06. All four object artifacts and periodic
+tubelet snapshots are verified in W&B; the collector stopped and no inference
+containers remain active. W&B reports US$6.08 estimated compute including the
+US$3 prior-compute allowance; API/build/storage charges are separate.
+ChefOST metric evaluation remains unscored.
 [W&B run](https://wandb.ai/chefOST/tubeletgraph%20-%20full%20evals/runs/vie9lddr),
-[Modal app](https://modal.com/apps/justintwx7/main/ap-lejox3B5EHUNPQlx7B144o).
-User authorized US$70. The [budgeted runner](../run_budgeted_video.py) verifies
+[Modal app](https://modal.com/apps/justintwx7/main/ap-l6praOQO1rKvdcucE8O6Cv).
+Current user limit: below US$40; configured total US$39. The [budgeted runner](../run_budgeted_video.py) verifies
 `chefOST / tubeletgraph - full evals` before launching; access was verified
 with W&B account `justintwx7`. See [destinations](../weights_and_biases/README.md).
 
@@ -29,16 +33,39 @@ This retains 7,026 of 7,896 annotated-span object-frames (89.0%). The omitted
 contours, not dataset segmentation ground truth; packaging and motion blur
 make the vegetable and dressing boundaries approximate.
 
-The runner uses one GPU job at a time, no configured retries, a two-hour
-per-object timeout, and a time-based US$55 compute allowance. US$15 is reserved
-for API/build/storage; this is a planning safeguard, not an invoice or an
-account-wide billing cap. Four two-hour jobs would cost about US$27.12 at the
-checked [Modal list rates](https://modal.com/pricing), excluding startup.
+The runner uses one GPU job at a time, no configured retries and a two-hour
+per-object timeout. The US$39 total allocates US$3 to prior compute (recorded
+estimate: US$2.53), US$21 to remaining compute and US$15 to API/build/storage
+and controller costs. This is a time-based safeguard, not an invoice or an
+account-wide billing cap. See [Modal list rates](https://modal.com/pricing).
 
-W&B receives raw predictions, manifests, logs and completion status. Scoring
+[Recovery coordinator](../resume_budgeted_video.py) verifies completed outputs
+and runs on Modal, so local client disconnection does not interrupt sequencing.
+Run state is persisted under `/<video>/orchestration/` on `tubelet-data`.
+
+W&B receives raw predictions, manifests, logs and completion status.
+The [periodic collector](../scripts/watch_tubelets.py) checks every 60 seconds
+and uploads changed intermediate tubelets, candidate/target mask contact sheets
+and source metadata under the same run’s `Files/tubelet_snapshots/`. The first
+knife and mayonnaise snapshots were verified on W&B. It runs as a detached
+local CPU process, so the local machine must remain awake; GPU inference is
+not restarted. Collector logs/PID are in
+`results/S15_Salad_7150991-451/periodic-tubelets/`. Scoring
 remains separate; the existing legacy evaluator is not used as ChefOST
 precision/recall. See the [batch protocol](batch_inference_and_speedups.md).
 
-Validated: ten runner, batch-loader and mask-format tests passed. Runner
+Validated: thirteen runner, batch-loader and mask-format tests passed. Runner
 coverage includes wrong destination, missing masks, cancellation at the
 time limit, and artifact publication.
+
+Snapshot publication: two tests passed for unchanged-output skipping and
+attaching compressed predictions, previews and metadata to the existing run.
+
+[Media backfill](../scripts/log_tubelet_media.py) added W&B image panels:
+`tubelets/<object>` shows each of the four final target tracks;
+`candidate_tubelets/` shows the 128 saved proposal tracks in paged galleries.
+`tubelet_progress/` shows captured progress and `tubelet_gallery/all_tracks`
+is the searchable table. Green masks show one track per image, with local and
+source frame indices. Candidate proposals are not validated target descendants.
+These panels were backfilled from saved outputs without new GPU inference.
+Two rendering tests verify per-track sampling and source-frame alignment.

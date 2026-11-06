@@ -40,9 +40,9 @@ class BudgetedVideoTests(unittest.TestCase):
         os.chdir(self.previous)
         self.tmp.cleanup()
 
-    def invoke(self, times=(0, 1, 2)):
+    def invoke(self, times=(0, 1, 2), extra_args=()):
         argv = ['runner', '--batch-file', 'batch.json', '--project',
-                'tubeletgraph - full evals', '--budget-usd', '70']
+                'tubeletgraph - full evals', '--budget-usd', '70', *extra_args]
         with patch('sys.argv', argv), patch.object(runner, 'load_batch', return_value=self.specs), \
              patch.object(runner, 'data_volume', self.volume), patch.object(runner, 'run_tubelet', self.gpu), \
              patch.object(runner.wandb, 'init', return_value=self.run), \
@@ -51,6 +51,38 @@ class BudgetedVideoTests(unittest.TestCase):
              patch.object(runner.modal, 'enable_output', return_value=nullcontext()), \
              patch.object(runner.time, 'monotonic', side_effect=times):
             runner.main()
+            self.init_kwargs = runner.wandb.init.call_args.kwargs
+
+    def test_resume_skips_completed_objects_and_reuses_wandb_id(self):
+        state = Path('saved')
+        state.mkdir()
+        (state / 'run.json').write_text(json.dumps({
+            'video_id': 'v1', 'run_name': 'previous',
+            'wandb_path': 'chefOST/tubeletgraph - full evals/example',
+        }))
+        (state / 'objects.json').write_text(json.dumps([
+            {'object': 'bowl', 'run_name': 'previous-bowl', 'status': 'succeeded'},
+        ]))
+        self.invoke(times=(), extra_args=['--resume-dir', str(state),
+                                        '--budget-usd', '39', '--prior-compute-usd', '3'])
+        self.gpu.with_options.return_value.spawn.assert_not_called()
+        kwargs = self.init_kwargs
+        self.assertEqual(kwargs['id'], 'example')
+        self.assertEqual(kwargs['resume'], 'must')
+        self.assertEqual(kwargs['config']['compute_allowance_usd'], 21)
+        self.assertEqual(self.run.summary['inference/completed_objects'], 1)
+        self.assertEqual(self.run.summary['budget/estimated_compute_usd'], 3)
+
+    def test_prior_spend_exhausts_budget_before_gpu_launch(self):
+        with self.assertRaisesRegex(ValueError, 'Budget cannot accommodate'):
+            self.invoke(extra_args=['--budget-usd', '39', '--prior-compute-usd', '25'])
+        self.gpu.with_options.assert_not_called()
+
+    def test_remote_coordinator_publishes_and_refreshes_volume(self):
+        with patch.object(runner.modal, 'is_local', return_value=False):
+            self.test_success_publishes_raw_artifacts_without_metric_claims()
+        self.volume.reload.assert_called_once()
+        self.assertGreaterEqual(self.volume.commit.call_count, 2)
 
     def test_wrong_destination_never_spawns_gpu(self):
         self.run.entity = 'personal-workspace'
