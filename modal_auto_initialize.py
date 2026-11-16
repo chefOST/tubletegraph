@@ -43,13 +43,19 @@ auto_image = (
     .run_commands(
         "python -c \"from huggingface_hub import snapshot_download; "
         f"snapshot_download('{DETECTOR_MODEL_ID}', revision='{DETECTOR_REVISION}', "
-        "allow_patterns=['*.json', '*.safetensors', '*.txt', '*.model'])\""
+        "allow_patterns=['*.json', '*.safetensors', '*.txt', '*.model'])\"",
+        "python -c \"from open_clip.pretrained import get_pretrained_cfg, download_pretrained; "
+        "cfg = get_pretrained_cfg('convnext_large_d_320', 'laion2b_s29b_b131k_ft_soup'); "
+        "assert cfg; download_pretrained(cfg)\"",
     )
+    .add_local_python_source("modal_tubelet", "scripts")
 )
+prepare_runtime_image = prepare_image.add_local_python_source("modal_tubelet", "scripts")
 publication_image = (
     modal.Image.debian_slim(python_version="3.12")
     .pip_install("wandb==0.28.2")
     .add_local_file(str(ROOT / "weights_and_biases/settings.json"), "/opt/wandb-settings.json", copy=True)
+    .add_local_python_source("modal_tubelet", "scripts")
 )
 
 
@@ -62,7 +68,7 @@ def _prepared_root(video: dict) -> Path:
     return DATA_ROOT / "auto_inputs" / video["video_id"] / video["video_sha256"]
 
 
-@app.function(image=prepare_image, cpu=4.0, memory=8192, timeout=7200,
+@app.function(image=prepare_runtime_image, cpu=4.0, memory=8192, timeout=7200,
               volumes={"/data": data_volume, "/videos": r2_videos}, retries=0)
 def prepare_auto_video(video: dict) -> dict:
     """Decode and cache a verified video once; no annotation files are mounted."""
