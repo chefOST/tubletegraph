@@ -4,12 +4,14 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 import os
+from pathlib import Path
 import re
 
 import modal
 
 
 APP_NAME = "tubeletgraph-moscato-cmu"
+LOCAL_ROOT = Path(__file__).resolve().parent
 VOLUME_NAME = "tubelet-data"
 SECRET_NAME = "tubelet-openai"
 WANDB_SECRET_NAME = "wandb"
@@ -119,7 +121,7 @@ tubelet_image = (
         "python -m pip install -r requirements.txt",
     )
     .add_local_dir(
-        "scripts",
+        str(LOCAL_ROOT / "scripts"),
         "/opt/moscato/scripts",
         copy=True,
         ignore=["**/__pycache__/**", "**/*.pyc"],

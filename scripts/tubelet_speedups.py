@@ -17,13 +17,19 @@ output for a frame is identical on every pass. These helpers:
   ``TUBELETGRAPH_FEATURE_CACHE_GPU_GB`` and then on CPU up to
   ``TUBELETGRAPH_FEATURE_CACHE_CPU_GB``. Frames beyond both budgets are
   recomputed as before.
+* ``TUBELETGRAPH_LAZY_CPU_FRAMES=1``: decode JPEGs on demand into a bounded
+  CPU LRU cache instead of retaining the whole video. The cache holds 16
+  frames unless ``TUBELETGRAPH_CPU_FRAME_CACHE_SIZE`` overrides that count.
 
-With both flags unset, behaviour is exactly upstream TubeletGraph.
+With all flags unset, behaviour is exactly upstream TubeletGraph.
 """
 
 from __future__ import annotations
 
 import atexit
+from collections import OrderedDict
+from collections.abc import Sequence
+import operator
 import os
 from typing import Any
 
@@ -31,12 +37,14 @@ SHARE_ENV = "TUBELETGRAPH_SHARE_SAM2"
 CACHE_ENV = "TUBELETGRAPH_CACHE_SAM2_FEATURES"
 GPU_GB_ENV = "TUBELETGRAPH_FEATURE_CACHE_GPU_GB"
 CPU_GB_ENV = "TUBELETGRAPH_FEATURE_CACHE_CPU_GB"
+LAZY_CPU_ENV = "TUBELETGRAPH_LAZY_CPU_FRAMES"
+CPU_FRAME_COUNT_ENV = "TUBELETGRAPH_CPU_FRAME_CACHE_SIZE"
 DEFAULT_GPU_GB = 24.0
 DEFAULT_CPU_GB = 24.0
 LOG_PREFIX = "[moscato-speedups]"
 
 _PREDICTORS: dict[tuple[str, str, str], Any] = {}
-_FRAMES: dict[tuple[str, int, bool, str], Any] = {}
+_FRAMES: dict[tuple[Any, ...], Any] = {}
 _FEATURE_CACHES: dict[tuple[int, str, int], "FeatureCache"] = {}
 
 
@@ -50,6 +58,70 @@ def _budget_bytes(name: str, default_gb: float) -> int:
     if gigabytes < 0:
         raise ValueError(f"{name} must be non-negative; got {value!r}")
     return int(gigabytes * 1024**3)
+
+
+class LazyCPUFrames(Sequence):
+    """SAM2-compatible JPEG sequence with only a fixed number of decoded frames."""
+
+    def __init__(self, img_paths, image_size, *, cache_size=16,
+                 img_mean=(0.485, 0.456, 0.406), img_std=(0.229, 0.224, 0.225)):
+        import torch
+        from sam2.utils.misc import _load_img_as_tensor
+
+        if not img_paths:
+            raise ValueError("No JPEG frames to load")
+        if cache_size < 1:
+            raise ValueError("CPU frame cache size must be positive")
+        self.img_paths = list(img_paths)
+        self.image_size = int(image_size)
+        self.cache_size = int(cache_size)
+        self.img_mean = torch.tensor(img_mean, dtype=torch.float32)[:, None, None]
+        self.img_std = torch.tensor(img_std, dtype=torch.float32)[:, None, None]
+        self._load_frame = _load_img_as_tensor
+        self._cache = OrderedDict()
+        self.video_height = self.video_width = None
+        self[0]  # Establish dimensions without decoding the rest of the video.
+
+    def __len__(self):
+        return len(self.img_paths)
+
+    def __getitem__(self, index):
+        index = operator.index(index)
+        if index < 0:
+            index += len(self)
+        if not 0 <= index < len(self):
+            raise IndexError(index)
+        if index in self._cache:
+            frame = self._cache.pop(index)
+            self._cache[index] = frame
+            return frame
+        if len(self._cache) >= self.cache_size:
+            self._cache.popitem(last=False)
+        frame, height, width = self._load_frame(self.img_paths[index], self.image_size)
+        if self.video_height is None:
+            self.video_height, self.video_width = height, width
+        elif (height, width) != (self.video_height, self.video_width):
+            raise ValueError(f"Frame dimensions changed at {self.img_paths[index]}")
+        # The pinned JPEG helper returns float64. The eager loader copies into
+        # float32 storage before normalizing; retain that exact operation order.
+        frame = frame.float().contiguous()
+        frame -= self.img_mean
+        frame /= self.img_std
+        self._cache[index] = frame
+        return frame
+
+
+def _lazy_cpu_frames(video_path, image_size, *, img_mean=(0.485, 0.456, 0.406),
+                     img_std=(0.229, 0.224, 0.225)):
+    if not os.path.isdir(video_path):
+        raise ValueError("Lazy CPU frames require a directory of JPEG images")
+    names = [name for name in os.listdir(video_path)
+             if os.path.splitext(name)[-1] in (".jpg", ".jpeg", ".JPG", ".JPEG")]
+    names.sort(key=lambda name: int(os.path.splitext(name)[0].replace("frame_", "").replace("frame", "")))
+    count = int(os.environ.get(CPU_FRAME_COUNT_ENV, "16"))
+    frames = LazyCPUFrames([os.path.join(video_path, name) for name in names], image_size,
+                           cache_size=count, img_mean=img_mean, img_std=img_std)
+    return frames, frames.video_height, frames.video_width
 
 
 class FeatureCache:
@@ -149,6 +221,20 @@ def _install_frame_cache() -> None:
         compute_device=torch.device("cuda"),
         **kwargs,
     ):
+        if enabled(LAZY_CPU_ENV):
+            if not offload_video_to_cpu:
+                raise ValueError("Lazy CPU frames require offload_video_to_cpu=True")
+            if args or async_loading_frames or set(kwargs) - {"img_mean", "img_std"}:
+                raise ValueError("Unsupported lazy CPU frame loader options")
+            key = ("lazy_cpu", os.path.abspath(str(video_path)), int(image_size),
+                   tuple(kwargs.get("img_mean", (0.485, 0.456, 0.406))),
+                   tuple(kwargs.get("img_std", (0.229, 0.224, 0.225))),
+                   os.environ.get(CPU_FRAME_COUNT_ENV, "16"))
+            if not enabled(SHARE_ENV):
+                return _lazy_cpu_frames(video_path, image_size, **kwargs)
+            if key not in _FRAMES:
+                _FRAMES[key] = _lazy_cpu_frames(video_path, image_size, **kwargs)
+            return _FRAMES[key]
         if async_loading_frames or args or kwargs:
             return original(
                 video_path,
@@ -183,9 +269,10 @@ def _install_frame_cache() -> None:
 
 def build_predictor(builder, model_cfg, model_weights, device):
     """Build a SAM2 video predictor, reusing one per process when enabled."""
+    if enabled(SHARE_ENV) or enabled(LAZY_CPU_ENV):
+        _install_frame_cache()
     if not enabled(SHARE_ENV):
         return builder(model_cfg, model_weights, device=device)
-    _install_frame_cache()
     key = (str(model_cfg), os.path.abspath(str(model_weights)), str(device))
     if key in _PREDICTORS:
         print(f"{LOG_PREFIX} reusing SAM2 predictor {key[0]}", flush=True)
@@ -193,6 +280,14 @@ def build_predictor(builder, model_cfg, model_weights, device):
         _PREDICTORS[key] = builder(model_cfg, model_weights, device=device)
         print(f"{LOG_PREFIX} built shared SAM2 predictor {key[0]}", flush=True)
     return _PREDICTORS[key]
+
+
+def initialize_state(predictor, video_dir):
+    """Opt into CPU frame storage only for the bounded lazy loader."""
+    if enabled(LAZY_CPU_ENV):
+        _install_frame_cache()
+        return predictor.init_state(video_path=video_dir, offload_video_to_cpu=True)
+    return predictor.init_state(video_path=video_dir)
 
 
 def attach_feature_cache(predictor, inference_state: dict, video_dir: str) -> None:
