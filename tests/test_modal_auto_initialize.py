@@ -1,3 +1,4 @@
+from contextlib import nullcontext
 import json
 from pathlib import Path
 import subprocess
@@ -20,12 +21,12 @@ class ModalAutoInitializationTests(unittest.TestCase):
             "video_id": "v1", "dataset": "CMU", "r2_path": "CMU/v1.mp4",
             "video_sha256": "a" * 64, "source_fps": 10,
             "source_frame_count": 20, "annotation_frame_count": 20, "duration_seconds": 2,
-            "alignment": {"status": "inferred_from_duration", "index_basis": "source_frame_indices"},
+            "frame_index_basis": "source_frame_indices",
         }
         self.ingredient = {
             "id": "ingredient1", "object_name": "egg", "status": "ready",
             "first_visible_annotation_index": 1, "seed_annotation_index": 2,
-            "seed_source_frame": 2, "seed_timestamp_seconds": 0.2,
+            "seed_source_frame": 2,
         }
         self.inputs = self.data / "auto_inputs" / "v1" / self.video["video_sha256"]
         (self.inputs / "frames").mkdir(parents=True)
@@ -76,13 +77,14 @@ class ModalAutoInitializationTests(unittest.TestCase):
         if self.native_mode != "missing_html":
             (semantic / "v1_1.html").write_text("<html>Native prompt transcript</html>")
 
-    def invoke(self):
+    def invoke(self, *, measure_gpu=False):
         with patch.object(worker, "DATA_ROOT", self.data), \
                 patch.object(worker, "REPOSITORY", self.repository), \
                 patch.object(worker, "data_volume", self.volume), \
                 patch.object(worker, "_command", side_effect=self.command) as command:
             result = worker.run_auto_initialized.local(
                 self.video, self.ingredient, self.prepared, "trial",
+                measure_gpu=measure_gpu,
             )
         self.commands = command.call_args_list
         self.manifest = json.loads((self.run_dir / "run_manifest.json").read_text())
@@ -104,6 +106,8 @@ class ModalAutoInitializationTests(unittest.TestCase):
         self.assertIn("finished_at", self.manifest)
         self.assertNotIn("elapsed_seconds", self.manifest)
         self.assertNotIn("stages_seconds", self.manifest)
+        self.assertNotIn("gpu_probe", self.manifest)
+        self.assertFalse(self.manifest["measure_gpu"])
         self.assertFalse((self.run_dir / "gpu.csv").exists())
         for relative in ["initial_frame.jpg", "initial_mask.png", "initialization.json", "initialization.log",
                          "tubeletgraph.log", "input.json", "generated_configs/custom_v1.yaml",
@@ -126,6 +130,34 @@ class ModalAutoInitializationTests(unittest.TestCase):
         self.assertIn("CalledProcessError", result["error"])
         self.assertEqual(self.manifest["status"], "initialization_failed")
         self.volume.commit.assert_called()
+
+    def test_requested_gpu_probe_records_only_opt_in_outputs_and_named_stages(self):
+        probe = MagicMock()
+        probe.__enter__.return_value = probe
+        probe.stage.side_effect = lambda name: nullcontext()
+        probe.summary.return_value = {
+            "samples": 2, "gpu_utilization_p95_pct": 80, "peak_memory_used_mib": 10000,
+            "stages": {"initialization": {"elapsed_seconds": 1},
+                       "native_inference": {"elapsed_seconds": 2}},
+        }
+        def close(*args):
+            (self.run_dir / "gpu.csv").write_text("requested GPU samples\n")
+            return False
+        probe.__exit__.side_effect = close
+        with patch.object(worker, "GpuProbe", return_value=probe) as create:
+            result = self.invoke(measure_gpu=True)
+        self.assertEqual(result["status"], "succeeded")
+        create.assert_called_once_with(self.run_dir / "gpu.csv")
+        self.assertEqual([call.args[0] for call in probe.stage.call_args_list],
+                         ["initialization", "native_inference"])
+        self.assertTrue(self.manifest["measure_gpu"])
+        self.assertEqual(self.manifest["gpu_probe"], probe.summary.return_value)
+        self.assertEqual(json.loads((self.run_dir / "gpu_summary.json").read_text()), probe.summary.return_value)
+
+    def test_default_run_never_starts_gpu_probe(self):
+        with patch.object(worker, "GpuProbe") as create:
+            self.invoke()
+        create.assert_not_called()
 
     def test_native_failure_preserves_partial_predictions_and_logs(self):
         self.native_mode = "failure"

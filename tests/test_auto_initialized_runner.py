@@ -17,11 +17,11 @@ class AutoInitializedRunnerTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
-        self.plan = {"provenance": {"alignment_policy": "infer_from_duration"}, "videos": [{
+        self.plan = {"provenance": {"frame_index_basis": "source_frame_indices"}, "videos": [{
             "video_id": "v1", "dataset": "CMU", "r2_path": "CMU/v1.mp4",
             "video_sha256": "a" * 64, "source_fps": 30, "source_frame_count": 300,
             "duration_seconds": 10, "annotation_frame_count": 300,
-            "alignment": {"status": "inferred_from_duration"}, "ingredients": [
+            "frame_index_basis": "source_frame_indices", "ingredients": [
                 {"id": "a", "object_name": "egg", "seed_source_frame": 5,
                  "first_visible_annotation_index": 4, "seed_annotation_index": 5,
                  "status": "ready", "skip_reason": None},
@@ -34,11 +34,12 @@ class AutoInitializedRunnerTests(unittest.TestCase):
         self.path.write_text(json.dumps(self.plan))
         self.runtime = SimpleNamespace(
             app=Mock(), prepare_auto_video=Mock(), run_auto_initialized=Mock(),
-            publish_auto_result=Mock(),
+            publish_auto_result=Mock(), modal=SimpleNamespace(enable_output=Mock(return_value=nullcontext())),
         )
         self.runtime.app.run.return_value = nullcontext()
         self.runtime.prepare_auto_video.remote.return_value = {"frames": "cloud"}
         self.call = Mock()
+        self.call.object_id = "fc-example"
         self.call.get.return_value = {"status": "succeeded"}
         self.runtime.run_auto_initialized.with_options.return_value.spawn.return_value = self.call
         self.runtime.publish_auto_result.remote.return_value = {"wandb_url": "https://wandb.ai/example"}
@@ -83,6 +84,23 @@ class AutoInitializedRunnerTests(unittest.TestCase):
         options = self.runtime.run_auto_initialized.with_options.call_args.kwargs
         self.assertEqual(options["retries"], 0)
         self.assertEqual(options["max_containers"], 1)
+        video = self.runtime.prepare_auto_video.remote.call_args.kwargs["video"]
+        self.assertEqual(video["frame_index_basis"], "source_frame_indices")
+        self.runtime.modal.enable_output.assert_called_once()
+        self.assertNotIn("measure_gpu", result)
+        for call in self.runtime.run_auto_initialized.with_options.return_value.spawn.call_args_list:
+            self.assertNotIn("measure_gpu", call.kwargs)
+
+    def test_measure_gpu_is_forwarded_only_when_opted_in(self):
+        result = self.execute(measure_gpu=True)
+        self.assertTrue(result["measure_gpu"])
+        for call in self.runtime.run_auto_initialized.with_options.return_value.spawn.call_args_list:
+            self.assertIs(call.kwargs["measure_gpu"], True)
+
+    def test_cli_measurement_flag_reaches_execute_plan(self):
+        with patch.object(runner, "execute_plan", return_value={}) as execute, redirect_stdout(io.StringIO()):
+            runner.main(["--plan", str(self.path), "--execute", "--budget-usd", "10", "--measure-gpu"])
+        self.assertTrue(execute.call_args.kwargs["measure_gpu"])
 
     def test_initialization_failure_is_published_and_next_ingredient_runs(self):
         self.call.get.side_effect = [{"status": "initialization_failed", "error": "No accepted masks"},
@@ -128,9 +146,25 @@ class AutoInitializedRunnerTests(unittest.TestCase):
         self.assertIn("Cancellation unavailable", result["jobs"]["a"]["cancellation_error"])
         self.assertEqual(self.runtime.publish_auto_result.remote.call_count, 1)
 
-    def test_timestamp_seed_is_allowed_for_pts_lookup(self):
+    def test_seed_must_be_an_integer_source_frame(self):
+        for invalid in (None, 0.5, True):
+            with self.subTest(seed=invalid):
+                plan = copy.deepcopy(self.plan)
+                plan["videos"][0]["ingredients"][0]["seed_source_frame"] = invalid
+                self.path.write_text(json.dumps(plan))
+                with self.assertRaisesRegex(ValueError, "Invalid seed frame"):
+                    runner.load_plan(self.path)
+
+    def test_seed_must_be_first_visible_frame_plus_one(self):
         plan = copy.deepcopy(self.plan)
-        plan["videos"][0]["ingredients"][0].update(seed_source_frame=None, seed_timestamp_seconds=0.5)
+        plan["videos"][0]["ingredients"][0]["seed_source_frame"] = 6
+        self.path.write_text(json.dumps(plan))
+        with self.assertRaisesRegex(ValueError, "immediately after first visibility"):
+            runner.load_plan(self.path)
+
+    def test_video_timing_and_annotation_counts_are_not_cross_checked(self):
+        plan = copy.deepcopy(self.plan)
+        plan["videos"][0].update(source_fps=15, duration_seconds=1000, annotation_frame_count=180)
         self.path.write_text(json.dumps(plan))
         self.assertEqual(runner.load_plan(self.path), plan)
 
