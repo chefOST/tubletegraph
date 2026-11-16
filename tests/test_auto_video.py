@@ -1,12 +1,12 @@
 import unittest
 
-from scripts.auto_video import resolve_seed, sampled_frames, verify_timing
+from scripts.auto_video import resolve_seed, sampled_frames
 
 
 class AutoVideoTests(unittest.TestCase):
     def setUp(self):
         self.video = {"source_frame_count": 300, "source_fps": 30.0, "duration_seconds": 10,
-                      "annotation_frame_count": 300, "alignment": {"index_basis": "source_frame_indices"}}
+                      "annotation_frame_count": 300, "frame_index_basis": "source_frame_indices"}
         self.media = {"source_frame_count": 300, "source_fps": 30.0, "duration_seconds": 10,
                       "timestamps_seconds": [i / 30 for i in range(300)]}
         self.ingredient = {"status": "ready", "first_visible_annotation_index": 100,
@@ -15,21 +15,16 @@ class AutoVideoTests(unittest.TestCase):
     def test_source_frame_indices_do_not_assume_ten_fps(self):
         self.assertEqual(resolve_seed(self.video, self.ingredient, self.media), 101)
 
-    def test_resampled_annotations_use_actual_pts(self):
-        video = {**self.video, "annotation_frame_count": 100,
-                 "alignment": {"index_basis": "uniform_annotation_timeline", "annotation_fps": 10}}
-        ingredient = {**self.ingredient, "first_visible_annotation_index": 9,
-                      "seed_annotation_index": 10, "seed_source_frame": None,
-                      "seed_timestamp_seconds": 1.0}
-        self.assertEqual(resolve_seed(video, ingredient, self.media), 30)
+    def test_timing_metadata_does_not_reinterpret_annotation_indices(self):
+        media = {**self.media, "source_fps": 24, "duration_seconds": 50,
+                 "source_frame_count": 200}
+        self.assertEqual(resolve_seed(self.video, self.ingredient, media), 101)
 
-    def test_changed_video_or_seed_fails(self):
-        with self.assertRaisesRegex(ValueError, "frame count"):
-            verify_timing(self.video, {**self.media, "source_frame_count": 299})
-        with self.assertRaisesRegex(ValueError, "duration"):
-            verify_timing(self.video, {**self.media, "duration_seconds": 30})
+    def test_invalid_seed_fails(self):
         with self.assertRaisesRegex(ValueError, "immediately after"):
             resolve_seed(self.video, {**self.ingredient, "seed_annotation_index": 102}, self.media)
+        with self.assertRaisesRegex(ValueError, "outside the video"):
+            resolve_seed(self.video, self.ingredient, {**self.media, "source_frame_count": 100})
 
     def test_twenty_four_fps_sampling_preserves_seed_and_video_extent(self):
         times = [i / 24 for i in range(240)]

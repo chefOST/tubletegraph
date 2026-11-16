@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from scripts.plan_auto_initialization import alignment_for, build_plan
+from scripts.plan_auto_initialization import build_plan
 
 
 class AutoInitializationPlanTests(unittest.TestCase):
@@ -56,39 +56,36 @@ class AutoInitializationPlanTests(unittest.TestCase):
         self.write(annotation)
         self.assertEqual(self.plan()['videos'], plan['videos'])
 
-    def test_matching_counts_preserve_raw_indices_and_record_inference(self):
+    def test_video_frame_rate_is_metadata_and_indices_are_direct(self):
         plan = build_plan(self.root, self.manifest, self.policy)
-        alignment = plan['videos'][0]['alignment']
-        self.assertEqual(plan['videos'][0]['ingredients'][0]['status'], 'ready')
-        self.assertEqual(alignment['status'], 'inferred_from_duration')
-        self.assertEqual(alignment['index_basis'], 'source_frame_indices')
-        self.assertEqual(alignment['annotation_fps'], 30)
-        self.assertNotIn('declared_annotation_fps', alignment)
-        self.assertFalse(alignment['independently_verified'])
+        video = plan['videos'][0]
+        self.assertEqual(video['ingredients'][0]['status'], 'ready')
+        self.assertEqual(video['frame_index_basis'], 'source_frame_indices')
+        self.assertEqual(plan['policy']['frame_index_basis'], 'source_frame_indices')
+        self.assertEqual(video['source_fps'], 30)
+        self.assertNotIn('alignment', video)
 
-    def test_other_uniform_rates_use_duration_and_timestamp_not_raw_index(self):
+    def test_annotation_length_and_duration_do_not_remap_indices(self):
         self.manifest['entries'][0] = self.entry('video-1', count=24, fps='24/1')
+        self.manifest['entries'][0]['media']['streams'][0]['duration'] = '999'
         plan = self.plan()
-        self.assertEqual(plan['videos'][0]['alignment']['index_basis'], 'uniform_annotation_timeline')
-        self.assertEqual(plan['videos'][0]['alignment']['annotation_fps'], 4)
-        self.assertIsNone(plan['videos'][0]['ingredients'][0]['seed_source_frame'])
-        self.assertEqual(plan['videos'][0]['ingredients'][0]['seed_timestamp_seconds'], 0.5)
+        video = plan['videos'][0]
+        self.assertEqual(video['source_fps'], 24)
+        self.assertEqual(video['ingredients'][0]['seed_source_frame'], 2)
+        self.assertEqual(video['ingredients'][0]['status'], 'ready')
 
-    def test_resampled_mapping_uses_timestamp_for_actual_pts_lookup(self):
-        annotation = {'object': [[], ['egg'], ['egg']] + [[]] * 7, 'state': {'egg': []}}
-        self.write({'video-1': annotation})
-        self.manifest['entries'][0] = self.entry('video-1', count=24, fps='24/1')
+    def test_duration_is_optional_and_never_required_for_seeding(self):
+        self.manifest['entries'][0]['media']['streams'][0].pop('duration')
         video = self.plan()['videos'][0]
-        egg = video['ingredients'][0]
-        self.assertEqual(egg['seed_annotation_index'], 2)
-        self.assertIsNone(egg['seed_source_frame'])
-        self.assertEqual(egg['seed_timestamp_seconds'], 0.2)
-        self.assertEqual(egg['status'], 'ready')
-        self.assertEqual(video['alignment']['index_basis'], 'uniform_annotation_timeline')
-        # Source-rate arrays must not be interpreted as 10 fps merely because
-        # the dataset's general documentation mentions that rate.
-        self.assertEqual(alignment_for(self.entry('video-1', 240, '24/1'), 240)
-                         ['index_basis'], 'source_frame_indices')
+        self.assertIsNone(video['duration_seconds'])
+        self.assertEqual(video['ingredients'][0]['seed_source_frame'], 2)
+        self.assertEqual(video['ingredients'][0]['status'], 'ready')
+
+    def test_seed_must_still_be_within_source_video(self):
+        self.manifest['entries'][0] = self.entry('video-1', count=2)
+        egg = self.plan()['videos'][0]['ingredients'][0]
+        self.assertEqual(egg['skip_reason'], 'seed_after_video_end')
+        self.assertEqual(egg['seed_source_frame'], 2)
 
     def test_exact_next_index_cannot_jump_to_later_visibility(self):
         self.write({'video-1': {'object': [['egg'], [], ['egg'], ['egg']], 'state': {'egg': []}}})
@@ -106,11 +103,12 @@ class AutoInitializationPlanTests(unittest.TestCase):
         self.assertEqual(items['unavailable']['skip_reason'], 'missing_r2_video')
         self.assertEqual(items['video-1']['skip_reason'], 'seed_after_annotation_end')
 
-    def test_identity_is_stable_when_media_timing_is_missing(self):
+    def test_identity_is_stable_when_media_metadata_is_missing(self):
         raw = self.plan()['videos'][0]['ingredients'][0]
-        self.manifest['entries'][0]['media']['streams'][0].pop('duration')
+        self.manifest['entries'][0]['media']['streams'][0].pop('avg_frame_rate')
         blocked = self.plan()['videos'][0]['ingredients'][0]
-        self.assertEqual(blocked['skip_reason'], 'missing_media_timing')
+        self.assertEqual(blocked['skip_reason'], 'missing_media_metadata')
+        self.assertEqual(blocked['seed_source_frame'], 2)
         self.assertEqual(raw['id'], blocked['id'])
         self.assertEqual(raw['mask_name'], blocked['mask_name'])
 

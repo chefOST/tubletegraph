@@ -18,11 +18,11 @@ GPU_HOURLY_USD = 2.839968  # L40S + 8 CPU cores + 64 GiB; estimate, not a billin
 BOOT_ALLOWANCE_SECONDS = 120
 VIDEO_FIELDS = {
     "id", "video_id", "dataset", "r2_path", "video_sha256", "source_fps",
-    "source_frame_count", "annotation_frame_count", "duration_seconds", "alignment",
+    "source_frame_count", "annotation_frame_count", "duration_seconds", "frame_index_basis",
 }
 INGREDIENT_FIELDS = {
     "id", "job_id", "object_name", "mask_name", "first_visible_annotation_index",
-    "seed_annotation_index", "seed_source_frame", "seed_timestamp_seconds",
+    "seed_annotation_index", "seed_source_frame",
     "status", "skip_reason",
 }
 
@@ -51,12 +51,12 @@ def load_plan(path: Path) -> dict:
                 raise ValueError(f"Unknown plan status for {key}")
             if ingredient["status"] == "ready":
                 frame = ingredient["seed_source_frame"]
-                if frame is None:
-                    timestamp = ingredient.get("seed_timestamp_seconds")
-                    if not isinstance(timestamp, (int, float)) or not math.isfinite(timestamp) or not 0 <= timestamp < video["duration_seconds"]:
-                        raise ValueError(f"Invalid seed timestamp for {key}")
-                elif not isinstance(frame, int) or isinstance(frame, bool) or not 0 <= frame < video["source_frame_count"]:
+                if type(frame) is not int or not 0 <= frame < video["source_frame_count"]:
                     raise ValueError(f"Invalid seed frame for {key}")
+                first = ingredient["first_visible_annotation_index"]
+                seed = ingredient["seed_annotation_index"]
+                if type(first) is not int or first < 0 or type(seed) is not int or seed != first + 1 or frame != seed:
+                    raise ValueError(f"Seed must be the source frame immediately after first visibility for {key}")
                 if not video.get("r2_path") or not video.get("video_sha256"):
                     raise ValueError(f"Missing video provenance for {key}")
     return plan
@@ -91,7 +91,7 @@ def _save(path: Path, state: dict) -> None:
     temporary.replace(path)
 
 
-def _run_job(runtime, video, ingredient, prepared, run_name, timeout, remaining):
+def _run_job(runtime, video, ingredient, prepared, run_name, timeout, remaining, measure_gpu=False):
     call = None
     fatal = None
     started = time.monotonic()
@@ -110,7 +110,12 @@ def _run_job(runtime, video, ingredient, prepared, run_name, timeout, remaining)
             cpu=(8.0, 8.0), memory=(65536, 65536), timeout=timeout,
             retries=0, max_containers=1, scaledown_window=2,
         )
-        call = gpu.spawn(video=video, ingredient=ingredient, prepared=prepared, run_name=run_name)
+        kwargs = {"video": video, "ingredient": ingredient, "prepared": prepared, "run_name": run_name}
+        if measure_gpu:
+            kwargs["measure_gpu"] = True
+        call = gpu.spawn(**kwargs)
+        print("GPU_JOB_STARTED", json.dumps({"run_name": run_name, "object": ingredient["object_name"],
+                                             "call_id": str(call.object_id)}), flush=True)
         while True:
             elapsed = time.monotonic() - started
             if elapsed >= min(timeout + BOOT_ALLOWANCE_SECONDS, remaining):
@@ -135,7 +140,8 @@ def _run_job(runtime, video, ingredient, prepared, run_name, timeout, remaining)
 
 
 def execute_plan(plan: dict, *, budget_usd: float, reserve_usd: float,
-                 max_job_seconds: int, output_dir: Path | None = None) -> dict:
+                 max_job_seconds: int, output_dir: Path | None = None,
+                 measure_gpu: bool = False) -> dict:
     allowance = _budget_seconds(budget_usd, reserve_usd, max_job_seconds)
     name = datetime.now(timezone.utc).strftime("auto-%Y%m%dT%H%M%SZ-") + uuid.uuid4().hex[:6]
     out = output_dir or Path("results") / "auto-initialized" / name
@@ -152,8 +158,11 @@ def execute_plan(plan: dict, *, budget_usd: float, reserve_usd: float,
              "estimated_gpu_compute_usd": 0.0,
              "budget_note": "Time-based GPU estimate; reserve covers separately billed CPU/API/build/storage and is not an account spending cap.",
              "provenance": provenance, "jobs": records}
+    if measure_gpu:
+        state["measure_gpu"] = True
     progress = out / "progress.json"
     _save(progress, state)
+    print("RUN_PROGRESS", str(progress.resolve()), flush=True)
     if not any(record["status"] == "ready" for record in records.values()):
         state["status"] = "no_ready_jobs"
         _save(progress, state)
@@ -174,6 +183,8 @@ def execute_plan(plan: dict, *, budget_usd: float, reserve_usd: float,
                 run_name=run_name, plan_provenance=provenance,
             )
             record.update(publication)
+            print("RESULT_PUBLISHED", json.dumps({"run_name": run_name, "status": result["status"],
+                                                   "wandb_url": publication.get("wandb_url")}), flush=True)
         except Exception as error:
             record["publication_error"] = f"{type(error).__name__}: {error}"
             raise
@@ -182,7 +193,7 @@ def execute_plan(plan: dict, *, budget_usd: float, reserve_usd: float,
 
     try:
         runtime = import_module("modal_auto_initialize")
-        with runtime.app.run(detach=True):
+        with runtime.modal.enable_output(), runtime.app.run(detach=True):
             state["status"] = "running"
             for source_video in plan["videos"]:
                 ready = [item for item in source_video["ingredients"] if item["status"] == "ready"]
@@ -192,7 +203,9 @@ def execute_plan(plan: dict, *, budget_usd: float, reserve_usd: float,
                 if allowance - spent < BOOT_ALLOWANCE_SECONDS + 60:
                     break
                 try:
+                    print("PREPARING_VIDEO", video["video_id"], flush=True)
                     prepared = runtime.prepare_auto_video.remote(video=video)
+                    print("VIDEO_PREPARED", video["video_id"], flush=True)
                 except Exception as error:
                     for item in ready:
                         ingredient = {key: value for key, value in item.items() if key in INGREDIENT_FIELDS}
@@ -209,6 +222,7 @@ def execute_plan(plan: dict, *, budget_usd: float, reserve_usd: float,
                     _save(progress, state)
                     result, elapsed, fatal = _run_job(
                         runtime, video, ingredient, prepared, run_name, timeout, allowance - spent,
+                        measure_gpu=measure_gpu,
                     )
                     spent += elapsed
                     state["estimated_gpu_compute_usd"] = spent / 3600 * GPU_HOURLY_USD
@@ -239,6 +253,8 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--budget-usd", type=float)
     parser.add_argument("--reserve-usd", type=float, default=2.0)
     parser.add_argument("--max-job-seconds", type=int, default=7200)
+    parser.add_argument("--measure-gpu", action="store_true",
+                        help="Opt in to GPU measurement for this run; disabled by default")
     parser.add_argument("--output-dir", type=Path, help="Local progress metadata only; model artifacts stay in cloud storage")
     args = parser.parse_args(argv)
     plan = load_plan(args.plan)
@@ -248,7 +264,8 @@ def main(argv: list[str] | None = None) -> None:
     if args.budget_usd is None:
         parser.error("--execute requires --budget-usd")
     result = execute_plan(plan, budget_usd=args.budget_usd, reserve_usd=args.reserve_usd,
-                          max_job_seconds=args.max_job_seconds, output_dir=args.output_dir)
+                          max_job_seconds=args.max_job_seconds, output_dir=args.output_dir,
+                          measure_gpu=args.measure_gpu)
     print(json.dumps(result, indent=2))
 
 

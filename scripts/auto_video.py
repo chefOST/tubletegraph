@@ -28,8 +28,6 @@ def validate_video(video: dict) -> None:
     relative = PurePosixPath(video["r2_path"])
     if relative.is_absolute() or ".." in relative.parts or not relative.parts:
         raise ValueError("Video path must stay inside the R2 release")
-    if video["alignment"].get("status") != "inferred_from_duration":
-        raise ValueError("Video timing has not been resolved from its duration")
 
 
 def probe_video(path: Path) -> dict:
@@ -56,24 +54,7 @@ def probe_video(path: Path) -> dict:
     }
 
 
-def verify_timing(video: dict, media: dict) -> None:
-    if media["source_frame_count"] != video["source_frame_count"]:
-        raise ValueError("Decoded frame count differs from the pinned plan")
-    fps = media["source_fps"]
-    if not math.isfinite(fps) or fps <= 0 or not math.isclose(fps, video["source_fps"], rel_tol=1e-6):
-        raise ValueError("Video frame rate differs from the pinned plan")
-    duration = media["duration_seconds"]
-    if not math.isfinite(duration) or duration <= 0:
-        raise ValueError("Video duration must be finite and positive")
-    if abs(duration - video["duration_seconds"]) > max(1 / fps, 0.001):
-        raise ValueError("Video duration differs from the annotation mapping")
-    if video["alignment"]["index_basis"] == "source_frame_indices":
-        if video["annotation_frame_count"] != media["source_frame_count"]:
-            raise ValueError("One-to-one annotation/source-frame mapping no longer holds")
-
-
 def resolve_seed(video: dict, ingredient: dict, media: dict) -> int:
-    verify_timing(video, media)
     if ingredient["status"] != "ready":
         raise ValueError("Ingredient is not ready for initialization")
     first, seed = ingredient["first_visible_annotation_index"], ingredient["seed_annotation_index"]
@@ -81,16 +62,9 @@ def resolve_seed(video: dict, ingredient: dict, media: dict) -> int:
         raise ValueError("Initialization must use the annotation immediately after first visibility")
     if seed >= video["annotation_frame_count"]:
         raise ValueError("Initialization is beyond the annotation timeline")
-    if video["alignment"]["index_basis"] == "source_frame_indices":
-        index = seed
-        if ingredient.get("seed_source_frame") != index:
-            raise ValueError("Planned source frame does not match the visibility seed")
-    else:
-        fps = video["alignment"]["annotation_fps"]
-        timestamp = seed / fps
-        if not math.isclose(timestamp, ingredient["seed_timestamp_seconds"], abs_tol=1e-6):
-            raise ValueError("Planned timestamp does not match the annotation rate")
-        index = bisect_left(media["timestamps_seconds"], timestamp - 1e-9)
+    index = seed
+    if ingredient.get("seed_source_frame") != index:
+        raise ValueError("Planned source frame does not match the visibility seed")
     if not 0 <= index < media["source_frame_count"]:
         raise ValueError("Initialization is outside the video")
     return index
