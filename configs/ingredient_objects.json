@@ -1,0 +1,230 @@
+{
+  "scope": "ingredients",
+  "definition": "Food ingredients, edible mixtures and transformed food forms, including cooking water. Excludes utensils, containers, appliances, packaging and inedible waste.",
+  "border_cases": {
+    "contents of the bowl": "Include food contents, not the bowl itself.",
+    "cooked omelette": "Include the transformed food material.",
+    "pizza": "Include the assembled food material.",
+    "teabag": "Exclude the physical sachet as packaging; tea leaves are not a separate canonical target.",
+    "eggshell": "Exclude inedible waste.",
+    "jug of cold water": "Exclude the vessel category, consistent with water-container exclusions.",
+    "cup of water": "Exclude the vessel category; the separate water category is included.",
+    "tea bag": "Exclude the physical sachet as packaging.",
+    "tortilla ends": "Include edible food pieces, even when trimmed from the main roll.",
+    "tea in mug": "Include tea contents, not the mug.",
+    "water in kettle": "Include water contents, not the kettle."
+  },
+  "datasets": {
+    "CMU": {
+      "include": [
+        "batter",
+        "bread slices",
+        "brownie batter",
+        "cheese",
+        "contents of the bowl",
+        "cooked omelette",
+        "egg mixture",
+        "eggs",
+        "jam",
+        "mayonnaise",
+        "oil",
+        "peanut butter",
+        "pepperoni",
+        "pizza",
+        "pizza sauce",
+        "salt",
+        "vegetables",
+        "water"
+      ],
+      "exclude": [
+        "baking tray",
+        "bowl",
+        "brownie mix package",
+        "cutting board",
+        "eggshell",
+        "grater",
+        "knife",
+        "measuring spoon/cup",
+        "mixer",
+        "mixing spoon",
+        "oil bottle",
+        "oven",
+        "oven gloves",
+        "pan",
+        "salt shaker",
+        "spread spatula",
+        "the dish",
+        "tin of pizza sauce",
+        "trash can",
+        "vegetable peeler",
+        "water jar"
+      ]
+    },
+    "EGTEA": {
+      "include": [
+        "bacon",
+        "bread",
+        "burger bun",
+        "cereal",
+        "cream cheese",
+        "dessert",
+        "egg",
+        "egg mixture",
+        "garnish",
+        "honey/chocolate syrup",
+        "hot dog/sausage",
+        "jam",
+        "juice",
+        "milk",
+        "mixture",
+        "oil",
+        "pasta",
+        "patty",
+        "peanut butter honey mixture",
+        "pizza dough",
+        "sauce",
+        "toppings",
+        "turkey",
+        "vegetables",
+        "water"
+      ],
+      "exclude": [
+        "baking tray",
+        "bowl",
+        "cereal box",
+        "colander",
+        "cooking utensil (flipper)",
+        "cover",
+        "cup",
+        "cutting board",
+        "eggshell",
+        "faucet/water tap",
+        "garnish container",
+        "juice bottle",
+        "kettle",
+        "knife",
+        "microwave",
+        "milk container",
+        "oil bottle",
+        "oven control knob",
+        "oven mitts",
+        "pan",
+        "plate",
+        "pot",
+        "sauce bottles",
+        "sink",
+        "spoon",
+        "stove",
+        "teabag"
+      ]
+    },
+    "EgoPER/coffee": {
+      "include": [
+        "brewed coffee",
+        "coffee beans",
+        "coffee grounds (from grinder)",
+        "water"
+      ],
+      "exclude": [
+        "bin",
+        "coffee dripper",
+        "coffee grinder",
+        "cup",
+        "digital scale",
+        "kettle",
+        "measurement cup",
+        "paper filter",
+        "spoon or scoop",
+        "timer",
+        "water container",
+        "water thermometer"
+      ]
+    },
+    "EgoPER/oatmeal": {
+      "include": [
+        "banana",
+        "cinnamon",
+        "honey",
+        "quick-cook oats",
+        "raisins",
+        "water"
+      ],
+      "exclude": [
+        "banana container",
+        "bowl",
+        "cinnamon container",
+        "container for water",
+        "container of oats",
+        "cup of water",
+        "cutting board",
+        "half-cup measuring cup",
+        "honey bottle",
+        "honey container",
+        "knife",
+        "measuring tablespoon",
+        "microwave",
+        "oven mitt",
+        "raisin container",
+        "spoon"
+      ]
+    },
+    "EgoPER/pinwheels": {
+      "include": [
+        "butter",
+        "jelly",
+        "pinwheels",
+        "tortilla",
+        "tortilla ends",
+        "tortilla rolls"
+      ],
+      "exclude": [
+        "bin",
+        "cutting board",
+        "dental floss",
+        "jelly container",
+        "knife",
+        "nut butter jar",
+        "plate",
+        "sponge or cloth",
+        "toothpick"
+      ]
+    },
+    "EgoPER/quesadilla": {
+      "include": [
+        "banana slices",
+        "cinnamon",
+        "nutella",
+        "tortilla",
+        "tortilla halves"
+      ],
+      "exclude": [
+        "cinnamon shaker",
+        "cutting board",
+        "knife",
+        "nutella jar",
+        "plate",
+        "spoon"
+      ]
+    },
+    "EgoPER/tea": {
+      "include": [
+        "honey",
+        "tea in mug",
+        "water in kettle"
+      ],
+      "exclude": [
+        "jug of cold water",
+        "kettle",
+        "measurement cup",
+        "mug",
+        "refrigerator",
+        "spoon",
+        "tea bag",
+        "thermometer",
+        "timer (or clock)",
+        "trash can"
+      ]
+    }
+  },
+  "source": "CMU/EGTEA ingredient categories follow frontier-experiments/configs/ingredient_objects.json; EgoPER applies the same food/material definition."
+}

@@ -14,6 +14,8 @@
    stored under a key made from the frame's bytes and the CropFormer config,
    and reused by later runs on the same video. CropFormer processes every
    frame independently, so a hit returns what it would have computed.
+4. Optional bounded lazy CPU frame loading avoids retaining every resized
+   video frame when ``TUBELETGRAPH_LAZY_CPU_FRAMES=1`` is enabled.
 """
 
 from __future__ import annotations
@@ -71,7 +73,15 @@ WRAPPER_BUILD_PATCH = (
 WRAPPER_INIT_MARKER = (
     "        self.inference_state = self.predictor.init_state(video_path=info['video_dir'])\n"
 )
-WRAPPER_INIT_PATCH = WRAPPER_INIT_MARKER + (
+WRAPPER_INIT_LEGACY = WRAPPER_INIT_MARKER + (
+    "        _moscato_speedups.attach_feature_cache(\n"
+    "            self.predictor, self.inference_state, info['video_dir']\n"
+    "        )\n"
+)
+WRAPPER_INIT_PATCH = (
+    "        self.inference_state = _moscato_speedups.initialize_state(\n"
+    "            self.predictor, info['video_dir']\n"
+    "        )\n"
     "        _moscato_speedups.attach_feature_cache(\n"
     "            self.predictor, self.inference_state, info['video_dir']\n"
     "        )\n"
@@ -156,11 +166,14 @@ def patch_speedups(repository: Path) -> list[tuple[Path, bool]]:
     predictor = (
         repository / "thirdparty" / "sam2" / "sam2" / "sam2_video_predictor.py"
     )
+    # Support both the original pinned checkout and an image containing the
+    # earlier feature-cache patch, without attaching its cache twice.
+    init_marker = WRAPPER_INIT_LEGACY if WRAPPER_INIT_LEGACY in wrapper.read_text() else WRAPPER_INIT_MARKER
     return [
         (module, True),
         (wrapper, replace_once(wrapper, WRAPPER_IMPORT_MARKER, WRAPPER_IMPORT_PATCH, "wrapper import")),
         (wrapper, replace_once(wrapper, WRAPPER_BUILD_MARKER, WRAPPER_BUILD_PATCH, "wrapper build")),
-        (wrapper, replace_once(wrapper, WRAPPER_INIT_MARKER, WRAPPER_INIT_PATCH, "wrapper init_state")),
+        (wrapper, replace_once(wrapper, init_marker, WRAPPER_INIT_PATCH, "wrapper init_state")),
         (predictor, replace_once(predictor, SAM2_FEATURE_MARKER, SAM2_FEATURE_PATCH, "SAM2 feature")),
     ]
 

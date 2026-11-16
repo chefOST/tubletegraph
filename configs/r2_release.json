@@ -1,0 +1,7 @@
+{
+  "bucket": "chefost-moscato-gt-videos",
+  "endpoint": "https://2aee25b6b08cc209d7cab66f1d0942fd.r2.cloudflarestorage.com",
+  "prefix": "moscato/releases/564f350e536734db/videos/",
+  "manifest_key": "moscato/releases/564f350e536734db/videos/manifest.json",
+  "release_sha256": "564f350e536734dbc9ba47fcf783e55083afd265c4a86d3d943364058fcb2edb"
+}
