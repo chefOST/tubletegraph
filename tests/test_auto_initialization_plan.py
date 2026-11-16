@@ -63,7 +63,7 @@ class AutoInitializationPlanTests(unittest.TestCase):
         self.assertEqual(alignment['status'], 'inferred_from_duration')
         self.assertEqual(alignment['index_basis'], 'source_frame_indices')
         self.assertEqual(alignment['annotation_fps'], 30)
-        self.assertFalse(alignment['matches_declared_10fps'])
+        self.assertNotIn('declared_annotation_fps', alignment)
         self.assertFalse(alignment['independently_verified'])
 
     def test_other_uniform_rates_use_duration_and_timestamp_not_raw_index(self):
@@ -74,7 +74,7 @@ class AutoInitializationPlanTests(unittest.TestCase):
         self.assertIsNone(plan['videos'][0]['ingredients'][0]['seed_source_frame'])
         self.assertEqual(plan['videos'][0]['ingredients'][0]['seed_timestamp_seconds'], 0.5)
 
-    def test_10fps_mapping_uses_timestamp_for_actual_pts_lookup(self):
+    def test_resampled_mapping_uses_timestamp_for_actual_pts_lookup(self):
         annotation = {'object': [[], ['egg'], ['egg']] + [[]] * 7, 'state': {'egg': []}}
         self.write({'video-1': annotation})
         self.manifest['entries'][0] = self.entry('video-1', count=24, fps='24/1')
@@ -84,7 +84,7 @@ class AutoInitializationPlanTests(unittest.TestCase):
         self.assertIsNone(egg['seed_source_frame'])
         self.assertEqual(egg['seed_timestamp_seconds'], 0.2)
         self.assertEqual(egg['status'], 'ready')
-        self.assertEqual(video['alignment']['index_basis'], 'annotation_10fps')
+        self.assertEqual(video['alignment']['index_basis'], 'uniform_annotation_timeline')
         # Source-rate arrays must not be interpreted as 10 fps merely because
         # the dataset's general documentation mentions that rate.
         self.assertEqual(alignment_for(self.entry('video-1', 240, '24/1'), 240)

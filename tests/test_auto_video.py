@@ -15,9 +15,9 @@ class AutoVideoTests(unittest.TestCase):
     def test_source_frame_indices_do_not_assume_ten_fps(self):
         self.assertEqual(resolve_seed(self.video, self.ingredient, self.media), 101)
 
-    def test_ten_fps_annotations_use_actual_pts(self):
+    def test_resampled_annotations_use_actual_pts(self):
         video = {**self.video, "annotation_frame_count": 100,
-                 "alignment": {"index_basis": "annotation_10fps", "annotation_fps": 10}}
+                 "alignment": {"index_basis": "uniform_annotation_timeline", "annotation_fps": 10}}
         ingredient = {**self.ingredient, "first_visible_annotation_index": 9,
                       "seed_annotation_index": 10, "seed_source_frame": None,
                       "seed_timestamp_seconds": 1.0}

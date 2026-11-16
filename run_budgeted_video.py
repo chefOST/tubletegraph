@@ -104,6 +104,7 @@ def main() -> None:
         job_type='inference', group=video_id,
         tags=['tubeletgraph', 'one-video', f'budget-{args.budget_usd:g}', 'raw-inference'],
         config=config, allow_val_change=True,
+        settings=wandb.Settings(x_disable_stats=True),
         **({'id': previous['wandb_path'].rsplit('/', 1)[-1], 'resume': 'must'} if previous else {}),
     ) as run:
         if run.entity.lower() != destinations['entity'].lower() or run.project != args.project:
