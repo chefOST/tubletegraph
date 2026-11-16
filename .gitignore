@@ -26,3 +26,6 @@ results/
 
 # From main.
 /wandb/
+
+/downloads/
+.DS_Store

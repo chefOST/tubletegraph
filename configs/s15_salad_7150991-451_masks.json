@@ -5,7 +5,7 @@
   "object_id": 1,
   "source_fps": 30,
   "frame_stride": 6,
-  "policy": "User-approved initialization at the first clearly maskable visible view found on the sampling grid. Earlier annotated frames are excluded from inference and must be reported separately in evaluation.",
+  "policy": "User-approved initialization at the first clearly maskable visible view found on the sampling grid.",
   "authoring": "Assistant-traced visible contours, visually reviewed; not dataset-provided ground-truth segmentation. Frame selection used images and object names, not state labels.",
   "objects": {
     "bowl": {

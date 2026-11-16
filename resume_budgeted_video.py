@@ -2,15 +2,17 @@
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 import sys
+from typing import Optional
 
 import modal
 
-from modal_tubelet import app, data_volume, evaluation_image, wandb_secret
+from modal_tubelet import app, data_volume, orchestration_image, wandb_secret
 
 coordinator_image = (
-    evaluation_image
+    orchestration_image
     .add_local_file('modal_tubelet.py', '/root/modal_tubelet.py', copy=True)
     .add_local_file('run_budgeted_video.py', '/root/run_budgeted_video.py', copy=True)
     .add_local_dir('configs', '/opt/resume/configs', copy=True)
@@ -24,8 +26,8 @@ coordinator_image = (
     timeout=7 * 3600, retries=0, max_containers=1, scaledown_window=2,
     volumes={'/data': data_volume}, secrets=[wandb_secret],
 )
-def coordinate(identity: dict, records: list, batch: dict, initialization: dict,
-               budget_usd: float, prior_compute_usd: float) -> dict:
+def coordinate(identity: dict, records: list, batch: dict, initialization: Optional[dict],
+               budget_usd: float, prior_compute_usd: float, reserve_usd: float) -> dict:
     import os
     from datetime import datetime, timezone
     import run_budgeted_video
@@ -51,12 +53,15 @@ def coordinate(identity: dict, records: list, batch: dict, initialization: dict,
     (out / 'run.json').write_text(json.dumps(identity, indent=2) + '\n')
     (out / 'objects.json').write_text(json.dumps(records, indent=2) + '\n')
     (out / 'batch.json').write_text(json.dumps(batch, indent=2) + '\n')
-    (out / 'initialization.json').write_text(json.dumps(initialization, indent=2) + '\n')
+    if initialization is not None:
+        (out / 'initialization.json').write_text(json.dumps(initialization, indent=2) + '\n')
     data_volume.commit()
     sys.argv = ['run_budgeted_video', '--batch-file', str(out / 'batch.json'),
-                '--initialization', str(out / 'initialization.json'),
-                '--project', 'tubeletgraph - full evals', '--budget-usd', str(budget_usd),
+                '--project', identity['wandb_path'].rsplit('/', 2)[1],
+                '--budget-usd', str(budget_usd), '--reserve-usd', str(reserve_usd),
                 '--prior-compute-usd', str(prior_compute_usd), '--resume-dir', str(out)]
+    if initialization is not None:
+        sys.argv.extend(['--initialization', str(out / 'initialization.json')])
     try:
         run_budgeted_video.main()
     finally:
@@ -65,12 +70,31 @@ def coordinate(identity: dict, records: list, batch: dict, initialization: dict,
 
 
 @app.local_entrypoint()
-def resume(resume_dir: str, budget_usd: float = 39.0, prior_compute_usd: float = 3.0):
+def resume(resume_dir: str, budget_usd: Optional[float] = None,
+           prior_compute_usd: Optional[float] = None, reserve_usd: Optional[float] = None,
+           batch_file: str = ''):
     state = Path(resume_dir)
     identity = json.loads((state / 'run.json').read_text())
     records = json.loads((state / 'objects.json').read_text())
-    batch = json.loads(Path('configs/batch_s15_salad_visible_start.json').read_text())
-    initialization = identity['initialization']
-    call = coordinate.spawn(identity, records, batch, initialization, budget_usd, prior_compute_usd)
+    batch_path = Path(batch_file) if batch_file else state / 'batch.json'
+    if not batch_path.is_file():
+        raise FileNotFoundError('Saved batch.json is missing; pass --batch-file for this run')
+    batch = json.loads(batch_path.read_text())
+    initialization = identity.get('initialization')
+    if budget_usd is None:
+        budget_usd = identity['budget_usd']
+    if prior_compute_usd is None:
+        if 'estimated_compute_usd' not in identity:
+            raise ValueError('Saved state has no spend estimate; pass --prior-compute-usd')
+        prior_compute_usd = identity['estimated_compute_usd']
+    if reserve_usd is None:
+        reserve_usd = identity.get('reserve_usd', 15.0)
+    if not math.isfinite(budget_usd) or budget_usd <= 0:
+        raise ValueError('Budget must be finite and positive')
+    if any(not math.isfinite(value) or value < 0 for value in (prior_compute_usd, reserve_usd)):
+        raise ValueError('Prior compute and reserve must be finite and nonnegative')
+    call = coordinate.spawn(identity, records, batch, initialization,
+                            budget_usd, prior_compute_usd, reserve_usd)
     print(json.dumps({'coordinator_call_id': call.object_id, 'wandb_url': identity['wandb_url'],
-                      'budget_usd': budget_usd, 'prior_compute_usd': prior_compute_usd}), flush=True)
+                      'budget_usd': budget_usd, 'prior_compute_usd': prior_compute_usd,
+                      'reserve_usd': reserve_usd}), flush=True)
