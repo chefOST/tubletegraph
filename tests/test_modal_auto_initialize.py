@@ -1,10 +1,9 @@
-from contextlib import contextmanager
 import json
 from pathlib import Path
 import subprocess
 import tempfile
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 import modal_auto_initialize as worker
 
@@ -41,11 +40,6 @@ class ModalAutoInitializationTests(unittest.TestCase):
         self.initialization_fails = False
         self.native_mode = "success"
         self.frame_bytes = []
-
-    @contextmanager
-    def telemetry(self, path):
-        path.write_text("elapsed_seconds,gpu_utilization_pct,memory_used_mib,memory_total_mib\n0,50,2048,46080\n")
-        yield
 
     def command(self, command, log_path, *, env=None):
         log_path.write_text("captured model output\n")
@@ -86,7 +80,6 @@ class ModalAutoInitializationTests(unittest.TestCase):
         with patch.object(worker, "DATA_ROOT", self.data), \
                 patch.object(worker, "REPOSITORY", self.repository), \
                 patch.object(worker, "data_volume", self.volume), \
-                patch.object(worker, "GpuTelemetry", side_effect=self.telemetry), \
                 patch.object(worker, "_command", side_effect=self.command) as command:
             result = worker.run_auto_initialized.local(
                 self.video, self.ingredient, self.prepared, "trial",
@@ -107,8 +100,13 @@ class ModalAutoInitializationTests(unittest.TestCase):
         self.assertEqual(self.manifest["semantic_entries"], 1)
         self.assertTrue(self.manifest["gt_visibility_assisted"])
         self.assertFalse(self.manifest["ground_truth_state_values_used"])
+        self.assertIn("started_at", self.manifest)
+        self.assertIn("finished_at", self.manifest)
+        self.assertNotIn("elapsed_seconds", self.manifest)
+        self.assertNotIn("stages_seconds", self.manifest)
+        self.assertFalse((self.run_dir / "gpu.csv").exists())
         for relative in ["initial_frame.jpg", "initial_mask.png", "initialization.json", "initialization.log",
-                         "tubeletgraph.log", "gpu.csv", "input.json", "generated_configs/custom_v1.yaml",
+                         "tubeletgraph.log", "input.json", "generated_configs/custom_v1.yaml",
                          "predictions/custom-v1-Ours/v1_1.json",
                          "predictions/custom-v1-Ours_gpt-4.1/v1_1.json",
                          "predictions/custom-v1-Ours_gpt-4.1/v1_1.html"]:
@@ -150,6 +148,41 @@ class ModalAutoInitializationTests(unittest.TestCase):
         result = self.invoke()
         self.assertEqual(result["status"], "inference_failed")
         self.assertIn("frame count does not match", result["error"])
+
+    def test_publisher_preserves_native_artifacts_and_disables_system_stats(self):
+        import wandb
+
+        result = self.invoke()
+        expected_artifacts = {path.relative_to(self.run_dir).as_posix(): path.read_bytes()
+                              for path in self.run_dir.rglob("*") if path.is_file()}
+        settings_path = self.root / "settings.json"
+        settings_path.write_text(json.dumps({
+            "entity": "chefOST", "projects": {"experiments": "tubeletgraph-experiments"},
+        }))
+        run = MagicMock()
+        run.__enter__.return_value = run
+        run.entity, run.project = "chefOST", "tubeletgraph-experiments"
+        run.url = "https://wandb.ai/chefOST/tubeletgraph-experiments/runs/test"
+        run.summary = {}
+        artifact = Mock()
+        uploaded = {}
+        artifact.add_file.side_effect = lambda path, name: uploaded.update({name: Path(path).read_bytes()})
+
+        def resolve_path(path):
+            return settings_path if path == "/opt/wandb-settings.json" else Path(path)
+
+        with patch.object(worker, "DATA_ROOT", self.data), \
+                patch.object(worker, "Path", side_effect=resolve_path), \
+                patch.object(worker, "data_volume", self.volume), \
+                patch.object(wandb, "init", return_value=run) as init, \
+                patch.object(wandb, "Artifact", return_value=artifact):
+            worker.publish_auto_result.local(self.video, self.ingredient, result, "trial", {})
+        self.assertTrue(init.call_args.kwargs["settings"].x_disable_stats)
+        for name, contents in expected_artifacts.items():
+            self.assertEqual(uploaded[name], contents)
+        published_manifest = json.loads(uploaded["run_manifest.json"])
+        self.assertEqual(published_manifest, self.manifest)
+        self.assertIn("result.json", uploaded)
 
 
 if __name__ == "__main__":

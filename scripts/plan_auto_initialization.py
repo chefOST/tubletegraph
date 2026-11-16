@@ -93,23 +93,20 @@ def alignment_for(entry: dict | None, count: int) -> dict:
     fps, source_count = _media(entry)
     duration = _duration(entry)
     result = {"policy": "infer_from_duration", "status": "blocked", "index_basis": None,
-              "source_offset_frames": 0, "declared_annotation_fps": 10, "reason": None,
+              "source_offset_frames": 0, "reason": None,
               "independently_verified": False}
     if fps is None or duration is None or count <= 0:
         return {**result, "reason": "missing_media_timing"}
     inferred_fps = count / duration
     if count == source_count:
         basis, annotation_fps, method = "source_frame_indices", fps, "matching_source_and_annotation_counts"
-    elif abs(Fraction(count, 10) - duration) <= max(Fraction(1, 10), 1 / fps):
-        basis, annotation_fps, method = "annotation_10fps", Fraction(10), "duration_matches_10fps"
     else:
         basis, annotation_fps, method = "uniform_annotation_timeline", inferred_fps, "annotation_count_divided_by_duration"
     return {**result, "status": "inferred_from_duration", "index_basis": basis,
             "method": method, "annotation_fps": float(annotation_fps),
             "annotation_fps_rational": str(annotation_fps),
             "inferred_annotation_fps": float(inferred_fps),
-            "source_duration_seconds": float(duration),
-            "matches_declared_10fps": annotation_fps == 10}
+            "source_duration_seconds": float(duration)}
 
 
 def build_plan(data_root: Path, manifest: dict, ingredient_policy: dict,

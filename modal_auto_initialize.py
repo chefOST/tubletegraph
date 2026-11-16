@@ -9,8 +9,6 @@ import shutil
 import subprocess
 import sys
 import tempfile
-import threading
-import time
 
 import modal
 
@@ -105,52 +103,6 @@ def prepare_auto_video(video: dict) -> dict:
     return {"root": str(root), "metadata": str(metadata_path)}
 
 
-class GpuTelemetry:
-    """Observe the actual GPU worker, including model subprocesses and API waits."""
-
-    def __init__(self, path: Path):
-        self.path = path
-        # Volume commits may reload mounts; keep open telemetry handles on local SSD.
-        self.scratch = tempfile.TemporaryDirectory(prefix="tubelet-gpu-metrics-")
-        self.local_path = Path(self.scratch.name) / "gpu.csv"
-        self.stop = threading.Event()
-        self.started = time.monotonic()
-        self.thread = threading.Thread(target=self._collect, daemon=True)
-
-    def _collect(self):
-        with self.local_path.open("w") as handle:
-            handle.write("elapsed_seconds,gpu_utilization_pct,memory_used_mib,memory_total_mib\n")
-            while not self.stop.is_set():
-                try:
-                    result = subprocess.run(
-                        ["nvidia-smi", "--query-gpu=utilization.gpu,memory.used,memory.total",
-                         "--format=csv,noheader,nounits"], check=True,
-                        capture_output=True, text=True, timeout=10,
-                    )
-                    values = result.stdout.strip().splitlines()[0].split(",")
-                    values = [float(value.strip()) for value in values]
-                    if len(values) != 3:
-                        raise ValueError("Unexpected GPU telemetry response")
-                    handle.write(",".join(map(str, [time.monotonic() - self.started, *values])) + "\n")
-                    handle.flush()
-                except Exception as error:
-                    self.local_path.with_suffix(".error.txt").write_text(f"{type(error).__name__}: {error}\n")
-                self.stop.wait(5)
-
-    def __enter__(self):
-        self.thread.start()
-        return self
-
-    def __exit__(self, *args):
-        self.stop.set()
-        self.thread.join(timeout=15)
-        shutil.copy2(self.local_path, self.path)
-        error_path = self.local_path.with_suffix(".error.txt")
-        if error_path.exists():
-            shutil.copy2(error_path, self.path.with_suffix(".error.txt"))
-        self.scratch.cleanup()
-
-
 def _command(command: list[str], log_path: Path, *, env: dict | None = None) -> None:
     with log_path.open("w") as handle:
         subprocess.run(command, cwd=REPOSITORY, stdout=handle,
@@ -182,11 +134,9 @@ def run_auto_initialized(video: dict, ingredient: dict, prepared: dict, run_name
         "output_kind": "raw_tubeletgraph_inference", "evaluation_status": "not_scored",
         "gt_visibility_assisted": True, "ground_truth_state_values_used": False,
         "annotation_alignment": video["alignment"], "memory_settings": INFERENCE_ENV,
-        "stages_seconds": {},
     }
     _write_json(run_dir / "input.json", {"video": video, "ingredient": ingredient})
     _write_json(manifest_path, manifest)
-    started = time.monotonic()
     stage = "preflight"
     try:
         media = json.loads((root / "source.json").read_text())
@@ -201,7 +151,7 @@ def run_auto_initialized(video: dict, ingredient: dict, prepared: dict, run_name
         _write_json(run_dir / "frames.json", {"sample_fps": SAMPLE_FPS, "frames": rows})
         source_frame = root / "frames" / f"{seed:07d}.jpg"
         shutil.copy2(source_frame, run_dir / "initial_frame.jpg")
-        with tempfile.TemporaryDirectory(prefix="tubelet-auto-") as temp, GpuTelemetry(run_dir / "gpu.csv"):
+        with tempfile.TemporaryDirectory(prefix="tubelet-auto-") as temp:
             temp_root = Path(temp)
             frames = temp_root / video["video_id"]
             frames.mkdir()
@@ -209,7 +159,6 @@ def run_auto_initialized(video: dict, ingredient: dict, prepared: dict, run_name
                 shutil.copy2(root / "frames" / f"{row['source_frame']:07d}.jpg",
                              frames / f"{row['local_frame']:07d}.jpg")
             stage = "initialization"
-            stage_start = time.monotonic()
             manifest["status"] = "initializing"
             _write_json(manifest_path, manifest)
             data_volume.commit()
@@ -219,9 +168,7 @@ def run_auto_initialized(video: dict, ingredient: dict, prepared: dict, run_name
                  "--provenance-out", str(run_dir / "initialization.json")],
                 run_dir / "initialization.log",
             )
-            manifest["stages_seconds"][stage] = time.monotonic() - stage_start
             stage = "inference"
-            stage_start = time.monotonic()
             manifest["status"] = "inferring"
             _write_json(manifest_path, manifest)
             data_volume.commit()
@@ -232,7 +179,6 @@ def run_auto_initialized(video: dict, ingredient: dict, prepared: dict, run_name
                  "--input-mask", str(run_dir / "initial_mask.png"), "--fps", str(SAMPLE_FPS)],
                 run_dir / "tubeletgraph.log", env=env,
             )
-            manifest["stages_seconds"][stage] = time.monotonic() - stage_start
             prediction = REPOSITORY / "_pred_out" / f"custom-{video['video_id']}-Ours_gpt-4.1" / f"{video['video_id']}_1.json"
             if not prediction.is_file() or not prediction.with_suffix(".html").is_file():
                 raise RuntimeError("Native TubeletGraph prediction or prompt transcript is missing")
@@ -255,8 +201,7 @@ def run_auto_initialized(video: dict, ingredient: dict, prepared: dict, run_name
                     shutil.copy2(config, run_dir / "generated_configs" / config.name)
         except Exception as error:
             manifest.update(status="artifact_failed", artifact_error=f"{type(error).__name__}: {error}")
-        manifest.update(elapsed_seconds=time.monotonic() - started,
-                        finished_at=datetime.now(timezone.utc).isoformat(), volume_path=str(run_dir))
+        manifest.update(finished_at=datetime.now(timezone.utc).isoformat(), volume_path=str(run_dir))
         _write_json(manifest_path, manifest)
         data_volume.commit()
     return {"status": manifest["status"], "volume_path": str(run_dir), "manifest": str(manifest_path),
@@ -282,7 +227,8 @@ def publish_auto_result(video: dict, ingredient: dict, result: dict, run_name: s
               "tubeletgraph_commit": TUBELETGRAPH_COMMIT}
     with wandb.init(entity=destinations["entity"], project=project, name=run_name,
                     job_type="inference", group=video["video_id"],
-                    tags=["tubeletgraph", "auto-initialized", "per-ingredient", "raw-inference"], config=config) as run:
+                    tags=["tubeletgraph", "auto-initialized", "per-ingredient", "raw-inference"], config=config,
+                    settings=wandb.Settings(x_disable_stats=True)) as run:
         if run.entity.casefold() != destinations["entity"].casefold() or run.project != project:
             raise RuntimeError("Unexpected W&B destination")
         run.summary["inference/status"] = result["status"]
@@ -300,10 +246,8 @@ def publish_auto_result(video: dict, ingredient: dict, result: dict, run_name: s
                 manifest_path = run_dir / "run_manifest.json"
                 if manifest_path.is_file():
                     manifest = json.loads(manifest_path.read_text())
-                    for key in ("elapsed_seconds", "sampled_frames", "semantic_entries"):
+                    for key in ("sampled_frames", "semantic_entries"):
                         if key in manifest:
                             run.summary[f"inference/{key}"] = manifest[key]
-                    for stage, elapsed in manifest.get("stages_seconds", {}).items():
-                        run.summary[f"timing/{stage}_seconds"] = elapsed
             run.log_artifact(artifact).wait()
         return {"wandb_url": run.url}
