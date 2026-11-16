@@ -1,7 +1,6 @@
 {
   "defaults": {
     "object_id": 1,
-    "map_states": false,
     "later_tracking": true
   },
   "videos": [

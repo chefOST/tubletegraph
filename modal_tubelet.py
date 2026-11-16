@@ -1,27 +1,4 @@
-"""Run pinned TubeletGraph inference for the CMU S12 MOSCATO experiment on Modal.
-
-One-time local setup:
-    python3 -m pip install modal
-    modal setup
-    modal volume create tubelet-data
-    modal volume create tubelet-ground-truth
-    modal secret create tubelet-openai OPENAI_API_KEY="$OPENAI_API_KEY"
-    modal secret create wandb WANDB_API_KEY="$WANDB_API_KEY"
-
-Smoke test the official bundled example first:
-    modal run modal_tubelet.py --smoke-test
-
-Run the prepared S12 clip:
-    modal run modal_tubelet.py \
-        --video-id S12_Sandwich_7150991-2470 \
-        --fps 30 \
-        --clip-start-global 2824 \
-        --object-name "bread slices"
-
-After visual validation, evaluate and publish to W&B:
-    modal run modal_tubelet.py \
-        --evaluate-run-name <completed-run-name>
-"""
+"""Run pinned TubeletGraph inference and retain its native predictions."""
 
 from __future__ import annotations
 
@@ -34,7 +11,6 @@ import modal
 
 APP_NAME = "tubeletgraph-moscato-cmu"
 VOLUME_NAME = "tubelet-data"
-GROUND_TRUTH_VOLUME_NAME = "tubelet-ground-truth"
 SECRET_NAME = "tubelet-openai"
 WANDB_SECRET_NAME = "wandb"
 R2_SECRET_NAME = "chefost-r2"
@@ -46,10 +22,6 @@ SAM2_SPEEDUP_ENV = {
     "TUBELETGRAPH_SHARE_SAM2": "1",
     "TUBELETGRAPH_CACHE_SAM2_FEATURES": "1",
 }
-WANDB_EXPERIMENTS_PROJECT = "tubeletgraph-experiments"
-WANDB_FULL_EVAL_PROJECT = "tubeletgraph - full evals"
-DEFAULT_WANDB_PROJECT = WANDB_FULL_EVAL_PROJECT
-DEFAULT_WANDB_ENTITY = "chefOST"
 TUBELETGRAPH_REPOSITORY = "https://github.com/YihongSun/TubeletGraph.git"
 TUBELETGRAPH_COMMIT = "fdb05b6fbd7f4644aea990bf967cc18d82bf291b"
 DETECTRON2_COMMIT = "a2f4a8771ab77e8411c26b27f24f9489a28a2453"
@@ -63,9 +35,6 @@ DEFAULT_EXPECTED_FRAMES = 3890
 
 app = modal.App(APP_NAME)
 data_volume = modal.Volume.from_name(VOLUME_NAME, create_if_missing=True)
-ground_truth_volume = modal.Volume.from_name(
-    GROUND_TRUTH_VOLUME_NAME, create_if_missing=True
-)
 openai_secret = modal.Secret.from_name(
     SECRET_NAME, required_keys=["OPENAI_API_KEY"]
 )
@@ -155,28 +124,14 @@ tubelet_image = (
         copy=True,
         ignore=["**/__pycache__/**", "**/*.pyc"],
     )
-    .add_local_file(
-        "configs/cmu_object_state_candidates.json",
-        "/opt/moscato/configs/cmu_object_state_candidates.json",
-        copy=True,
-    )
     .run_commands(
         "python /opt/moscato/scripts/patch_tubeletgraph.py /opt/TubeletGraph",
     )
 )
 
-evaluation_image = (
+orchestration_image = (
     modal.Image.debian_slim(python_version="3.12")
-    .pip_install(
-        "scikit-learn>=1.7,<2",
-        "wandb==0.28.2",
-    )
-    .add_local_dir(
-        "scripts",
-        "/opt/moscato/scripts",
-        copy=True,
-        ignore=["**/__pycache__/**", "**/*.pyc"],
-    )
+    .pip_install("modal>=1.1,<2", "wandb==0.28.2")
 )
 
 
@@ -187,13 +142,6 @@ def _safe_component(value: str, label: str) -> str:
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", value):
         raise ValueError(f"Unsafe {label}: {value!r}")
     return value
-
-
-def _wandb_project(value: str) -> str:
-    # The team-mandated project names contain spaces, so allow them verbatim.
-    if value in (WANDB_EXPERIMENTS_PROJECT, WANDB_FULL_EVAL_PROJECT):
-        return value
-    return _safe_component(value, "wandb_project")
 
 
 def _mask_names(input_root) -> list[str]:
@@ -239,23 +187,16 @@ def run_tubelet(
     persist_intermediates: bool = False,
     later_tracking: bool = True,
     sam2_speedups: bool = True,
-    map_states: bool = True,
     clip_end_global: int = 0,
     mask_name: str = "mask.png",
     collect_spacing: int = 30,
 ) -> dict:
-    """Validate inputs, run TubeletGraph, map states, and persist artifacts.
-
-    With ``map_states=False`` the MOSCATO adapter is skipped and only
-    TubeletGraph's raw output (masks and its own VLM state text under
-    ``predictions/``) is saved, for downstream label matching elsewhere.
-    """
+    """Validate frame/mask inputs and save native masks, descriptions and provenance."""
     import json
     import os
     from pathlib import Path
     import shutil
     import subprocess
-    import sys
     import traceback
 
     import numpy as np
@@ -292,7 +233,6 @@ def run_tubelet(
         input_mask = repository / "assets/example/0334_cut_fruit_1_0000000.png"
         run_dir = Path("/data/smoke_tests") / resolved_run_name
         expected_input_frames = None
-        state_dict_path = None
     else:
         logical_video_id = video_id
         input_root = Path("/data") / video_id
@@ -300,8 +240,6 @@ def run_tubelet(
         input_mask = (input_root / mask_name).resolve()
         if input_root.resolve() not in input_mask.parents:
             raise ValueError(f"mask_name escapes the video folder: {mask_name!r}")
-        state_dict_path = input_root / "state_dict.json"
-        legacy_ground_truth_path = input_root / "ground_truth.json"
         run_dir = input_root / "runs" / resolved_run_name
         expected_input_frames = int(expected_frames) or None
 
@@ -330,7 +268,8 @@ def run_tubelet(
         "max_frames": int(max_frames) or None,
         "later_object_tracking": bool(later_tracking),
         "sam2_speedups": dict(SAM2_SPEEDUP_ENV) if sam2_speedups else {},
-        "moscato_adapter": bool(map_states),
+        "output_kind": "raw_tubeletgraph_inference",
+        "evaluation_status": "not_scored",
         "collect_spacing": int(collect_spacing),
         "tubeletgraph_repository": TUBELETGRAPH_REPOSITORY,
         "tubeletgraph_commit": TUBELETGRAPH_COMMIT,
@@ -342,11 +281,6 @@ def run_tubelet(
         "torch": torch.__version__,
         "torch_cuda": torch.version.cuda,
         "openai_secret_present": True,
-        "ground_truth_available_to_gpu_job": False,
-        "ground_truth_volume_mounted": False,
-        "adapter_input_mode": "tubelet_semantic_text_plus_single_event_frame",
-        "adapter_prompt_contains_video_id": False,
-        "adapter_prompt_contains_frame_number": False,
         "artifacts": {},
     }
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
@@ -357,18 +291,6 @@ def run_tubelet(
             raise FileNotFoundError(input_frames)
         if not input_mask.is_file():
             raise FileNotFoundError(input_mask)
-        if map_states and not smoke_test and (
-            state_dict_path is None or not state_dict_path.is_file()
-        ):
-            raise FileNotFoundError(
-                f"{state_dict_path} is required for closed-vocabulary state mapping"
-            )
-        if not smoke_test and legacy_ground_truth_path.is_file():
-            raise RuntimeError(
-                "Ground truth is present on the inference Volume. Move it to "
-                f"{GROUND_TRUTH_VOLUME_NAME!r} before running inference."
-            )
-
         entries = sorted(path for path in input_frames.iterdir() if path.is_file())
         non_jpegs = [path.name for path in entries if path.suffix.lower() != ".jpg"]
         if non_jpegs:
@@ -467,10 +389,10 @@ def run_tubelet(
 
         command = [
             "python",
-            "quick_run.py",
-            "--input_dir",
+            "/opt/moscato/scripts/run_native_inference.py",
+            "--input-dir",
             str(local_frames),
-            "--input_mask",
+            "--input-mask",
             str(local_mask),
             "--fps",
             str(tubelet_fps),
@@ -540,52 +462,6 @@ def run_tubelet(
                     f"Expected TubeletGraph VLM prediction was not produced: {prediction_json}"
                 )
 
-        if not smoke_test and map_states:
-            sys.path.insert(0, "/opt/moscato")
-            from openai import OpenAI
-            from scripts.build_event_draft import build_draft
-            from scripts.map_event_states import map_events
-
-            prediction = json.loads(prediction_json.read_text(encoding="utf-8"))
-            state_dict = json.loads(state_dict_path.read_text(encoding="utf-8"))
-            candidate_config = json.loads(
-                Path(
-                    "/opt/moscato/configs/cmu_object_state_candidates.json"
-                ).read_text(encoding="utf-8")
-            )
-            state_candidates = (
-                candidate_config.get("videos", {})
-                .get(video_id, {})
-                .get(object_name)
-            )
-            event_config = {
-                "video_id": video_id,
-                "target_object": object_name,
-                "clip_start_global": int(clip_start_global),
-                "clip_end_global": int(clip_start_global) + len(frame_paths),
-            }
-            draft = build_draft(prediction, event_config)
-            draft["frame_stride"] = int(frame_stride)
-            draft["source_fps"] = int(fps)
-            draft["tubelet_fps"] = int(tubelet_fps)
-            draft["source_frame_count"] = int(selected_source_count)
-            draft_path = run_dir / "tubelet_events.draft.json"
-            draft_path.write_text(json.dumps(draft, indent=2) + "\n")
-            events = map_events(
-                draft,
-                state_dict,
-                local_frames,
-                OpenAI(),
-                "gpt-4.1",
-                allowed_states=state_candidates,
-            )
-            events_path = run_dir / "tubelet_events.json"
-            events_path.write_text(json.dumps(events, indent=2) + "\n")
-            manifest["artifacts"]["event_draft"] = draft_path.name
-            manifest["artifacts"]["mapped_events"] = events_path.name
-            manifest["state_candidate_policy"] = candidate_config["policy"]
-            manifest["state_candidates"] = state_candidates
-
         manifest["status"] = "succeeded"
     except Exception as error:  # Persist partial outputs before re-raising.
         caught_error = error
@@ -596,7 +472,6 @@ def run_tubelet(
         artifact_errors = []
         artifact_sources = {
             "predictions": repository / "_pred_out",
-            "visualizations": repository / "_vis_out",
         }
         if persist_intermediates:
             artifact_sources["intermediates"] = repository / "_interm_out"
@@ -747,153 +622,6 @@ def prepare_from_r2(
 
 
 @app.function(
-    image=evaluation_image,
-    cpu=2.0,
-    memory=4096,
-    timeout=20 * 60,
-    volumes={"/data": data_volume, "/ground-truth": ground_truth_volume},
-    secrets=[wandb_secret],
-    single_use_containers=True,
-)
-def evaluate_and_log(
-    video_id: str,
-    object_name: str,
-    run_name: str,
-    wandb_project: str,
-    wandb_entity: str = "",
-    wandb_tags: str = "",
-) -> dict:
-    """Evaluate an isolated completed run, then publish metrics to W&B."""
-    import hashlib
-    import json
-    from pathlib import Path
-    import sys
-
-    video_id = _safe_component(video_id, "video_id")
-    run_name = _safe_component(run_name, "evaluate_run_name")
-    wandb_project = _wandb_project(wandb_project)
-    if wandb_entity:
-        wandb_entity = _safe_component(wandb_entity, "wandb_entity")
-
-    input_root = Path("/data") / video_id
-    run_dir = input_root / "runs" / run_name
-    annotations_path = Path("/ground-truth") / video_id / "ground_truth.json"
-    state_dict_path = input_root / "state_dict.json"
-    events_path = run_dir / "tubelet_events.json"
-    manifest_path = run_dir / "run_manifest.json"
-    required = [annotations_path, state_dict_path, events_path, manifest_path]
-    missing = [str(path) for path in required if not path.is_file()]
-    if missing:
-        raise FileNotFoundError(f"Required evaluation files are missing: {missing}")
-
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    if manifest.get("status") != "succeeded":
-        raise RuntimeError(
-            f"Refusing to evaluate run with status {manifest.get('status')!r}"
-        )
-
-    sys.path.insert(0, "/opt/moscato")
-    from scripts.evaluate import evaluate_events, load_json, write_csv
-    from scripts.log_wandb import log_evaluation, run_tags
-
-    rows, summary = evaluate_events(
-        load_json(annotations_path),
-        load_json(state_dict_path),
-        load_json(events_path),
-    )
-    if summary["object"] != object_name:
-        raise ValueError(
-            f"Event object {summary['object']!r} does not match {object_name!r}"
-        )
-
-    def sha256(path: Path) -> str:
-        digest = hashlib.sha256()
-        with path.open("rb") as handle:
-            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-                digest.update(chunk)
-        return digest.hexdigest()
-
-    evaluation_dir = run_dir / "evaluation"
-    evaluation_dir.mkdir(exist_ok=True)
-    csv_path = evaluation_dir / "frame_predictions.csv"
-    summary_path = evaluation_dir / "summary.json"
-    wandb_result_path = evaluation_dir / "wandb.json"
-    write_csv(csv_path, rows)
-    summary.update(
-        {
-            "run_name": run_name,
-            "evaluated_at": datetime.now(timezone.utc).isoformat(),
-            "provenance": {
-                "annotations_sha256": sha256(annotations_path),
-                "state_dict_sha256": sha256(state_dict_path),
-                "events_sha256": sha256(events_path),
-                "ground_truth_used_for_inference": False,
-                "ground_truth_volume": GROUND_TRUTH_VOLUME_NAME,
-                "ground_truth_mounted_only_by_evaluation": True,
-            },
-        }
-    )
-    summary_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
-
-    eval_kind = (
-        "full-eval" if wandb_project == WANDB_FULL_EVAL_PROJECT else "experiment"
-    )
-    try:
-        wandb_result = log_evaluation(
-            summary=summary,
-            rows=rows,
-            project=wandb_project,
-            entity=wandb_entity,
-            run_name=f"{video_id}-{object_name}-{run_name}",
-            artifact_paths={
-                "evaluation": csv_path,
-                "summary": summary_path,
-                "events": events_path,
-                "manifest": manifest_path,
-            },
-            config={
-                "video_id": video_id,
-                "object": object_name,
-                "run_name": run_name,
-                "eval_kind": eval_kind,
-                "fps": manifest.get("fps"),
-                "frame_stride": manifest.get("frame_stride"),
-                "tubelet_fps": manifest.get("tubelet_fps"),
-                "later_object_tracking": manifest.get("later_object_tracking"),
-                "adapter_input_mode": manifest.get("adapter_input_mode"),
-                "tubeletgraph_commit": TUBELETGRAPH_COMMIT,
-                "detectron2_commit": DETECTRON2_COMMIT,
-                "ground_truth_used_for_inference": False,
-                "ground_truth_volume": GROUND_TRUTH_VOLUME_NAME,
-                "ground_truth_mounted_only_by_evaluation": True,
-                "metric_policy": summary["policy"],
-            },
-            tags=run_tags(
-                eval_kind=eval_kind,
-                video_id=video_id,
-                object_name=object_name,
-                manifest=manifest,
-                extra=[t.strip() for t in wandb_tags.split(",") if t.strip()],
-            ),
-        )
-        wandb_result_path.write_text(
-            json.dumps(wandb_result, indent=2) + "\n", encoding="utf-8"
-        )
-    finally:
-        data_volume.commit()
-
-    return {
-        "status": "succeeded",
-        "metrics": {
-            key: summary[key]
-            for key in ("precision", "accuracy", "f1", "f1_max")
-        },
-        "summary": str(summary_path),
-        "wandb": wandb_result,
-    }
-
-
-@app.function(
     image=prepare_image,
     cpu=1.0,
     memory=1024,
@@ -912,7 +640,7 @@ def r2_manifest() -> str:
 BATCH_RUN_KEYS = {
     "video_id", "fps", "clip_start_global", "object_name", "object_id",
     "expected_frames", "max_frames", "frame_stride", "run_name",
-    "later_tracking", "persist_intermediates", "map_states",
+    "later_tracking", "persist_intermediates",
     "clip_end_global", "mask_name", "collect_spacing",
 }
 BATCH_PREPARE_KEYS = {"r2_path", "dataset", "overwrite"}
@@ -1017,8 +745,6 @@ def run_batch(
     def launch(spec: dict):
         kwargs = {key: spec[key] for key in BATCH_RUN_KEYS if key in spec}
         kwargs.setdefault("run_name", f"{run_name}-{object_slug(spec['object_name'])}")
-        # Batch runs keep TubeletGraph's raw output; labels are matched downstream.
-        kwargs.setdefault("map_states", False)
         return run_tubelet.spawn(sam2_speedups=sam2_speedups, **kwargs)
 
     window = max_parallel if max_parallel > 0 else len(ready)
@@ -1054,11 +780,6 @@ def main(
     smoke_test: bool = False,
     persist_intermediates: bool = False,
     later_tracking: bool = True,
-    evaluate_run_name: str = "",
-    wandb_project: str = "",
-    wandb_entity: str = DEFAULT_WANDB_ENTITY,
-    wandb_tags: str = "",
-    experiment: bool = False,
     sam2_speedups: bool = True,
     batch_file: str = "",
     max_parallel: int = 0,
@@ -1074,8 +795,8 @@ def main(
         return
 
     if batch_file:
-        if smoke_test or evaluate_run_name:
-            raise ValueError("--batch-file cannot be combined with --smoke-test or --evaluate-run-name")
+        if smoke_test:
+            raise ValueError("--batch-file cannot be combined with --smoke-test")
         results = run_batch(
             load_batch(batch_file),
             run_name=_run_name(run_name),
@@ -1091,29 +812,6 @@ def main(
         failed = [r for r in results if r["status"] in ("failed", "prepare_failed")]
         if failed:
             raise SystemExit(f"{len(failed)} of {len(results)} batch entries failed")
-        return
-
-    # Evaluations log to "tubeletgraph - full evals" by default; pass
-    # --experiment for development runs (tubeletgraph-experiments).
-    if experiment and wandb_project and wandb_project != WANDB_EXPERIMENTS_PROJECT:
-        raise ValueError("--experiment cannot be combined with a different --wandb-project")
-    if not wandb_project:
-        wandb_project = WANDB_EXPERIMENTS_PROJECT if experiment else DEFAULT_WANDB_PROJECT
-
-    if evaluate_run_name:
-        if smoke_test or run_name:
-            raise ValueError(
-                "--evaluate-run-name cannot be combined with --smoke-test or --run-name"
-            )
-        result = evaluate_and_log.remote(
-            video_id=video_id,
-            object_name=object_name,
-            run_name=evaluate_run_name,
-            wandb_project=wandb_project,
-            wandb_entity=wandb_entity,
-            wandb_tags=wandb_tags,
-        )
-        print(json.dumps(result, indent=2))
         return
 
     result = run_tubelet.remote(
