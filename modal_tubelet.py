@@ -99,7 +99,7 @@ tubelet_image = (
         # TubeletGraph does not import mmcv.ops; use OpenMMLab's official
         # non-op distribution and avoid compiling optional CUDA extensions.
         "python -m pip install mmcv-lite==2.2.0",
-        "cd /opt/TubeletGraph && bash thirdparty/setup_ckpts.sh",
+        "cd /opt/TubeletGraph && bash -e thirdparty/setup_ckpts.sh",
         "cd /opt/TubeletGraph/thirdparty/sam2 && python -m pip install -e .",
         "cd /opt/TubeletGraph/thirdparty/sam2 && "
         'python -m pip install -e ".[notebooks]"',
