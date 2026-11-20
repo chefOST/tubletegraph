@@ -13,6 +13,7 @@ APP_NAME = "tubeletgraph-moscato-cmu"
 VOLUME_NAME = "tubelet-data"
 GROUND_TRUTH_VOLUME_NAME = "tubelet-ground-truth"
 SECRET_NAME = "tubelet-openai"
+WANDB_SECRET_NAME = "wandb"
 R2_SECRET_NAME = "chefost-r2"
 R2_BUCKET = "chefost-moscato-gt-videos"
 R2_ENDPOINT = "https://2aee25b6b08cc209d7cab66f1d0942fd.r2.cloudflarestorage.com"
@@ -39,6 +40,7 @@ DEFAULT_EXPECTED_FRAMES = 3890
 
 app = modal.App(APP_NAME)
 data_volume = modal.Volume.from_name(VOLUME_NAME, create_if_missing=True)
+wandb_secret = modal.Secret.from_name(WANDB_SECRET_NAME, required_keys=["WANDB_API_KEY"])
 openai_secret = modal.Secret.from_name(
     SECRET_NAME, required_keys=["OPENAI_API_KEY"]
 )
