@@ -6,7 +6,7 @@ TubeletGraph research for object-state tracking in procedural cooking videos.
 
 - [Organization guide](https://github.com/chefOST/.github/blob/main/profile/README.md).
 - [Project goals](https://github.com/chefOST/.github/blob/main/docs/PaperNotes.md#project-goals) and [paper notes](https://github.com/chefOST/.github/blob/main/docs/PaperNotes.md#6-tubeletgraph).
-- [Evaluation definitions](https://github.com/chefOST/.github/blob/main/docs/Evaluation.md).
+- [Evaluation definitions](https://github.com/chefOST/.github/blob/main/docs/Evaluation.md) and the sole [evaluation implementation](https://github.com/chefOST/chefOST-data#evaluation).
 - [Contribution rules](https://github.com/chefOST/.github/blob/main/CONTRIBUTING.md) and [agent instructions](AGENTS.md).
 
 ## Data
