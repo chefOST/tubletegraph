@@ -1,27 +1,4 @@
-"""Run pinned TubeletGraph inference for the CMU S12 MOSCATO experiment on Modal.
-
-One-time local setup:
-    python3 -m pip install modal
-    modal setup
-    modal volume create tubelet-data
-    modal volume create tubelet-ground-truth
-    modal secret create tubelet-openai OPENAI_API_KEY="$OPENAI_API_KEY"
-    modal secret create wandb WANDB_API_KEY="$WANDB_API_KEY"
-
-Smoke test the official bundled example first:
-    modal run modal_tubelet.py --smoke-test
-
-Run the prepared S12 clip:
-    modal run modal_tubelet.py \
-        --video-id S12_Sandwich_7150991-2470 \
-        --fps 30 \
-        --clip-start-global 2824 \
-        --object-name "bread slices"
-
-After visual validation, evaluate and publish to W&B:
-    modal run modal_tubelet.py \
-        --evaluate-run-name <completed-run-name>
-"""
+'Run pinned TubeletGraph inference and save native predictions.\n\nBenchmark evaluation is maintained in chefOST/chefOST-data.'
 
 from __future__ import annotations
 
@@ -36,7 +13,6 @@ APP_NAME = "tubeletgraph-moscato-cmu"
 VOLUME_NAME = "tubelet-data"
 GROUND_TRUTH_VOLUME_NAME = "tubelet-ground-truth"
 SECRET_NAME = "tubelet-openai"
-WANDB_SECRET_NAME = "wandb"
 R2_SECRET_NAME = "chefost-r2"
 R2_BUCKET = "chefost-moscato-gt-videos"
 R2_ENDPOINT = "https://2aee25b6b08cc209d7cab66f1d0942fd.r2.cloudflarestorage.com"
@@ -63,14 +39,8 @@ DEFAULT_EXPECTED_FRAMES = 3890
 
 app = modal.App(APP_NAME)
 data_volume = modal.Volume.from_name(VOLUME_NAME, create_if_missing=True)
-ground_truth_volume = modal.Volume.from_name(
-    GROUND_TRUTH_VOLUME_NAME, create_if_missing=True
-)
 openai_secret = modal.Secret.from_name(
     SECRET_NAME, required_keys=["OPENAI_API_KEY"]
-)
-wandb_secret = modal.Secret.from_name(
-    WANDB_SECRET_NAME, required_keys=["WANDB_API_KEY"]
 )
 # Shared MOSCATO videos on R2 (see chefOST-data README). Read-only; mounted
 # only by the CPU frame-preparation function. Set MOSCATO_DISABLE_R2=1 to run
@@ -746,151 +716,6 @@ def prepare_from_r2(
     return metadata
 
 
-@app.function(
-    image=evaluation_image,
-    cpu=2.0,
-    memory=4096,
-    timeout=20 * 60,
-    volumes={"/data": data_volume, "/ground-truth": ground_truth_volume},
-    secrets=[wandb_secret],
-    single_use_containers=True,
-)
-def evaluate_and_log(
-    video_id: str,
-    object_name: str,
-    run_name: str,
-    wandb_project: str,
-    wandb_entity: str = "",
-    wandb_tags: str = "",
-) -> dict:
-    """Evaluate an isolated completed run, then publish metrics to W&B."""
-    import hashlib
-    import json
-    from pathlib import Path
-    import sys
-
-    video_id = _safe_component(video_id, "video_id")
-    run_name = _safe_component(run_name, "evaluate_run_name")
-    wandb_project = _wandb_project(wandb_project)
-    if wandb_entity:
-        wandb_entity = _safe_component(wandb_entity, "wandb_entity")
-
-    input_root = Path("/data") / video_id
-    run_dir = input_root / "runs" / run_name
-    annotations_path = Path("/ground-truth") / video_id / "ground_truth.json"
-    state_dict_path = input_root / "state_dict.json"
-    events_path = run_dir / "tubelet_events.json"
-    manifest_path = run_dir / "run_manifest.json"
-    required = [annotations_path, state_dict_path, events_path, manifest_path]
-    missing = [str(path) for path in required if not path.is_file()]
-    if missing:
-        raise FileNotFoundError(f"Required evaluation files are missing: {missing}")
-
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    if manifest.get("status") != "succeeded":
-        raise RuntimeError(
-            f"Refusing to evaluate run with status {manifest.get('status')!r}"
-        )
-
-    sys.path.insert(0, "/opt/moscato")
-    from scripts.evaluate import evaluate_events, load_json, write_csv
-    from scripts.log_wandb import log_evaluation, run_tags
-
-    rows, summary = evaluate_events(
-        load_json(annotations_path),
-        load_json(state_dict_path),
-        load_json(events_path),
-    )
-    if summary["object"] != object_name:
-        raise ValueError(
-            f"Event object {summary['object']!r} does not match {object_name!r}"
-        )
-
-    def sha256(path: Path) -> str:
-        digest = hashlib.sha256()
-        with path.open("rb") as handle:
-            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-                digest.update(chunk)
-        return digest.hexdigest()
-
-    evaluation_dir = run_dir / "evaluation"
-    evaluation_dir.mkdir(exist_ok=True)
-    csv_path = evaluation_dir / "frame_predictions.csv"
-    summary_path = evaluation_dir / "summary.json"
-    wandb_result_path = evaluation_dir / "wandb.json"
-    write_csv(csv_path, rows)
-    summary.update(
-        {
-            "run_name": run_name,
-            "evaluated_at": datetime.now(timezone.utc).isoformat(),
-            "provenance": {
-                "annotations_sha256": sha256(annotations_path),
-                "state_dict_sha256": sha256(state_dict_path),
-                "events_sha256": sha256(events_path),
-                "ground_truth_used_for_inference": False,
-                "ground_truth_volume": GROUND_TRUTH_VOLUME_NAME,
-                "ground_truth_mounted_only_by_evaluation": True,
-            },
-        }
-    )
-    summary_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
-
-    eval_kind = (
-        "full-eval" if wandb_project == WANDB_FULL_EVAL_PROJECT else "experiment"
-    )
-    try:
-        wandb_result = log_evaluation(
-            summary=summary,
-            rows=rows,
-            project=wandb_project,
-            entity=wandb_entity,
-            run_name=f"{video_id}-{object_name}-{run_name}",
-            artifact_paths={
-                "evaluation": csv_path,
-                "summary": summary_path,
-                "events": events_path,
-                "manifest": manifest_path,
-            },
-            config={
-                "video_id": video_id,
-                "object": object_name,
-                "run_name": run_name,
-                "eval_kind": eval_kind,
-                "fps": manifest.get("fps"),
-                "frame_stride": manifest.get("frame_stride"),
-                "tubelet_fps": manifest.get("tubelet_fps"),
-                "later_object_tracking": manifest.get("later_object_tracking"),
-                "adapter_input_mode": manifest.get("adapter_input_mode"),
-                "tubeletgraph_commit": TUBELETGRAPH_COMMIT,
-                "detectron2_commit": DETECTRON2_COMMIT,
-                "ground_truth_used_for_inference": False,
-                "ground_truth_volume": GROUND_TRUTH_VOLUME_NAME,
-                "ground_truth_mounted_only_by_evaluation": True,
-                "metric_policy": summary["policy"],
-            },
-            tags=run_tags(
-                eval_kind=eval_kind,
-                video_id=video_id,
-                object_name=object_name,
-                manifest=manifest,
-                extra=[t.strip() for t in wandb_tags.split(",") if t.strip()],
-            ),
-        )
-        wandb_result_path.write_text(
-            json.dumps(wandb_result, indent=2) + "\n", encoding="utf-8"
-        )
-    finally:
-        data_volume.commit()
-
-    return {
-        "status": "succeeded",
-        "metrics": {
-            key: summary[key]
-            for key in ("precision", "accuracy", "f1", "f1_max")
-        },
-        "summary": str(summary_path),
-        "wandb": wandb_result,
-    }
 
 
 @app.function(
@@ -1054,11 +879,6 @@ def main(
     smoke_test: bool = False,
     persist_intermediates: bool = False,
     later_tracking: bool = True,
-    evaluate_run_name: str = "",
-    wandb_project: str = "",
-    wandb_entity: str = DEFAULT_WANDB_ENTITY,
-    wandb_tags: str = "",
-    experiment: bool = False,
     sam2_speedups: bool = True,
     batch_file: str = "",
     max_parallel: int = 0,
@@ -1074,8 +894,8 @@ def main(
         return
 
     if batch_file:
-        if smoke_test or evaluate_run_name:
-            raise ValueError("--batch-file cannot be combined with --smoke-test or --evaluate-run-name")
+        if smoke_test:
+            raise ValueError("--batch-file cannot be combined with --smoke-test")
         results = run_batch(
             load_batch(batch_file),
             run_name=_run_name(run_name),
@@ -1095,26 +915,7 @@ def main(
 
     # Evaluations log to "tubeletgraph - full evals" by default; pass
     # --experiment for development runs (tubeletgraph-experiments).
-    if experiment and wandb_project and wandb_project != WANDB_EXPERIMENTS_PROJECT:
-        raise ValueError("--experiment cannot be combined with a different --wandb-project")
-    if not wandb_project:
-        wandb_project = WANDB_EXPERIMENTS_PROJECT if experiment else DEFAULT_WANDB_PROJECT
 
-    if evaluate_run_name:
-        if smoke_test or run_name:
-            raise ValueError(
-                "--evaluate-run-name cannot be combined with --smoke-test or --run-name"
-            )
-        result = evaluate_and_log.remote(
-            video_id=video_id,
-            object_name=object_name,
-            run_name=evaluate_run_name,
-            wandb_project=wandb_project,
-            wandb_entity=wandb_entity,
-            wandb_tags=wandb_tags,
-        )
-        print(json.dumps(result, indent=2))
-        return
 
     result = run_tubelet.remote(
         video_id=video_id,
